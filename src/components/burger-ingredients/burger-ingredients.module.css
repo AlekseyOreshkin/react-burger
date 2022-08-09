@@ -1,0 +1,6 @@
+.main {
+    width: 50%;
+    /* min-height: 912px; */
+    height: calc(100vh - 200px);
+    background-color: red;
+}

@@ -1,0 +1,28 @@
+.nav {
+  width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  
+  height: 56px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo {
+}
+
+.navBox {
+  width: 33%;
+  display: flex-box;
+  justify-self: left;
+  justify-content: flex-start;
+}
+.leftBox {
+  composes: navBox;
+  width: 600px;
+  
+}
+
+.rightBox {
+  composes: navBox;
+
+}
