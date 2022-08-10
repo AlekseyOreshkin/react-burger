@@ -1,7 +1,8 @@
 import React from 'react';
 import burgerIngredientsBox from './burger-ingredients-box.module.css';
-import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ingredients-category';
 import {IngredientsCategories, IngredientsData} from '../../utils/data'
+import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ingredients-category';
+import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 
 
@@ -11,7 +12,9 @@ class BurgerIngredientsBox extends React.Component {
     <div  className={burgerIngredientsBox.main}>
         {IngredientsCategories.map((cat, index) => (
             <BurgerIngredientsCategory type={cat} key={index} > 
-                {IngredientsData.filter(ingr => ingr.type === cat).map((ingr, index) => (<p key={index}>{ingr.name}</p>))}
+                {IngredientsData.filter(ingr => ingr.type === cat).map((ingr, index) => (
+                    <BurgerIngredientsCard key={index} ingredient={ingr} />
+                ))}
             </BurgerIngredientsCategory>
         ))}
     </div>
