@@ -18,7 +18,9 @@ class AppHeaderButton extends React.Component {
     return (
         <Button type="secondary" size="medium" >
             {this.getIcon(this.props.icon)}
-            <span className="text text_type_main-default">{this.props.children}</span>
+            <span className="text text_type_main-default">
+                {this.props.children}
+            </span>
         </Button>
     );
   }

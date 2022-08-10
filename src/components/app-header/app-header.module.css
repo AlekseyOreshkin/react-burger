@@ -1,8 +1,12 @@
 .nav {
-  width: 1280px;
+  width: calc(100% + 80px);
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: -40px;
+  margin-right: auto;
+  grid-area: header;
   background-repeat: no-repeat;
   background-position: 50%;
-  margin: 0 auto;
   display: flex;
   justify-content: left;
 }

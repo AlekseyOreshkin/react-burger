@@ -8,12 +8,11 @@ class App extends React.Component {
   render() {
 
     return (
-      <div >
+      <div className='main-grid'>
         <AppHeader />
-        <div className={appStyles.app}>
-          <BurgerIngredients className = {appStyles.mainBox}/>
-          <BurgerConstructor className = {appStyles.mainBox}/>
-        </div>
+        <p className={`${appStyles.staticText} text text_type_main-large`}>Соберите бургер</p>
+        <BurgerIngredients />
+        <BurgerConstructor />
       </div>
     );
   }
