@@ -9,7 +9,7 @@ import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients
 class BurgerIngredientsBox extends React.Component {
   render() {
     return (
-    <div  className={burgerIngredientsBox.main}>
+    <div  className={`${burgerIngredientsBox.main} scrollable`}>
         {IngredientsCategories.map((cat, index) => (
             <BurgerIngredientsCategory type={cat} key={index} > 
                 {IngredientsData.filter(ingr => ingr.type === cat).map((ingr, index) => (

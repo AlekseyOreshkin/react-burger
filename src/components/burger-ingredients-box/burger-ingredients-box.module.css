@@ -1,13 +1,9 @@
 .main {
-    position: absolute;
-    width: 576px;
-    top: 246px;
-    bottom: 40px;
+    height: 500px;
     padding-top: 48px;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-
-    scrollbar-width: thin;
-    scrollbar-color: #6969dd #e0e0e0;
+    margin-top: 10px;
 }
+

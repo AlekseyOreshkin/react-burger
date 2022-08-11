@@ -5,7 +5,7 @@ body {
 
 .main-grid {
   display: grid;
-  height: 100vh;
+  height: 780px;
   grid-template-columns: 1fr  [left-border-line] 600px [center-line] 600px [right-border-line] 1fr;
   grid-template-rows: [top-line] 88px [nav-bottom-lie] 100px [container-top-line] auto [container-bottom-line] 40px [bottom-line];
   grid-template-areas: 
@@ -18,4 +18,20 @@ body {
   align-items: stretch;
   justify-content: stretch;
   align-content: stretch;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #8585AD;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #4C4CFF;
 }

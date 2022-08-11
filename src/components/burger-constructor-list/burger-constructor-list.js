@@ -6,7 +6,7 @@ import {SelectedIngredients, IngredientsData} from '../../utils/data'
 class BurgerConstructorList extends React.Component {
   render() {
     return (
-    <div className={burgerConstructorListStyles.main}>
+    <div className={`${burgerConstructorListStyles.main} scrollable`}>
         {SelectedIngredients.map((ingredient, index) => {
             let data = IngredientsData.find(d => d._id === ingredient._id);
             return (
