@@ -7,10 +7,14 @@ class BurgerIngredientsCard extends React.Component {
     return (
     <div  className={burgerIngredientsCard.main}>
         <img src={this.props.ingredient.image} alt={this.props.ingredient.name} />
-        <p className="text text_type_digits-default">
-            {this.props.ingredient.price}
-            <CurrencyIcon type="primary" />
-        </p>
+        <div className={burgerIngredientsCard.priceWrapper}>
+          <p className={`text_type_digits-default ${burgerIngredientsCard.textWrapper}`}>
+              {this.props.ingredient.price}
+          </p>
+          <div className={burgerIngredientsCard.logoWrapper}>
+            <CurrencyIcon type="primary" style={{display: 'block', marginLeft: '100px'}}/>
+          </div>
+        </div>
         <p className="text text_type_main-small">
             {this.props.ingredient.name}
         </p>

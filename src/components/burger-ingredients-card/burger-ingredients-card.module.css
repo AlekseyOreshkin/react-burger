@@ -1,4 +1,20 @@
 .main {
-    width: 272px;
+    width: 240px;
     display: block;
+    margin: 0 10px;
+}
+
+.priceWrapper{
+    display: flex;
+    padding: 0 0 10px 0;
+    margin: 0;
+    justify-content: center;
+}
+.textWrapper{
+    display: inline-block;
+    margin: 0;
+}
+.logoWrapper {
+    display: inline-block;
+    margin-left: 4px;
 }

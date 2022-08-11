@@ -211,4 +211,33 @@ export const IngredientsData = [
        "__v":0
     }
  ];
+
+ export const SelectedIngredients = 
+ [
+   { 
+      "_id":"60666c42cc7b410027a1a9b1", 
+      "type": "top", 
+      "isLocked": "true"
+   }, 
+   { 
+      "_id":"60666c42cc7b410027a1a9b9",
+   },
+   { 
+      "_id":"60666c42cc7b410027a1a9b4",
+   },
+   { 
+      "_id":"60666c42cc7b410027a1a9bc",
+   },
+   { 
+      "_id":"60666c42cc7b410027a1a9bb",
+   },
+   { 
+      "_id":"60666c42cc7b410027a1a9bb",
+   },
+   {
+       "_id":"60666c42cc7b410027a1a9b1",
+        "type": "bottom",
+         "isLocked": "true"
+   }
+];
  

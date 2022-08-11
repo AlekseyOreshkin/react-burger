@@ -9,6 +9,7 @@
   background-position: 50%;
   display: flex;
   justify-content: left;
+  align-content: center;
 }
 .rightItems{
   display: flex;

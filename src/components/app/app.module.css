@@ -1,4 +1,4 @@
 .staticText {
   grid-area: static-text;
-  align-self: end;
+  display: block;
 }

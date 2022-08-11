@@ -17,10 +17,12 @@ class AppHeaderButton extends React.Component {
   render() {
     return (
         <Button type="secondary" size="medium" >
-            {this.getIcon(this.props.icon)}
-            <span className="text text_type_main-default">
-                {this.props.children}
-            </span>
+            <div className={buttonStyles.main}>
+                <p className={buttonStyles.iconWrapper} >{this.getIcon(this.props.icon)}</p>
+                <p className={`text text_type_main-default ${buttonStyles.textWrapper}`}>
+                    {this.props.children}
+                </p>
+            </div>
         </Button>
     );
   }

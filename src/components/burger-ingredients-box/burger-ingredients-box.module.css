@@ -1,10 +1,10 @@
 .main {
     position: absolute;
-    width: 600px;
+    width: 576px;
     top: 246px;
     bottom: 40px;
     padding-top: 48px;
-    display: flexbox;
+    display: flex;
     flex-direction: column;
     overflow-y: scroll;
 

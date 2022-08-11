@@ -10,7 +10,7 @@ class App extends React.Component {
     return (
       <div className='main-grid'>
         <AppHeader />
-        <p className={`${appStyles.staticText} text text_type_main-large`}>Соберите бургер</p>
+        <p className={`text_type_main-large ${appStyles.staticText}`}>Соберите бургер</p>
         <BurgerIngredients />
         <BurgerConstructor />
       </div>
