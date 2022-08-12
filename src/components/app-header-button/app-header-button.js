@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import buttonStyles from './app-header-button.module.css';
 import { Button, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -26,6 +27,12 @@ class AppHeaderButton extends React.Component {
         </Button>
     );
   }
-}
+};
+
+AppHeaderButton.propTypes = {
+    icon: PropTypes.string.isRequired,
+    children: PropTypes.string.isRequired
+};
+
 
 export default AppHeaderButton;

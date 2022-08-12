@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -22,5 +23,7 @@ class BurgerIngredientsCard extends React.Component {
     );
   }
 }
-
+BurgerIngredientsCard.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+};
 export default BurgerIngredientsCard;
