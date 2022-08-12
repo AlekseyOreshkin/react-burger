@@ -5,8 +5,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.topBun {
+    padding-right: 0px;
+}
+.bottomBun {
+    padding-right: 0px;
+}
+.ingredients {
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 10px 10px 10px 0;
+    margin-bottom: 10px;
 }
 .ingredientWrapper {
+    width: 100%;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+.dragIconWrapper {
+    padding-right: 4px;
 }

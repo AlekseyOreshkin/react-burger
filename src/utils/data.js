@@ -213,31 +213,16 @@ export const IngredientsData = [
  ];
 
  export const SelectedIngredients = 
- [
-   { 
-      "_id":"60666c42cc7b410027a1a9b1", 
-      "type": "top", 
-      "isLocked": "true"
-   }, 
-   { 
-      "_id":"60666c42cc7b410027a1a9b9",
-   },
-   { 
-      "_id":"60666c42cc7b410027a1a9b4",
-   },
-   { 
-      "_id":"60666c42cc7b410027a1a9bc",
-   },
-   { 
-      "_id":"60666c42cc7b410027a1a9bb",
-   },
-   { 
-      "_id":"60666c42cc7b410027a1a9bb",
-   },
-   {
-       "_id":"60666c42cc7b410027a1a9b1",
-        "type": "bottom",
-         "isLocked": "true"
-   }
-];
+ {
+   "top":"60666c42cc7b410027a1a9b1",
+   "bottom":"60666c42cc7b410027a1a9b1",
+   "middle":
+      [
+         "60666c42cc7b410027a1a9b9",
+         "60666c42cc7b410027a1a9b4",
+         "60666c42cc7b410027a1a9bc",
+         "60666c42cc7b410027a1a9bb",
+         "60666c42cc7b410027a1a9bb",
+      ]
+};
  
