@@ -7,3 +7,6 @@
     align-items: center;
     overflow-y: scroll;
 }
+.ingredientWrapper {
+    margin-bottom: 10px;
+}

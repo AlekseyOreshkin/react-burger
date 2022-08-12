@@ -6,7 +6,7 @@ class BurgerIngredientsCategory extends React.Component {
   render() {
     return (
     <div  className={burgerIngredientsCategory.main}>
-        <p className="text text_type_main-medium" style={{width: '100%'}}>
+        <p className={`text text_type_main-medium ${burgerIngredientsCategory.textWrapper}`}>
             {this.props.type === 'bun' ? 'Булки' 
             : this.props.type === 'main' ? 'Начинки'
             : 'Соусы'}

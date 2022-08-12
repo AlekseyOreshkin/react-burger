@@ -9,3 +9,9 @@
     margin-right: 16px;
     margin-bottom: 52px;
 }
+.iconWrapper {
+    padding-left: 9.5px;
+}
+.buttonWrapper {
+    padding: '0  16px 0 40px';
+}

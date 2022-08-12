@@ -8,11 +8,11 @@ class BurgerConstructorList extends React.Component {
     return (
     <div className={`${burgerConstructorListStyles.main} scrollable`}>
         {SelectedIngredients.map((ingredient, index) => {
-            let data = IngredientsData.find(d => d._id === ingredient._id);
+            const data = IngredientsData.find(d => d._id === ingredient._id);
             return (
               data && 
-                <div style={{marginBottom: '10px'}}>
-                  <ConstructorElement key={index}
+                <div className={burgerConstructorListStyles.ingredientWrapper} key={index}>
+                  <ConstructorElement
                     type={ingredient.type}
                     isLocked={ingredient.isLocked}
                     text={data.name}

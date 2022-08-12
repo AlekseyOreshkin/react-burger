@@ -12,7 +12,7 @@ class BurgerIngredientsCard extends React.Component {
               {this.props.ingredient.price}
           </p>
           <div className={burgerIngredientsCard.logoWrapper}>
-            <CurrencyIcon type="primary" style={{display: 'block', marginLeft: '100px'}}/>
+            <CurrencyIcon type="primary" />
           </div>
         </div>
         <p className="text text_type_main-small">

@@ -9,10 +9,10 @@ class BurgerConstructorSubmit extends React.Component {
       <p className="text text_type_digits-medium">
         123 
       </p>
-      <div style={{paddingLeft: '9.5px'}}>
+      <div className={burgerConstructorSubmitStyles.iconWrapper}>
         <CurrencyIcon type='primary' />
       </div>
-      <div style={{padding: '0  16px 0 40px'}}>
+      <div className={burgerConstructorSubmitStyles.buttonWrapper}>
         <Button type="primary" size="large" onClick={() => {}}>
             Оформить заказ
         </Button>

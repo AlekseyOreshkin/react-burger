@@ -8,9 +8,9 @@ class App extends React.Component {
   render() {
 
     return (
-      <div className='main-grid'>
+      <div className='main-grid' style={{height: window.innerHeight}}>
         <AppHeader />
-        <p className={`text_type_main-large ${appStyles.staticText}`}>Соберите бургер</p>
+        <h1 className={`text_type_main-large ${appStyles.staticText}`}>Соберите бургер</h1>
         <BurgerIngredients />
         <BurgerConstructor />
       </div>
