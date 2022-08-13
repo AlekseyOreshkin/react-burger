@@ -3,11 +3,11 @@ import burgerConstructorListStyles from './burger-constructor-list.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import {SelectedIngredients, IngredientsData} from '../../utils/data'
 
-class BurgerConstructorList extends React.Component {
-  render() {
-    const topData = IngredientsData.find(d => d._id === SelectedIngredients.top);
-    const bottomData = IngredientsData.find(d => d._id === SelectedIngredients.bottom);
-    return (
+const BurgerConstructorList = () => {
+  const topData = IngredientsData.find(d => d._id === SelectedIngredients.top);
+  const bottomData = IngredientsData.find(d => d._id === SelectedIngredients.bottom);
+  
+  return (
     <div className={burgerConstructorListStyles.main}>
         <div className={burgerConstructorListStyles.topBun}>
           <ConstructorElement
@@ -44,8 +44,7 @@ class BurgerConstructorList extends React.Component {
             price={bottomData.price}/>
         </div>
     </div>
-    );
-  }
-}
+  );
+};
 
 export default BurgerConstructorList;

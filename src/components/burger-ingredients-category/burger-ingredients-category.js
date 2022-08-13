@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import burgerIngredientsCategory from './burger-ingredients-category.module.css';
 
 
-class BurgerIngredientsCategory extends React.Component {
-  getName() {
-    switch(this.props.type) {
+const BurgerIngredientsCategory = ({type, children}) => {
+  const getName = type => {
+    switch(type) {
       case 'bun':
         return 'Булки';
       case 'main':
@@ -15,17 +15,17 @@ class BurgerIngredientsCategory extends React.Component {
     }
 
   }
-  render() {
-    return (
+
+  return (
     <div  className={burgerIngredientsCategory.main}>
         <p className={`text text_type_main-medium ${burgerIngredientsCategory.textWrapper}`}>
-            {this.getName()}
+            {getName(type)}
         </p>
-        {this.props.children}
+        {children}
     </div>
-    );
-  }
-}
+  );
+};
+
 BurgerIngredientsCategory.propTypes = {
   type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
   children: PropTypes.arrayOf(PropTypes.element.isRequired).isRequired

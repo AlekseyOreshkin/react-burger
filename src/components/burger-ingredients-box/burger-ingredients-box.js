@@ -5,10 +5,8 @@ import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ing
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 
-
-class BurgerIngredientsBox extends React.Component {
-  render() {
-    return (
+const BurgerIngredientsBox = () => {
+  return (
     <div  className={`${burgerIngredientsBox.main} scrollable`}>
         {IngredientsCategories.map((cat, index) => (
             <BurgerIngredientsCategory type={cat} key={index} > 
@@ -18,8 +16,7 @@ class BurgerIngredientsBox extends React.Component {
             </BurgerIngredientsCategory>
         ))}
     </div>
-    );
-  }
+  );
 }
 
 export default BurgerIngredientsBox;

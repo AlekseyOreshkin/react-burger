@@ -4,15 +4,14 @@ import BurgerIngredientsTab from '../burger-ingredients-tab/burger-ingredients-t
 import BurgerIngredientsBox from '../burger-ingredients-box/burger-ingredients-box'
 
 
-class BurgerIngredients extends React.Component {
-  render() {
-    return (
-    <div  className={burgerIngredients.main}>
-        <BurgerIngredientsTab />
-        <BurgerIngredientsBox />
-    </div>
-    );
-  }
+const BurgerIngredients = () => {
+  return (
+  <div  className={burgerIngredients.main}>
+      <BurgerIngredientsTab />
+      <BurgerIngredientsBox />
+  </div>
+  );
 }
+
 
 export default BurgerIngredients;

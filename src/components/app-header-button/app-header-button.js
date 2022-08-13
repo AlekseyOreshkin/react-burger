@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import buttonStyles from './app-header-button.module.css';
 import { Button, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-class AppHeaderButton extends React.Component {
-    getIcon = (icon) =>
+const AppHeaderButton = ({icon, text}) => {
+    const getIcon = (icon) =>
     {
         if (icon === 'burger') {
             return (<BurgerIcon type="primary" />);
@@ -15,23 +15,21 @@ class AppHeaderButton extends React.Component {
         }
         return null; 
     }
-  render() {
     return (
         <Button type="secondary" size="medium" >
             <div className={buttonStyles.main}>
-                <p className={buttonStyles.iconWrapper} >{this.getIcon(this.props.icon)}</p>
+                <p className={buttonStyles.iconWrapper} >{getIcon(icon)}</p>
                 <p className={`text text_type_main-default ${buttonStyles.textWrapper}`}>
-                    {this.props.children}
+                    {text}
                 </p>
             </div>
         </Button>
     );
-  }
 };
 
 AppHeaderButton.propTypes = {
     icon: PropTypes.string.isRequired,
-    children: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired
 };
 
 

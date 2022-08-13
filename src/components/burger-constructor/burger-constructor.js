@@ -3,15 +3,14 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 import BurgerConstructorList from '../burger-constructor-list/burger-constructor-list';
 import BurgerConstructorSubmit from '../burger-constructor-submit/burger-constructor-submit';
 
-class BurgerConstructor extends React.Component {
-  render() {
-    return (
-    <div className={burgerConstructorStyles.main}>
-      <BurgerConstructorList />
-      <BurgerConstructorSubmit />
-    </div>
-    );
-  }
+const BurgerConstructor = () => {
+  return (
+  <div className={burgerConstructorStyles.main}>
+    <BurgerConstructorList />
+    <BurgerConstructorSubmit />
+  </div>
+  );
 }
+
 
 export default BurgerConstructor;
