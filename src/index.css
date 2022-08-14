@@ -1,55 +1,9 @@
-
-body {
-  background: #131316;
+@font-face {
+  font-family: 'Spectral';
+  src: url("./fonts/spectral.woff") format("woff");
 }
 
-.main-grid {
-  display: grid;
-  height: 800px;
-  grid-template-columns: 1fr  [left-border-line] 600px [center-line] 600px [right-border-line] 1fr;
-  grid-template-rows: [top-line] 88px [nav-bottom-lie] 100px [container-top-line] auto [container-bottom-line] 40px [bottom-line];
-  grid-template-areas: 
-    ". header header ."
-    ". static-text . ."
-    ". ingredients constructor ."
-    "footer footer footer footer";
-  
-  justify-items: stretch;
-  align-items: stretch;
-  justify-content: stretch;
-  align-content: stretch;
-}
-
-.scrollable::-webkit-scrollbar {
-  width: 8px;
-}
-
-.scrollable::-webkit-scrollbar-track {
-  background: #2F2F37;
-}
-
-.scrollable::-webkit-scrollbar-thumb {
-  background: #8585AD;
-}
-
-.scrollable::-webkit-scrollbar-thumb:hover {
-  background: #4C4CFF;
-}
-
-.modal-grid {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-columns: 40px 1fr 40px;
-  grid-template-rows: 100px 1fr 60px;
-
-  grid-template-areas: 
-    ". header ."
-    ". content ."
-    ". footer .";
-  
-  justify-items: stretch;
-  align-items: stretch;
-  justify-content: stretch;
-  align-content: stretch;
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url("./fonts/ibm-plex-sans.woff") format("woff");
 }
