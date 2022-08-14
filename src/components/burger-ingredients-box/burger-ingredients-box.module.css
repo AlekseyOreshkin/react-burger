@@ -1,0 +1,9 @@
+.main {
+    height: 500px;
+    padding-top: 48px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+

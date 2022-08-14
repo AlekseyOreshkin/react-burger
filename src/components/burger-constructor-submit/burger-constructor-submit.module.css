@@ -1,0 +1,18 @@
+.main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    margin-top: 48px;
+    margin-right: 16px;
+    margin-bottom: 52px;
+}
+.iconWrapper {
+    padding: 0 9.5px;
+}
+.buttonWrapper {
+    padding: '0  16px 0 40px';
+    margin-right: 16px;
+}

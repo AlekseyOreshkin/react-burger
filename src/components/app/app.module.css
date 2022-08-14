@@ -1,5 +1,3 @@
-.app {
-  width: 100%;
-  margin: 0 auto;
+.staticText {
+  grid-area: static-text;
 }
-
