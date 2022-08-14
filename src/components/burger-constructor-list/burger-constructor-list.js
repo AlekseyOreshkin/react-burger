@@ -1,11 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import burgerConstructorListStyles from './burger-constructor-list.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {SelectedIngredients, IngredientsData} from '../../utils/data'
 
-const BurgerConstructorList = () => {
-  const topData = IngredientsData.find(d => d._id === SelectedIngredients.top);
-  const bottomData = IngredientsData.find(d => d._id === SelectedIngredients.bottom);
+const BurgerConstructorList = ({data}) => {
+  if (!data || data.length === 0) {
+    return (<p>Конструктор пуст</p>);
+  }
+  const IngredientsData = data;
+  const topData = IngredientsData.find(d => d.type === 'bun');
+  const bottomData = topData;
+  const SelectedIngredients = IngredientsData.filter(d => d.type !== 'bun');
   
   return (
     <div className={burgerConstructorListStyles.main}>
@@ -18,11 +23,10 @@ const BurgerConstructorList = () => {
             price={topData.price}/>
         </div>
         <div className={`${burgerConstructorListStyles.ingredients} scrollable`}>
-            {SelectedIngredients.middle.map((id, index) => {
-                const data = IngredientsData.find(d => d._id === id);
+            {SelectedIngredients.map((data, index) => {
                 return (
                   data && 
-                    <div className={burgerConstructorListStyles.ingredientWrapper} key={index}>
+                    <div className={burgerConstructorListStyles.ingredientWrapper} key={data._id}>
                       <div className={burgerConstructorListStyles.dragIconWrapper}>
                         <DragIcon />
                       </div>
@@ -45,6 +49,11 @@ const BurgerConstructorList = () => {
         </div>
     </div>
   );
+};
+
+
+BurgerConstructorList.propTypes = {
+  data: PropTypes.array
 };
 
 export default BurgerConstructorList;

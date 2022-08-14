@@ -2,6 +2,10 @@
     width: 240px;
     display: block;
     margin: 0 10px;
+    cursor: pointer;
+}
+.main:hover {
+    margin-top: 2px;;
 }
 
 .priceWrapper{
