@@ -6,7 +6,7 @@ const detailsAccessors = [
     { name: 'Калории,ккал', accsessor: 'calories'},
     { name: 'Белки, г', accsessor: 'proteins'},
     { name: 'Жиры, г', accsessor: 'fat'},
-    { name: 'Углеводы, г', accsessor: 'carbohydrates'},
+    { name: 'Углеводы, г', accsessor: 'carbohydrates'}
 ]
 
 const BurgerIngredientsModalDetails = ({ingredient}) => {
