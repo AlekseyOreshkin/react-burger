@@ -1,24 +1,34 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import PropType from 'prop-types';
 import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import useEscapeKey from '../../hooks/use-escape-key';
 
 
 const Modal = (props) => {
 
-    const closeModal = () => {
-       if (props.isShowing) {
+    const isOpen = props.isShowing 
+
+    const closeModal = useCallback(() => {
+       if (isOpen) {
         props.toggle();
        }
-    }
-    
-    useEscapeKey(() => {
-        console.log('Escape pressed');
-        closeModal();
     });
+
+    useEffect(() => {
+        function closeByEscape(evt) {
+            if(evt.key === 'Escape') {
+                closeModal();
+            }
+        }
+        if(isOpen) {
+            document.addEventListener('keydown', closeByEscape);
+            return () => {
+                document.removeEventListener('keydown', closeByEscape);
+            }
+        }
+    }, [isOpen, closeModal]) 
 
     const renderHeader = (text) => {
         return (<>
