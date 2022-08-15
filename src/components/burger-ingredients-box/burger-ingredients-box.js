@@ -7,13 +7,12 @@ import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients
 
 
 const BurgerIngredientsBox = ({ data }) => {
-  const IngredientsData = data;
   return (
     <div  className={`${burgerIngredientsBox.main} scrollable`}>
         {IngredientsCategories.map((cat, index) => (
             <BurgerIngredientsCategory type={cat} key={index} > 
-                {IngredientsData.filter(ing => ing.type === cat).map((ing, index) => (
-                    <BurgerIngredientsCard key={index} ingredient={ing} />
+                {data.filter(ing => ing.type === cat).map((ing, index) => (
+                    <BurgerIngredientsCard key={ing._id} ingredient={ing} />
                 ))}
             </BurgerIngredientsCategory>
         ))}
@@ -22,7 +21,7 @@ const BurgerIngredientsBox = ({ data }) => {
 }
 
 BurgerIngredientsBox.propTypes = {
-  data: PropTypes.any // PropTypes.arrayof(PropTypes.object.isRequired).isRequired
+  data: PropTypes.array.isRequired
 };
 
 export default BurgerIngredientsBox;

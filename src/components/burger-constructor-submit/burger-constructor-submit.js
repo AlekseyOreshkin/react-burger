@@ -1,7 +1,7 @@
 import React from 'react';
 import burgerConstructorSubmitStyles from './burger-constructor-submit.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import useModal from '../modal/use-modal';
+import useModal from '../../hooks/use-modal';
 import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
 

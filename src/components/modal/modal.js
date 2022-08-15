@@ -4,7 +4,7 @@ import PropType from 'prop-types';
 import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import useEscapeKey from './use-escape-key';
+import useEscapeKey from '../../hooks/use-escape-key';
 
 
 const Modal = (props) => {

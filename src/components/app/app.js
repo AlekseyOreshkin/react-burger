@@ -3,7 +3,7 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { IngredientsUrl } from '../../utils/constants';
+import { INGREDIENTS_URL } from '../../utils/constants';
 
 const App = () => {
 
@@ -11,8 +11,14 @@ const App = () => {
   
   useEffect(() => {
     console.log('Загрузка ингредиентов');
-    fetch(IngredientsUrl)
-      .then(response => response.json())
+    fetch(INGREDIENTS_URL)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка ${response.status}`);
+        
+      })
       .then(({success, data}) => {
         if (success) {
           console.log(`Загружено ингредиентов: ${data.length}`);
@@ -24,7 +30,7 @@ const App = () => {
         console.log(`Ошибка выполнения запроса: ${error}`);
       });
 
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className='main-grid' >
       <AppHeader />

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import useModal from '../modal/use-modal';
+import useModal from '../../hooks/use-modal';
 import Modal from '../modal/modal';
 import BurgerIngredientsModalDetails from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
 
