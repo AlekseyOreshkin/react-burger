@@ -31,5 +31,7 @@ const BurgerIngredientsCard = ({ ingredient, ingredientRef, showDetails }) => {
 
 BurgerIngredientsCard.propTypes = {
   ingredient: PropTypes.object.isRequired,
+  ingredientRef: PropTypes.object.isRequired,
+  showDetails: PropTypes.func.isRequired
 };
 export default BurgerIngredientsCard;
