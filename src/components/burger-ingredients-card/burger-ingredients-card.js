@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import useModal from '../../hooks/use-modal';
-import Modal from '../modal/modal';
-import BurgerIngredientsModalDetails from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
 
-const BurgerIngredientsCard = ({ ingredient }) => {
 
-  const showDetails = useModal();
-
+const BurgerIngredientsCard = ({ ingredient, ingredientRef, showDetails }) => {
+  
+  const popupDetails = () => {
+    ingredientRef.current = ingredient;
+    showDetails();
+  }
+  
   return (<>
-    <div  className={burgerIngredientsCard.main} onClick={showDetails.toggle}>
+    <div  className={burgerIngredientsCard.main} onClick={popupDetails}>
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={burgerIngredientsCard.priceWrapper}>
           <p className={`text_type_digits-default ${burgerIngredientsCard.textWrapper}`}>
@@ -25,9 +26,6 @@ const BurgerIngredientsCard = ({ ingredient }) => {
             {ingredient.name}
         </p>
     </div>
-    <Modal  headerText='Детали ингредиента' {...showDetails} >
-        <BurgerIngredientsModalDetails ingredient={ingredient} />
-    </Modal>
   </>);
 };
 

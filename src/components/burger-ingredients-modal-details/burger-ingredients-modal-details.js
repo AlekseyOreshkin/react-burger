@@ -28,7 +28,7 @@ const BurgerIngredientsModalDetails = ({ingredient}) => {
 };
 
 BurgerIngredientsModalDetails.propTypes = {
-    ingredient : PropTypes.object.isRequired
+    ingredient : PropTypes.object
 }
 
 export default BurgerIngredientsModalDetails;

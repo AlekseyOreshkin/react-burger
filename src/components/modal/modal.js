@@ -14,7 +14,7 @@ const Modal = (props) => {
        if (isOpen) {
         props.toggle();
        }
-    });
+    }, [isOpen, props]);
 
     useEffect(() => {
         function closeByEscape(evt) {
