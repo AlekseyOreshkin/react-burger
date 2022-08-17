@@ -1,8 +1,7 @@
 .nav {
-  width: calc(100% + 80px);
+  width: 100%;
   margin-top: 0;
   margin-bottom: 0;
-  margin-left: -40px;
   margin-right: auto;
   grid-area: header;
   background-repeat: no-repeat;

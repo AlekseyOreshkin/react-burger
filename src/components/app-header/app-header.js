@@ -6,7 +6,7 @@ import AppHeaderButton from '../app-header-button/app-header-button';
 const AppHeader = () => {
   return (
     <header className={headerStyles.nav} style={{backgroundImage: `url(${logoPath})`}}>
-      <AppHeaderButton icon='burger' text='Конструктор' />
+      <AppHeaderButton icon='burger' text='Конструктор' active={true}/>
       <AppHeaderButton icon='list' text='Лента заказов' />
       <div className={headerStyles.rightItems}>
         <AppHeaderButton icon='profile' text='Личный кабинет' />
