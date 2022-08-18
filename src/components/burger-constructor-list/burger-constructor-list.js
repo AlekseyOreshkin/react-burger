@@ -3,8 +3,7 @@ import burgerConstructorListStyles from './burger-constructor-list.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { isValidIngredientsData, isValidConstructorData } from '../../utils/validation';
 
-import { ConstructorContext } from '../app/constructor-context';
-import { IngredientsContext } from '../app/ingredients-context';
+import { ConstructorContext, IngredientsContext } from '../../contexts/contexts';
 
 const BurgerConstructorList = () => {
 

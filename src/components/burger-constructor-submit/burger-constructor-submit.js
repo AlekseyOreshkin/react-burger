@@ -5,38 +5,20 @@ import useModal from '../../hooks/use-modal';
 import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
 import { isValidIngredientsData, isValidConstructorData } from '../../utils/validation';
-import { ORDER_REQUEST_URL } from '../../utils/constants';
+import { ORDER_REQUEST_ENDPOINT } from '../../utils/constants';
+import { request } from '../../utils/request';
+import { reducer, initialState } from './reduser';
+import { SET_ORDER, SET_PRICE, RESET } from '../../actions/actions';
 
-import { ConstructorContext } from '../app/constructor-context';
-import { IngredientsContext } from '../app/ingredients-context';
+import { ConstructorContext, IngredientsContext } from '../../contexts/contexts';
 
-function calc(selectedIngredients) {
-  return selectedIngredients?.map(o => Number(o.price)).reduce((prev, curr) => prev + curr);
-}
-
-const initialState = { ingredients: [], price: 0, order: '', name: '' };
-
-function reducer (state, action)  {
-  switch(action.type)
-  {
-    case 'set_order':
-      return {
-          ...state,
-          order: action.order,
-          name: action.name
-      };
-      case 'set_price':
-        return {
-            ...state,
-            ingredients: action.ingredients.map(o => o._id),
-            price: calc(action.ingredients)
-        };
-      case 'reset':
-      return initialState;
-    default:
-      throw Error(`Unknonw actiontype ${action.type}`);
+const orderRequestParams = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
   }
 };
+
 
 const BurgerConstructorSubmit = () => {
 
@@ -48,50 +30,37 @@ const BurgerConstructorSubmit = () => {
   const makeOrder = useModal();
 
   useEffect( () => {
-    dispatch({type: 'reset'});
+    dispatch({type: RESET});
   }, []);
+  
 
   useEffect( () => {
       if (!isValidIngredientsData(ingredientsData) || !isValidConstructorData(constructorData)) {
-        dispatch({type: 'reset'});
+        dispatch({type: RESET});
       }
       else {
         const selectedBun = ingredientsData.find(o => o._id === constructorData.bun);
-        const selectedIngredients = ingredientsData.filter(o => constructorData.ingredients.includes(o._id));
-          dispatch({type: 'set_price', ingredients: [...selectedIngredients, selectedBun, selectedBun]});
+        const selectedIngredients = [...(ingredientsData.filter(o => constructorData.ingredients.includes(o._id))), selectedBun, selectedBun];
+        const price = selectedIngredients.map(o => Number(o.price)).reduce((prev, curr) => prev + curr);
+        dispatch({type: SET_PRICE, ingredients: selectedIngredients.map(o => o._id), price: price} );
       }
-    }, [ingredientsData, constructorData]
-  );
+    }, [ingredientsData, constructorData] 
+  ); 
   
   
   const requestOrder = () => {
-    console.log('Запрос заказа');
-    fetch(ORDER_REQUEST_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ingredients: state.ingredients
-        })
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Ошибка ${response.status}`);
-      })
-      .then(({ name, order: {number}, success }) => {
-        if (success) {
-          console.log(`Получен номер заказа: ${number}, Название: ${name}`);
-          dispatch({type: 'set_order', order: String(number), name: name});
-          makeOrder.toggle();
-        } else {
-          console.log('Неизвестный ответ сервера. Пока без обработки');
-        }
-      }).catch(error => {
-        console.log(`Ошибка выполнения запроса: ${error}`);
-      });
+    const params = {...orderRequestParams, body: JSON.stringify({ingredients: state.ingredients})};
+    request(ORDER_REQUEST_ENDPOINT, params)
+    .then(([result, { name, order: {number}, success }]) => {
+      if (result && success) {
+        console.log(`Получен номер заказа: ${number}, Название: ${name}`);
+        dispatch({type: SET_ORDER, order: String(number), name: name});
+        makeOrder.toggle();
+      } else {
+        console.log('Ошибка выполнения запроса');}})
+    .catch(([ ,error]) => {
+      console.log(`Ошибка выполнения запроса ${error}`);
+    });
   };
 
   return (

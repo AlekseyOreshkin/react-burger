@@ -3,9 +3,9 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { ConstructorContext } from './constructor-context';
-import { IngredientsContext } from './ingredients-context';
-import { INGREDIENTS_URL } from '../../utils/constants';
+import { ConstructorContext, IngredientsContext } from '../../contexts/contexts';
+import { INGREDIENTS_ENDPOINT } from '../../utils/constants';
+import { request } from '../../utils/request';
 
 const initialConstructorData = { bun: '',  ingredients: []};
 const initialIngredientsData = [];
@@ -28,26 +28,17 @@ const App = () => {
   
   useEffect(() => {
     console.log('Загрузка ингредиентов');
-    fetch(INGREDIENTS_URL)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`Ошибка ${response.status}`);
-        
-      })
-      .then(({success, data}) => {
-        if (success) {
-          console.log(`Загружено ингредиентов: ${data.length}`);
-          setIngredientsData(data);
-          setConstructorData(getConstructorData(data));
-        } else {
-          console.log('Неизвестный ответ сервера. Пока без обработки');
-        }
-      }).catch(error => {
-        console.log(`Ошибка выполнения запроса: ${error}`);
-      });
-
+    request(INGREDIENTS_ENDPOINT).then(([result, {success, data}]) => {
+      if (result && success) {
+        console.log(`Загружено ингредиентов: ${data.length}`);
+        setIngredientsData(data);
+        setConstructorData(getConstructorData(data));
+      } else {
+        console.log('Неизвестный ответ сервера. Пока без обработки');
+      }
+    }).catch(([ ,error]) => {
+      console.log(`Ошибка выполнения запроса ${error}`);
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className='main-grid' >

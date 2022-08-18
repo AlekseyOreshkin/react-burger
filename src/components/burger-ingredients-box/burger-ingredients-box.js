@@ -5,13 +5,12 @@ import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients
 import useModal from '../../hooks/use-modal';
 import Modal from '../modal/modal';
 import BurgerIngredientsModalDetails from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
-import { IngredientsContext } from '../app/ingredients-context';
-
-const ingredientsCategories = ['bun', 'main', 'sauce'];
+import { IngredientCategoriesContext, IngredientsContext } from '../../contexts/contexts';
 
 const BurgerIngredientsBox = () => {
   
   const [ingregientsData, ] = useContext(IngredientsContext);
+  const [ingredientsCategories, ] = useContext(IngredientCategoriesContext);
   const ingredientRef = useRef(null);
   const showModal = useModal();
   const handleShowDetails = () => {
@@ -20,7 +19,7 @@ const BurgerIngredientsBox = () => {
 
   return (<>
     <div  className={`${burgerIngredientsBox.main} scrollable`}>
-        {ingredientsCategories.map((cat, index) => (
+        {Array.from(ingredientsCategories.types).map((cat, index) => (
             <BurgerIngredientsCategory type={cat} key={index} > 
                 {ingregientsData.filter(ing => ing.type === cat).map((ing) => (
                     <BurgerIngredientsCard key={ing._id} ingredient={ing} ingredientRef={ingredientRef} showDetails={handleShowDetails}/>
