@@ -1,6 +1,8 @@
 .main {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    background-color: transparent;
+    border: none;
 }
 .iconWrapper {
     display: inline-block;
@@ -8,5 +10,9 @@
 }
 .textWrapper {
     display: inline-block;
-    color: #F2F2F3;;
+    color: #8585AD;
+}
+
+.active {
+    color: #F2F2F3;
 }

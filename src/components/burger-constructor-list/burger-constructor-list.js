@@ -1,16 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import burgerConstructorListStyles from './burger-constructor-list.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { isValidIngredientsData, isValidConstructorData } from '../../utils/validation';
 
-const BurgerConstructorList = ({data}) => {
-  if (!data || data.length === 0) {
-    return (<p>Конструктор пуст</p>);
+import { ConstructorContext, IngredientsContext } from '../../contexts/contexts';
+
+const BurgerConstructorList = () => {
+
+  const [ingredientsData, ] = useContext(IngredientsContext);
+  const [constructorData, ] = useContext(ConstructorContext);
+  
+  if (!isValidIngredientsData(ingredientsData) || !isValidConstructorData(constructorData)) {
+    return null;
   }
-  const IngredientsData = data;
-  const topData = IngredientsData.find(d => d.type === 'bun');
+  const topData = ingredientsData.find(o => o._id === constructorData.bun);
   const bottomData = topData;
-  const SelectedIngredients = IngredientsData.filter(d => d.type !== 'bun');
+  const selectedIngredients = ingredientsData.filter(o => constructorData.ingredients.includes(o._id));
   
   return (
     <div className={burgerConstructorListStyles.main}>
@@ -23,7 +28,7 @@ const BurgerConstructorList = ({data}) => {
             price={topData.price}/>
         </div>
         <div className={`${burgerConstructorListStyles.ingredients} scrollable`}>
-            {SelectedIngredients.map((data, index) => {
+            {selectedIngredients.map((data) => {
                 return (
                   data && 
                     <div className={burgerConstructorListStyles.ingredientWrapper} key={data._id}>
@@ -51,9 +56,5 @@ const BurgerConstructorList = ({data}) => {
   );
 };
 
-
-BurgerConstructorList.propTypes = {
-  data: PropTypes.array.isRequired
-};
 
 export default BurgerConstructorList;

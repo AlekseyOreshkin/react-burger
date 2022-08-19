@@ -1,6 +1,10 @@
 
-const INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
+const BASE_URL = 'https://norma.nomoreparties.space/api';
+const INGREDIENTS_ENDPOINT = '/ingredients';
+const ORDER_REQUEST_ENDPOINT = '/orders';
 
 export {
-    INGREDIENTS_URL
+    BASE_URL,
+    INGREDIENTS_ENDPOINT,
+    ORDER_REQUEST_ENDPOINT
 };

@@ -1,25 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import burgerIngredientsCategory from './burger-ingredients-category.module.css';
-
+import {mapIngredientCategoryId, mapIngredientCategoryName} from '../../utils/map-ingredient-category-name';
 
 const BurgerIngredientsCategory = ({type, children}) => {
-  const getName = type => {
-    switch(type) {
-      case 'bun':
-        return 'Булки';
-      case 'main':
-        return 'Начинки';
-      default:
-        return 'Соусы';
-    }
-
-  }
 
   return (
-    <div  className={burgerIngredientsCategory.main}>
+    <div id={mapIngredientCategoryId(type)} className={burgerIngredientsCategory.main}>
         <p className={`text text_type_main-medium ${burgerIngredientsCategory.textWrapper}`}>
-            {getName(type)}
+            {mapIngredientCategoryName(type)}
         </p>
         {children}
     </div>

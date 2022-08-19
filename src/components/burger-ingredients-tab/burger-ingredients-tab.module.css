@@ -1,3 +1,7 @@
 .main {
+    margin-left: -12px;
     display: flex;
+}
+.tab {
+    padding: auto;
 }

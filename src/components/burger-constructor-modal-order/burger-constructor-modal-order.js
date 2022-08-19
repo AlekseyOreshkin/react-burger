@@ -4,11 +4,11 @@ import burgerConstrctorModelOrderStyles from './burger-constructor-modal-order.m
 import confirmImage from '../../images/modal-order/done.png';
 
 
-const BurgerConstrctorModelOrder = ({close}) => {
+const BurgerConstrctorModelOrder = ({order, close}) => {
 
     return (
         <div className={burgerConstrctorModelOrderStyles.main} >
-            <p className={`text text_type_digits-large ${burgerConstrctorModelOrderStyles.orderNumber}`}>034536</p>
+            <p className={`text text_type_digits-large ${burgerConstrctorModelOrderStyles.orderNumber}`}>{order}</p>
             <p className='text text_type_main-medium'>идентификатор заказа</p>
             <button className={burgerConstrctorModelOrderStyles.confirmButton}
                 style={{backgroundImage : `url(${confirmImage})`}} onClick={close} /> 
@@ -19,7 +19,8 @@ const BurgerConstrctorModelOrder = ({close}) => {
 };
 
 BurgerConstrctorModelOrder.propTypes = {
-    close : PropTypes.func.isRequired
+    order: PropTypes.string.isRequired,
+    close: PropTypes.func.isRequired
 }
 
 export default BurgerConstrctorModelOrder;

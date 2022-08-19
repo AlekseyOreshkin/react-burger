@@ -1,16 +1,16 @@
-import React, {useRef} from 'react';
-import PropTypes from 'prop-types';
+import React, {useRef, useContext} from 'react';
 import burgerIngredientsBox from './burger-ingredients-box.module.css';
-import { IngredientsCategories }  from '../../utils/data'
 import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ingredients-category';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 import useModal from '../../hooks/use-modal';
 import Modal from '../modal/modal';
 import BurgerIngredientsModalDetails from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
+import { IngredientCategoriesContext, IngredientsContext } from '../../contexts/contexts';
 
-
-const BurgerIngredientsBox = ({ data }) => {
+const BurgerIngredientsBox = () => {
   
+  const [ingregientsData, ] = useContext(IngredientsContext);
+  const [ingredientsCategories, ] = useContext(IngredientCategoriesContext);
   const ingredientRef = useRef(null);
   const showModal = useModal();
   const handleShowDetails = () => {
@@ -19,9 +19,9 @@ const BurgerIngredientsBox = ({ data }) => {
 
   return (<>
     <div  className={`${burgerIngredientsBox.main} scrollable`}>
-        {IngredientsCategories.map((cat, index) => (
+        {Array.from(ingredientsCategories.types).map((cat, index) => (
             <BurgerIngredientsCategory type={cat} key={index} > 
-                {data.filter(ing => ing.type === cat).map((ing, index) => (
+                {ingregientsData.filter(ing => ing.type === cat).map((ing) => (
                     <BurgerIngredientsCard key={ing._id} ingredient={ing} ingredientRef={ingredientRef} showDetails={handleShowDetails}/>
                 ))}
             </BurgerIngredientsCategory>
@@ -32,9 +32,5 @@ const BurgerIngredientsBox = ({ data }) => {
     </Modal>
   </>);
 }
-
-BurgerIngredientsBox.propTypes = {
-  data: PropTypes.array.isRequired
-};
 
 export default BurgerIngredientsBox;
