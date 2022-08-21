@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect }from 'react';
+import React, { useState, useContext, useEffect, createRef }from 'react';
 import burgerIngredients from './burger-ingredients.module.css';
-import BurgerIngredientsTab from '../burger-ingredients-tab/burger-ingredients-tab';
-import BurgerIngredientsBox from '../burger-ingredients-box/burger-ingredients-box';
+import { BurgerIngredientsTabs } from '../burger-ingredients-tabs/burger-ingredients-tabs';
+import { BurgerIngredientsBox } from '../burger-ingredients-box/burger-ingredients-box';
 import { IngredientsContext, IngredientCategoriesContext}  from '../../contexts/contexts';
 
-const initialState = {types: new Set(), active: '', ingredientsListRef: null};
+const initialState = {tabs: new Set(), active: '', catRefs: []};
 
 const BurgerIngredients = () => {
 
@@ -15,12 +15,15 @@ const BurgerIngredients = () => {
     let newState = initialState;
     let first = '';
     ingregientsData.map(i => i.type).forEach(t => {
-      if (!newState.types.has(t)) {
-        if (newState.types.size === 0) {
+      if (!newState.tabs.has(t)) {
+        if (newState.tabs.size === 0) {
           first = t;
         }
-        newState.types.add(t);
+        newState.tabs.add(t);
       }
+    });
+    newState.tabs.forEach(tab => {
+      newState.catRefs = [...newState.catRefs, {cat: tab, ref: createRef()}];
     });
     if (state.active.length > 0 && newState.types.has(state.active)) {
       newState.active = state.active;
@@ -34,7 +37,7 @@ const BurgerIngredients = () => {
   return (
   <div  className={burgerIngredients.main}>
     <IngredientCategoriesContext.Provider value={[state, setState]} >
-      <BurgerIngredientsTab />
+      <BurgerIngredientsTabs />
       <BurgerIngredientsBox />
     </IngredientCategoriesContext.Provider>
   </div>

@@ -14,7 +14,4 @@ export const mapIngredientCategoryName = (category, single = false) => {
     };
 };
 
-export const mapIngredientCategoryId = (category) => {
-    return `${category}_id`
-};
 

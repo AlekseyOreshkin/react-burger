@@ -19,8 +19,8 @@ const BurgerIngredientsBox = () => {
 
   return (<>
     <div  className={`${burgerIngredientsBox.main} scrollable`}>
-        {Array.from(ingredientsCategories.types).map((cat, index) => (
-            <BurgerIngredientsCategory type={cat} key={index} > 
+        {Array.from(ingredientsCategories.tabs).map((cat, index) => (
+            <BurgerIngredientsCategory type={cat} key={index} catRef={ingredientsCategories.catRefs.find(o => o.cat === cat).ref}> 
                 {ingregientsData.filter(ing => ing.type === cat).map((ing) => (
                     <BurgerIngredientsCard key={ing._id} ingredient={ing} ingredientRef={ingredientRef} showDetails={handleShowDetails}/>
                 ))}
@@ -33,4 +33,6 @@ const BurgerIngredientsBox = () => {
   </>);
 }
 
-export default BurgerIngredientsBox;
+export {
+   BurgerIngredientsBox
+};
