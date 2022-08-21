@@ -9,15 +9,15 @@ const BurgerIngredientsTabs = () => {
   
   const [state, setState] = useContext(IngredientCategoriesContext);
 
-  const setActive = useCallback((type, ref) => {
+  const setActive = useCallback((type) => {
     setState({...state, active: type});
-    ref.current.scrollIntoView({ behavior: "smooth" });
+    state.catRefs.find(o => o.cat === type).ref.current.scrollIntoView({ behavior: "smooth" });
   }, [state, setState]);
 
   return (
       <div className={burgerIngredientsTabsStyles.main}>
         {Array.from(state.tabs).map(t => (
-          <Tab value={t} key={t} active={t === state.active} onClick={(value) => {setActive(value, state.catRefs.find(o => o.cat === t).ref)}} className={burgerIngredientsTabsStyles.tab}>
+          <Tab value={t} key={t} active={t === state.active} onClick={(value) => {setActive(value)}} className={burgerIngredientsTabsStyles.tab}>
             {mapIngredientCategoryName(t)}
         </Tab>
         ))}
