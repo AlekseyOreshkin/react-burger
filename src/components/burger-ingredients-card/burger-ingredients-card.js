@@ -1,18 +1,22 @@
 import React from 'react';
+import { useDrag } from 'react-dnd/dist/hooks';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-const BurgerIngredientsCard = ({ ingredient, ingredientRef, showDetails }) => {
+const BurgerIngredientsCard = ({ ingredient, showDetails }) => {
   
-  const popupDetails = () => {
-    ingredientRef.current = ingredient;
-    showDetails();
-  }
+  const [{isDragging}, dragRef] = useDrag({
+    type: 'ingredient',
+    item: ingredient,
+    collect: monitor => ({
+      isDragging: monitor.isDragging()
+    })
+  });
   
-  return (<>
-    <div  className={burgerIngredientsCard.main} onClick={popupDetails}>
+  return (
+    !isDragging && (<div  className={burgerIngredientsCard.main} onClick={() => {showDetails(ingredient)}} ref={dragRef}>
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={burgerIngredientsCard.priceWrapper}>
           <p className={`text_type_digits-default ${burgerIngredientsCard.textWrapper}`}>
@@ -25,13 +29,12 @@ const BurgerIngredientsCard = ({ ingredient, ingredientRef, showDetails }) => {
         <p className="text text_type_main-small">
             {ingredient.name}
         </p>
-    </div>
-  </>);
+    </div>)
+  );
 };
 
 BurgerIngredientsCard.propTypes = {
   ingredient: PropTypes.object.isRequired,
-  ingredientRef: PropTypes.object.isRequired,
   showDetails: PropTypes.func.isRequired
 };
 export default BurgerIngredientsCard;

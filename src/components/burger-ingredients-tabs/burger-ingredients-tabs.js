@@ -1,31 +1,28 @@
-import React, { useCallback, useContext } from 'react';
+import React  from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import burgerIngredientsTabsStyles from './burger-ingredients-tabs.module.css';
 import {  Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { mapIngredientCategoryName } from '../../utils/map-ingredient-category-name';
-import { IngredientCategoriesContext } from '../../contexts/contexts';
+import { setActiveTab } from '../../services/actions/ingredients';
 
 
-const BurgerIngredientsTabs = () => {
+export const BurgerIngredientsTabs = () => {
   
-  const [state, setState] = useContext(IngredientCategoriesContext);
-
-  const setActive = useCallback((type) => {
-    setState({...state, active: type});
-    state.catRefs.find(o => o.cat === type).ref.current.scrollIntoView({ behavior: "smooth" });
-  }, [state, setState]);
+  const {activeTab, cats} = useSelector(state => ({activeTab: state.ingredients.activeTab, cats: state.ingredients.cats}));
+  const dispatch = useDispatch();
+  
+  const setActive = (type) => {
+    dispatch(setActiveTab(type));
+    console.log(type);
+  };
 
   return (
       <div className={burgerIngredientsTabsStyles.main}>
-        {Array.from(state.tabs).map(t => (
-          <Tab value={t} key={t} active={t === state.active} onClick={(value) => {setActive(value)}} className={burgerIngredientsTabsStyles.tab}>
-            {mapIngredientCategoryName(t)}
+        {cats.map(cat => (
+          <Tab value={cat.type} key={cat.type} active={cat.type === activeTab} onClick={(value) => {setActive(value)}} className={burgerIngredientsTabsStyles.tab}>
+            {cat.name}
         </Tab>
         ))}
       </div>
   );
 }
 
-
-export {
-  BurgerIngredientsTabs
-};

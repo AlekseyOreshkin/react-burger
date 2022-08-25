@@ -9,7 +9,7 @@ const detailsAccessors = [
     { name: 'Углеводы, г', accsessor: 'carbohydrates'}
 ]
 
-const BurgerIngredientsModalDetails = ({ingredient}) => {
+export const BurgerIngredientsModalDetails = ({ingredient}) => {
 
     return (
         <div className={burgerIngredientsModalDetailsStyles.main} >
@@ -30,5 +30,3 @@ const BurgerIngredientsModalDetails = ({ingredient}) => {
 BurgerIngredientsModalDetails.propTypes = {
     ingredient : PropTypes.object
 }
-
-export default BurgerIngredientsModalDetails;

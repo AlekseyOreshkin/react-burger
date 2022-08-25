@@ -5,4 +5,8 @@ export function isValidIngredientsData(ingredientsData) {
 export function isValidConstructorData(constructorData) {
     return constructorData?.bun?.length > 0 /*&& constructorData?.ingredients?.length > 0*/ ;
 };
+export function isBun(ingredient) {
+    return ingredient?.type === 'bun';
+ }
+ 
   
