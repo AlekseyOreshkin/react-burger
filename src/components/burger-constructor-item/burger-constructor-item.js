@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd/dist/hooks';
 import burgerConstructorItemStyles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { moveIngredients } from '../../services/actions/constructor';
+import { changeIngredients } from '../../services/actions/constructor';
 
 export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
 
-    const items = useSelector(state => state.constructor.items);
+  const {bun_id, ids} = useSelector(state => ({bun_id: state.constructor.bun, ids: state.constructor.items}));
 
     const dispatch = useDispatch();
     
@@ -32,11 +32,10 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
         return;
       }
 
-      const arr = [...items];
+      const arr = [...ids];
       const target_id = arr.splice(from.index, 1)[0];
       arr.splice(index > from.index ? index - 1: index, 0, target_id);
-      console.log(items, arr);
-      dispatch(moveIngredients(arr)); 
+      dispatch(changeIngredients(bun_id, arr)); 
     };
     
 

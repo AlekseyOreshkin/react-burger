@@ -2,25 +2,25 @@ import {
     GET_ORDER_REQUEST, 
     GET_ORDER_SUCCESS, 
     GET_ORDER_FAILED, 
-    ADD_INGREDIENT,
-    MOVE_INGREDIENTS
+    CHANGE_INGREDIENTS,
+    SET_PRICE
  } from '../actions/constructor';
 
 const initialConstructor = { bun: '',  items: [], price: 0};
 export const constructorReducer = (state = initialConstructor, action) => {
     switch (action.type)
     {
-        case ADD_INGREDIENT:
-            return {
-                ...state,
-                bun: action.isBun ? action.id : state.bun,
-                items: action.isBun ? state.items : state.items ? [...state.items, action.id] : [action.id]
-            };
-    case MOVE_INGREDIENTS:
+    case CHANGE_INGREDIENTS:
         return {
             ...state,
+            bun: action.bun,
             items: action.items
         };
+    case SET_PRICE:
+        return {
+            ...state,
+            price: action.price
+        }
     default:
         return state ?? initialConstructor;
     }

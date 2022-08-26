@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd/dist/hooks';
 import burgerConstructorListStyles from './burger-constructor-list.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import {addIngredient, moveIngredients} from '../../services/actions/constructor';
+import { setPrice, changeIngredients} from '../../services/actions/constructor';
 import { isBun } from '../../utils/validation';
 import {BurgerConstructorItem} from '../burger-constructor-item/burger-constructor-item';
 
@@ -21,14 +21,30 @@ const BurgerConstructorList = () => {
     }
   });
 
+  useEffect(() => {
+    const arr = ids ? [...ids] : [];
+    if (bun_id) {
+      arr.splice(0, 0, bun_id, bun_id);
+    }
+    const price = arr.map(id => (id ? Number(ingredients.find(o => o._id === id)?.price) : 0)).reduce((acc, price) => acc + price, 0);
+    dispatch(setPrice(price))
+  }, [bun_id, ids, ingredients, dispatch]);
+
   const onDropNewIngredientHandler = (item) => {
-    dispatch(addIngredient(item._id, isBun(item))); 
+    const items = ids ? [...ids] : [];
+    let bun = bun_id;
+    if (isBun(item)) {
+      bun = item._id;
+    } else {
+      items.splice(-1, 0, item._id);
+    }
+    dispatch(changeIngredients(bun, items)); 
   };
   
   const onRemoveIngredient = (index) => {
     let arr = [...ids];
     arr.splice(index, 1);
-    dispatch(moveIngredients(arr));
+    dispatch(changeIngredients(bun_id, arr));
   }
 
 
