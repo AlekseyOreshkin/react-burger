@@ -3,7 +3,7 @@ import {
     GET_ORDER_SUCCESS, 
     GET_ORDER_FAILED, 
     ADD_INGREDIENT,
-    REMOVE_INGREDIENT
+    MOVE_INGREDIENTS
  } from '../actions/constructor';
 
 const initialConstructor = { bun: '',  items: [], price: 0};
@@ -16,12 +16,12 @@ export const constructorReducer = (state = initialConstructor, action) => {
                 bun: action.isBun ? action.id : state.bun,
                 items: action.isBun ? state.items : state.items ? [...state.items, action.id] : [action.id]
             };
-        case REMOVE_INGREDIENT:
-            return {
-                ...state,
-                items: action.items
-            };
-            default:
+    case MOVE_INGREDIENTS:
+        return {
+            ...state,
+            items: action.items
+        };
+    default:
         return state ?? initialConstructor;
     }
 };

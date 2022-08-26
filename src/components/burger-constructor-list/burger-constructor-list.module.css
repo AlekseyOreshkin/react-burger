@@ -25,17 +25,3 @@
     margin-top: auto;
     margin-bottom: auto;
 }
-.ingredientWrapper {
-    width: 100%;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-
-}
-.ingredientWrapper:last-child {
-    margin-bottom: 0;
-}
-
-.dragIconWrapper {
-    padding-right: 4px;
-}

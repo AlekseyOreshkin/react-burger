@@ -8,7 +8,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 const BurgerIngredientsCard = ({ ingredient, showDetails }) => {
   
   const [{isDragging}, dragRef] = useDrag({
-    type: 'ingredient',
+    type: 'new_ingredient',
     item: ingredient,
     collect: monitor => ({
       isDragging: monitor.isDragging()
