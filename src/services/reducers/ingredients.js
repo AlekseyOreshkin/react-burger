@@ -42,14 +42,14 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
     }
 };
 
-const initialIngredientDetails = { ingredient: {}, show: false };
+const initialIngredientDetails = { id: '', show: false };
 
 export const ingredientDetailsReducer = (state = initialIngredientDetails, action) => {
     switch(action.type) {
         case SHOW_INGREDIENT_DETAILS:
             return {
                 ...state,
-                ingredient: action.ingredient,
+                id: action.id,
                 show: true
             };
         case HIDE_INGREDIENT_DETAILS:

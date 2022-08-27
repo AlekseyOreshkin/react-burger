@@ -39,7 +39,7 @@ const BurgerIngredientsBox = () => {
         {cats.map(cat => (<BurgerIngredientsCategory 
           key={cat.type} type={cat.type}/>))};
     </div>
-    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={() => dispatch(hideIngredientDetails())}>
+    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={() => showDetails && dispatch(hideIngredientDetails())}>
         <BurgerIngredientsModalDetails />
     </Modal>
   </>);

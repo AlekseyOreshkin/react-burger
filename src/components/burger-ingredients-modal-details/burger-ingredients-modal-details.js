@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import burgerIngredientsModalDetailsStyles from './burger-ingredients-modal-details.module.css'
 import { useSelector } from 'react-redux';
 
@@ -11,7 +11,10 @@ const detailsAccessors = [
 
 export const BurgerIngredientsModalDetails = () => {
 
-    const ingredient = useSelector(store => store.ingredientDetails.ingredient);
+    const id = useSelector(store => store.ingredientDetails.id);
+    const ingredients = useSelector(store => store.ingredients.items);
+
+    const ingredient = useMemo(() => ingredients.find(o => o._id === id), [id, ingredients]);
 
     return (
         <div className={burgerIngredientsModalDetailsStyles.main} >

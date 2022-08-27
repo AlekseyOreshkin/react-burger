@@ -38,7 +38,7 @@ const Modal = (props) => {
             <button className={modalStyles.closeButton} onClick={closeModal}><CloseIcon /></button>
     </>)}
     
-    return props.isShowing ? ReactDOM.createPortal(
+    return props.isShowing && ReactDOM.createPortal(
     <React.Fragment>
         <div  className={modalStyles.main}>
             <div className='modal-grid'>
@@ -52,7 +52,7 @@ const Modal = (props) => {
         </div>
         <ModalOverlay isShowing={props.isShowing} toggle={props.toggle} />
     </React.Fragment>, document.getElementById("react-modals")
-    ) : null;
+    ) ;
 };
 
 Modal.propTypes = {

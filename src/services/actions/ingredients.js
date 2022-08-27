@@ -19,9 +19,9 @@ export const getIngredients = () => {
     }
 };
 
-export const showIngredientDetails = ingredient => dispatch => dispatch({type: SHOW_INGREDIENT_DETAILS, ingredient: ingredient});
+export const showIngredientDetails = id => dispatch => dispatch({type: SHOW_INGREDIENT_DETAILS, id});
 
 export const hideIngredientDetails = () => dispatch => dispatch({type: HIDE_INGREDIENT_DETAILS});
 
-export const setActiveTab = cat => dispatch => dispatch({type: SET_ACTIVE_TAB, cat: cat});
+export const setActiveTab = cat => dispatch => dispatch({type: SET_ACTIVE_TAB, cat});
 
