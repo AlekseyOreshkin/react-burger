@@ -62,7 +62,7 @@ const BurgerConstructorList = () => {
             thumbnail={topData.image}
             price={topData.price}/>
         </div>}
-        {ids && <div className={`${burgerConstructorListStyles.ingredients} scrollable`}>
+        {ids && <div className={`${burgerConstructorListStyles.ingredients} scrollable`} style={{margin: bun_id ? '0' : 'auto 0'}}>
             {selectedIngredients.map((data, index) => <BurgerConstructorItem key={index} data={data} index={index} onRemoveIngredient={onRemoveIngredient}/>)}
         </div>}
         {bottomData && <div className={burgerConstructorListStyles.bottomBun}>
