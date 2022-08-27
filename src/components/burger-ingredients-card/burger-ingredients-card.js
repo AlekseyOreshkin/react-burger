@@ -1,12 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useDrag } from 'react-dnd/dist/hooks';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { showIngredientDetails } from '../../services/actions/ingredients';
 
 
-const BurgerIngredientsCard = ({ ingredient, showDetails }) => {
-  
+const BurgerIngredientsCard = ({ ingredient }) => {
+
+  const dispatch = useDispatch();
+
   const [{isDragging}, dragRef] = useDrag({
     type: 'new_ingredient',
     item: ingredient,
@@ -16,7 +20,8 @@ const BurgerIngredientsCard = ({ ingredient, showDetails }) => {
   });
   
   return (
-    !isDragging && (<div  className={burgerIngredientsCard.main} onClick={() => {showDetails(ingredient)}} ref={dragRef}>
+    !isDragging && (<div  className={burgerIngredientsCard.main} ref={dragRef}
+      onClick={() => dispatch(showIngredientDetails(ingredient))}>
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={burgerIngredientsCard.priceWrapper}>
           <p className={`text_type_digits-default ${burgerIngredientsCard.textWrapper}`}>
@@ -34,7 +39,7 @@ const BurgerIngredientsCard = ({ ingredient, showDetails }) => {
 };
 
 BurgerIngredientsCard.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  showDetails: PropTypes.func.isRequired
+  ingredient: PropTypes.object.isRequired
+  
 };
 export default BurgerIngredientsCard;

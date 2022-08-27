@@ -1,7 +1,8 @@
 import {  
     GET_ORDER_REQUEST, 
     GET_ORDER_SUCCESS, 
-    GET_ORDER_FAILED, 
+    GET_ORDER_FAILED,
+    CLOSE_ORDER, 
     CHANGE_INGREDIENTS,
     SET_PRICE
  } from '../actions/constructor';
@@ -25,7 +26,7 @@ export const constructorReducer = (state = initialConstructor, action) => {
         return {...state};    }
 };
 
-const initialOrderDetails = { number: '', name: '', request: false, failed: false};
+const initialOrderDetails = { number: '', name: '', request: false, failed: false, show: false};
 export const orderDetailsReducer = (state = initialOrderDetails, action) => {
     switch(action.type)
     {
@@ -41,13 +42,19 @@ export const orderDetailsReducer = (state = initialOrderDetails, action) => {
             request: false,
             failed: false,
             number: String(action.number),
-            name: action.name
+            name: action.name,
+            show: true
         };
     case GET_ORDER_FAILED:
         return {
             ...state,
             request: false,
             failed: true
+        };
+    case CLOSE_ORDER:
+        return {
+            ...state,
+            show: false,
         };
     default:
         return {...state};    }

@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useMemo} from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import burgerIngredientsCategory from './burger-ingredients-category.module.css';
 import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients-card';
 
 
-const BurgerIngredientsCategory = ({type, name, handleShowDetails}) => {
+const BurgerIngredientsCategory = ({type}) => {
 
   const {items, cats } = useSelector(state => ({items: state.ingredients.items, cats: state.ingredients.cats}));
+
+  const cat = useMemo(() => cats.find(c => c.type === type), [cats, type]);
  
   return (
     <div className={burgerIngredientsCategory.main}>
-        <p className={`text text_type_main-medium ${burgerIngredientsCategory.textWrapper}`}  ref={cats.find(c => c.type === type).ref} >{name}</p>
+        <p className={`text text_type_main-medium ${burgerIngredientsCategory.textWrapper}`}  ref={cat.ref} >{cat.name}</p>
         {items.filter(ing => ing.type === type).map(ing => (
-            <BurgerIngredientsCard key={ing._id} ingredient={ing} showDetails={handleShowDetails}/>
+            <BurgerIngredientsCard key={ing._id} ingredient={ing}/>
         ))}
 
     </div>
@@ -22,8 +24,6 @@ const BurgerIngredientsCategory = ({type, name, handleShowDetails}) => {
 
 BurgerIngredientsCategory.propTypes = {
   type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-  name: PropTypes.string.isRequired,
-  handleShowDetails: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientsCategory;

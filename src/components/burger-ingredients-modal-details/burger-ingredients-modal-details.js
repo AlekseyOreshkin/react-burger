@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import burgerIngredientsModalDetailsStyles from './burger-ingredients-modal-details.module.css'
+import { useSelector } from 'react-redux';
 
 const detailsAccessors = [
     { name: 'Калории,ккал', accsessor: 'calories'},
@@ -9,7 +9,9 @@ const detailsAccessors = [
     { name: 'Углеводы, г', accsessor: 'carbohydrates'}
 ]
 
-export const BurgerIngredientsModalDetails = ({ingredient}) => {
+export const BurgerIngredientsModalDetails = () => {
+
+    const ingredient = useSelector(store => store.ingredientDetails.ingredient);
 
     return (
         <div className={burgerIngredientsModalDetailsStyles.main} >
@@ -27,6 +29,3 @@ export const BurgerIngredientsModalDetails = ({ingredient}) => {
     );
 };
 
-BurgerIngredientsModalDetails.propTypes = {
-    ingredient : PropTypes.object
-}

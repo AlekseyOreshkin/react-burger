@@ -19,7 +19,7 @@ export const getIngredients = () => {
     }
 };
 
-export const showIngredientDetails = id => dispatch => dispatch({type: SHOW_INGREDIENT_DETAILS, _id: id});
+export const showIngredientDetails = ingredient => dispatch => dispatch({type: SHOW_INGREDIENT_DETAILS, ingredient: ingredient});
 
 export const hideIngredientDetails = () => dispatch => dispatch({type: HIDE_INGREDIENT_DETAILS});
 

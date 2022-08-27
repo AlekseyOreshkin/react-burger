@@ -42,19 +42,20 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
     }
 };
 
-const initialIngredientDetails = { _id: '', show: false };
+const initialIngredientDetails = { ingredient: {}, show: false };
 
 export const ingredientDetailsReducer = (state = initialIngredientDetails, action) => {
     switch(action.type) {
         case SHOW_INGREDIENT_DETAILS:
             return {
                 ...state,
-                _id: action._id,
+                ingredient: action.ingredient,
                 show: true
             };
         case HIDE_INGREDIENT_DETAILS:
             return {
-                ...state
+                ...state,
+                show: false
             };
         default:
             return {...state};
