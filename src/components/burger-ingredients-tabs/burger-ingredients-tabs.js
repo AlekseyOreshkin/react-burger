@@ -9,10 +9,10 @@ export const BurgerIngredientsTabs = () => {
   
   const {activeTab, cats} = useSelector(state => ({activeTab: state.ingredients.activeTab, cats: state.ingredients.cats}));
   const dispatch = useDispatch();
-  
+
   const setActive = (type) => {
+    cats.find(c => c.type === type).ref.current.scrollIntoView({ behavior: "smooth" });
     dispatch(setActiveTab(type));
-    console.log(type);
   };
 
   return (

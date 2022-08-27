@@ -51,7 +51,7 @@ const Modal = (props) => {
             </div>
         </div>
         <ModalOverlay isShowing={props.isShowing} toggle={props.toggle} />
-        </React.Fragment>, document.getElementById("react-modals")
+    </React.Fragment>, document.getElementById("react-modals")
     ) : null;
 };
 

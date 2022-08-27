@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd/dist/hooks';
 import burgerConstructorItemStyles from './burger-constructor-item.module.css';
@@ -51,4 +52,9 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
             handleClose={()=> onRemoveIngredient(index)}/>
         </div>
       </div>);
-}
+};
+BurgerConstructorItem.propTypes = {
+  data: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onRemoveIngredient: PropTypes.func.isRequired
+};

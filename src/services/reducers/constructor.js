@@ -22,8 +22,7 @@ export const constructorReducer = (state = initialConstructor, action) => {
             price: action.price
         }
     default:
-        return state ?? initialConstructor;
-    }
+        return {...state};    }
 };
 
 const initialOrderDetails = { number: '', name: '', request: false, failed: false};
@@ -39,8 +38,10 @@ export const orderDetailsReducer = (state = initialOrderDetails, action) => {
     case GET_ORDER_SUCCESS:
         return {
             ...state,
-            request: true,
-            failed: false
+            request: false,
+            failed: false,
+            number: String(action.number),
+            name: action.name
         };
     case GET_ORDER_FAILED:
         return {
@@ -49,7 +50,6 @@ export const orderDetailsReducer = (state = initialOrderDetails, action) => {
             failed: true
         };
     default:
-        return state ?? initialOrderDetails;
-    }
+        return {...state};    }
 };
 

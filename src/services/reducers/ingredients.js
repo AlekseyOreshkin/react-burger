@@ -38,7 +38,7 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
                 activeTab: action.cat
             }
         default:
-            return state;
+            return {...state};
     }
 };
 
@@ -53,8 +53,11 @@ export const ingredientDetailsReducer = (state = initialIngredientDetails, actio
                 show: true
             };
         case HIDE_INGREDIENT_DETAILS:
+            return {
+                ...state
+            };
         default:
-            return state;
+            return {...state};
     }
 };
 

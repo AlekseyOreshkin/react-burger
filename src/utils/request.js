@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { BASE_URL, INGREDIENTS_ENDPOINT, ORDER_REQUEST_ENDPOINT } from './constants';
 
 const request = async (endopoint, initParams = {headers: {'Content-Type': 'application/json'}}) => {
@@ -45,13 +46,14 @@ export const getIngredientsRequest = async () => {
     {
         const [result, {success, data}] = await request(INGREDIENTS_ENDPOINT);
         checkResult(INGREDIENTS_ENDPOINT, result, success);
-        let cats = new Set();
+        const cats = [];
         data.map(o => o.type).forEach(type => { 
-            if (!cats.has(type)) {
-                cats.add(type);
+            
+            if (!cats.find(c => c.type === type)) {
+                cats.splice(0, 0, {type, name: mapIngredientCategoryName(type), ref: createRef()});
             }
         });
-        return Promise.resolve([data, Array.from(cats).map(type => ({type: type, name: mapIngredientCategoryName(type)}))]);
+        return Promise.resolve([data, cats.sort((l,r) => l.type.localeCompare(r.type))]);
     }
     catch(error)
     {
