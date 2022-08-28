@@ -19,11 +19,11 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
         }
       });
     
-    const [{isDragging}, dragRef] = useDrag({
+    const [{opacity}, dragRef] = useDrag({
         type: 'constructor_item',
         item: { index },
         collect: monitor => ({
-          isDragging: monitor.isDragging()
+          opacity: monitor.isDragging() ? 0.5 : 1
         })
       });
     
@@ -40,7 +40,7 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
     };
     
 
-    return (!isDragging && <div className={burgerConstructorItemStyles.main} ref={dropRef} >
+    return (<div className={burgerConstructorItemStyles.main} style={{opacity}} ref={dropRef} >
         <div ref={dragRef} className={burgerConstructorItemStyles.ingredientWrapper}>
           <div className={burgerConstructorItemStyles.dragIconWrapper} >
             <DragIcon />

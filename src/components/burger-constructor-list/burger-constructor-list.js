@@ -15,8 +15,11 @@ const BurgerConstructorList = () => {
   const {bun_id, ids} = useSelector(state => ({bun_id: state.constructor.bun, ids: state.constructor.items}));
   const dispatch = useDispatch();
   
-  const [, dropNewRef] = useDrop({
+  const [{ isHover }, dropNewRef] = useDrop({
     accept: 'new_ingredient',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
     drop(item) {
       onDropNewIngredientHandler(item);
     }
@@ -54,7 +57,7 @@ const BurgerConstructorList = () => {
   const selectedIngredients = ids?.map(id => ingredients.find(o => o._id === id));
   
   return (
-    <div className={burgerConstructorListStyles.main} ref={dropNewRef} >
+    <div className={`${burgerConstructorListStyles.main} ${isHover ? burgerConstructorListStyles.onHover : ''}`} ref={dropNewRef} >
         {topData && <div className={burgerConstructorListStyles.topBun}>
           <ConstructorElement
             type='top'

@@ -12,16 +12,16 @@ const BurgerIngredientsCard = ({ ingredient }) => {
   
   const dispatch = useDispatch();
 
-  const [{isDragging}, dragRef] = useDrag({
+  const [{ opacity }, dragRef] = useDrag({
     type: 'new_ingredient',
-    item: ingredient,
+    item: {...ingredient},
     collect: monitor => ({
-      isDragging: monitor.isDragging()
+      opacity: monitor.isDragging() ? 0.5 : 1
     })
   });
   
   return (
-    !isDragging && (<div  className={burgerIngredientsCard.main} ref={dragRef}
+    (<div  className={burgerIngredientsCard.main} ref={dragRef} style={{opacity}}
       onClick={() => !showDetails && dispatch(showIngredientDetails(ingredient._id))}> 
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={burgerIngredientsCard.priceWrapper}>
