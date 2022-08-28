@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd/dist/hooks';
-import burgerConstructorItemStyles from './burger-constructor-item.module.css';
+import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { changeIngredients } from '../../services/actions/constructor';
 
@@ -40,9 +40,9 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
     };
     
 
-    return (<div className={burgerConstructorItemStyles.main} style={{opacity}} ref={dropRef} >
-        <div ref={dragRef} className={burgerConstructorItemStyles.ingredientWrapper}>
-          <div className={burgerConstructorItemStyles.dragIconWrapper} >
+    return (<div className={styles.main} style={{opacity}} ref={dropRef} >
+        <div ref={dragRef} className={styles.ingredientWrapper}>
+          <div className={styles.dragIconWrapper} >
             <DragIcon />
           </div>
           <ConstructorElement

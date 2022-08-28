@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import burgerConstructorSubmitStyles from './burger-constructor-submit.module.css';
+import styles from './burger-constructor-submit.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
@@ -30,14 +30,14 @@ const BurgerConstructorSubmit = () => {
 
   
   return (
-    <div className={burgerConstructorSubmitStyles.main}>
+    <div className={styles.main}>
       <p className="text text_type_digits-medium">
         {price}
       </p>
-      <div className={burgerConstructorSubmitStyles.iconWrapper}>
+      <div className={styles.iconWrapper}>
         <CurrencyIcon type='primary' />
       </div>
-      <div className={burgerConstructorSubmitStyles.buttonWrapper}>
+      <div className={styles.buttonWrapper}>
         <Button type="primary" size="large" onClick={onOrderSubmit} disabled={!price || !bun}>
             Оформить заказ
         </Button>

@@ -1,6 +1,6 @@
 import React  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import burgerIngredientsTabsStyles from './burger-ingredients-tabs.module.css';
+import styles from './burger-ingredients-tabs.module.css';
 import {  Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setActiveTab } from '../../services/actions/ingredients';
 
@@ -16,9 +16,9 @@ export const BurgerIngredientsTabs = () => {
   };
 
   return (
-      <div className={burgerIngredientsTabsStyles.main}>
+      <div className={styles.main}>
         {cats.map(cat => (
-          <Tab value={cat.type} key={cat.type} active={cat.type === activeTab} onClick={(value) => {setActive(value)}} className={burgerIngredientsTabsStyles.tab}>
+          <Tab value={cat.type} key={cat.type} active={cat.type === activeTab} onClick={(value) => {setActive(value)}} className={styles.tab}>
             {cat.name}
         </Tab>
         ))}

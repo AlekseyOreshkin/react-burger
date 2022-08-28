@@ -1,6 +1,6 @@
 import React from 'react';
 import  PropTypes  from 'prop-types';
-import modalOverlayStyles from './modal-overlay.module.css';
+import styles from './modal-overlay.module.css';
 
 const ModalOverlay = ( {isShowing, toggle }) => {
     const handleClickAction = (e) => {
@@ -9,7 +9,7 @@ const ModalOverlay = ( {isShowing, toggle }) => {
         }
     }
     return (
-        <div className={modalOverlayStyles.main} onClick={(e) => handleClickAction(e)}>
+        <div className={styles.main} onClick={(e) => handleClickAction(e)}>
         </div>
     );
 };

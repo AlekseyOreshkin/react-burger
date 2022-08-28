@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import buttonStyles from './app-header-button.module.css';
+import styles from './app-header-button.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 const AppHeaderButton = ({icon, text, active}) => {
@@ -20,9 +20,9 @@ const AppHeaderButton = ({icon, text, active}) => {
     }
     
     return (
-        <button className={buttonStyles.main}>
-            <p className={buttonStyles.iconWrapper} >{getIcon(icon)}</p>
-            <p className={`text text_type_main-default ${buttonStyles.textWrapper} ${active ? buttonStyles.active : ''}`}>
+        <button className={styles.main}>
+            <p className={styles.iconWrapper} >{getIcon(icon)}</p>
+            <p className={`text text_type_main-default ${styles.textWrapper} ${active ? styles.active : ''}`}>
                 {text}
             </p>
         </button>

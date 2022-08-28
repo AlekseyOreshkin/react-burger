@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import PropType from 'prop-types';
-import modalStyles from './modal.module.css';
+import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -35,17 +35,17 @@ const Modal = (props) => {
             <p className={`text text_type_main-large`}>
                 {text?.length > 0 ? text : ' '}
             </p>
-            <button className={modalStyles.closeButton} onClick={closeModal}><CloseIcon /></button>
+            <button className={styles.closeButton} onClick={closeModal}><CloseIcon /></button>
     </>)}
     
     return props.isShowing && ReactDOM.createPortal(
     <React.Fragment>
-        <div  className={modalStyles.main}>
+        <div  className={styles.main}>
             <div className='modal-grid'>
-                <div className={modalStyles.modalHeader}>
+                <div className={styles.modalHeader}>
                     {renderHeader(props.headerText)}
                 </div>
-                <div className={modalStyles.modalContent}>
+                <div className={styles.modalContent}>
                     {props.children}
                 </div>
             </div>
