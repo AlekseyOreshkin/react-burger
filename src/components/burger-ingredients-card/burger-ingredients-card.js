@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useDispatch  } from 'react-redux';
 import { useDrag } from 'react-dnd/dist/hooks';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
@@ -8,7 +8,6 @@ import { showIngredientDetails } from '../../services/actions/ingredientDetails'
 
 
 const BurgerIngredientsCard = ({ ingredient }) => {
-  const showDetails = useSelector(state => state.ingredientDetails.show);
   
   const dispatch = useDispatch();
 
@@ -19,10 +18,12 @@ const BurgerIngredientsCard = ({ ingredient }) => {
       opacity: monitor.isDragging() ? 0.5 : 1
     })
   });
+
+  const onShowIngredientDetails = useCallback(() => dispatch(showIngredientDetails(ingredient._id)), [dispatch, ingredient._id]);
   
   return (
     (<div  className={burgerIngredientsCard.main} ref={dragRef} style={{opacity}}
-      onClick={() => !showDetails && dispatch(showIngredientDetails(ingredient._id))}> 
+      onClick={onShowIngredientDetails}> 
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={burgerIngredientsCard.priceWrapper}>
           <p className={`text_type_digits-default ${burgerIngredientsCard.textWrapper}`}>
