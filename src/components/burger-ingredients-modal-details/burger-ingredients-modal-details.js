@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import {v4 as uuidv4} from 'uuid';
 import burgerIngredientsModalDetailsStyles from './burger-ingredients-modal-details.module.css'
 import { useSelector } from 'react-redux';
 
@@ -22,7 +23,7 @@ export const BurgerIngredientsModalDetails = () => {
             <p className='text text_type_main-medium'>{ingredient.name}</p>
             <div className={burgerIngredientsModalDetailsStyles.details}>
                 {detailsAccessors.map( (o, i) => (
-                    <div key={i} className={burgerIngredientsModalDetailsStyles.info}>
+                    <div key={uuidv4()} className={burgerIngredientsModalDetailsStyles.info}>
                         <p className={`text text_type_main-small`}>{o.name}</p>
                         <p className={`text text_type_main-medium`}>{ingredient[o.accsessor]}</p>
                     </div>

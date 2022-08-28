@@ -4,7 +4,8 @@ import burgerIngredientsBox from './burger-ingredients-box.module.css';
 import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ingredients-category';
 import Modal from '../modal/modal';
 import { BurgerIngredientsModalDetails } from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
-import { setActiveTab, hideIngredientDetails } from '../../services/actions/ingredients';
+import { setActiveTab } from '../../services/actions/ingredients';
+import { hideIngredientDetails } from '../../services/actions/ingredientDetails';
 
 
 const BurgerIngredientsBox = () => {

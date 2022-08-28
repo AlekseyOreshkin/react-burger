@@ -1,14 +1,10 @@
 import {  
-    GET_ORDER_REQUEST, 
-    GET_ORDER_SUCCESS, 
-    GET_ORDER_FAILED,
-    CLOSE_ORDER, 
     CHANGE_INGREDIENTS,
     SET_PRICE
  } from '../actions/constructor';
 
 const initialConstructor = { bun: '',  items: [], price: 0};
-export const constructorReducer = (state = initialConstructor, action) => {
+const constructorReducer = (state = initialConstructor, action) => {
     switch (action.type)
     {
     case CHANGE_INGREDIENTS:
@@ -26,37 +22,4 @@ export const constructorReducer = (state = initialConstructor, action) => {
         return {...state};    }
 };
 
-const initialOrderDetails = { number: '', name: '', request: false, failed: false, show: false};
-export const orderDetailsReducer = (state = initialOrderDetails, action) => {
-    switch(action.type)
-    {
-    case GET_ORDER_REQUEST:
-        return {
-            ...state,
-            request: true,
-            failed: false
-        };
-    case GET_ORDER_SUCCESS:
-        return {
-            ...state,
-            request: false,
-            failed: false,
-            number: String(action.number),
-            name: action.name,
-            show: true
-        };
-    case GET_ORDER_FAILED:
-        return {
-            ...state,
-            request: false,
-            failed: true
-        };
-    case CLOSE_ORDER:
-        return {
-            ...state,
-            show: false,
-        };
-    default:
-        return {...state};    }
-};
-
+export default constructorReducer;

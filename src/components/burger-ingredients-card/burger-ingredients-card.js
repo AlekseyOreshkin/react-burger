@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd/dist/hooks';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { showIngredientDetails } from '../../services/actions/ingredients';
+import { showIngredientDetails } from '../../services/actions/ingredientDetails';
 
 
 const BurgerIngredientsCard = ({ ingredient }) => {

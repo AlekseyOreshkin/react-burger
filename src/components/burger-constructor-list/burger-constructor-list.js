@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd/dist/hooks';
+import { v4 as uuidv4 } from 'uuid';
 import burgerConstructorListStyles from './burger-constructor-list.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setPrice, changeIngredients} from '../../services/actions/constructor';
@@ -63,7 +64,7 @@ const BurgerConstructorList = () => {
             price={topData.price}/>
         </div>}
         {ids && <div className={`${burgerConstructorListStyles.ingredients} scrollable`} style={{margin: bun_id ? '0' : 'auto 0'}}>
-            {selectedIngredients.map((data, index) => <BurgerConstructorItem key={index} data={data} index={index} onRemoveIngredient={onRemoveIngredient}/>)}
+            {selectedIngredients.map((data, index) => <BurgerConstructorItem key={uuidv4()} data={data} index={index} onRemoveIngredient={onRemoveIngredient}/>)}
         </div>}
         {bottomData && <div className={burgerConstructorListStyles.bottomBun}>
           <ConstructorElement

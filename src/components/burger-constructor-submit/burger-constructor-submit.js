@@ -4,7 +4,7 @@ import burgerConstructorSubmitStyles from './burger-constructor-submit.module.cs
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
-import { getOrder, closeOrder } from '../../services/actions/constructor';
+import { getOrder, closeOrder } from '../../services/actions/orderDetails';
 
 
 const BurgerConstructorSubmit = () => {
@@ -38,7 +38,7 @@ const BurgerConstructorSubmit = () => {
         <CurrencyIcon type='primary' />
       </div>
       <div className={burgerConstructorSubmitStyles.buttonWrapper}>
-        <Button type="primary" size="large" onClick={onOrderSubmit}>
+        <Button type="primary" size="large" onClick={onOrderSubmit} disabled={!price || !bun}>
             Оформить заказ
         </Button>
         <Modal isShowing={showOrder} toggle={() => dispatch(closeOrder())}>

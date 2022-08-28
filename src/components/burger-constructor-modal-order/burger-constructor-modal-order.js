@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import burgerConstrctorModelOrderStyles from './burger-constructor-modal-order.module.css'
 import confirmImage from '../../images/modal-order/done.png';
-import { closeOrder } from '../../services/actions/constructor';
+import { closeOrder } from '../../services/actions/orderDetails';
 
 
 const BurgerConstrctorModelOrder = () => {

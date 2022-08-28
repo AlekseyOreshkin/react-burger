@@ -2,15 +2,13 @@ import {
     GET_INGREDIENTS_REQUEST, 
     GET_INGREDIENTS_SUCCESS, 
     GET_INGREDIENTS_FAILED,
-    SHOW_INGREDIENT_DETAILS,
-    HIDE_INGREDIENT_DETAILS,
     SET_ACTIVE_TAB
 } from "../actions/ingredients";
 
 
 const initialIngredients = {items: [], cats: [], activeTab: 'bun', request: false, failed: false};
 
-export const ingredientsReducer = (state = initialIngredients, action) => {
+const ingredientsReducer = (state = initialIngredients, action) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {
@@ -42,23 +40,4 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
     }
 };
 
-const initialIngredientDetails = { id: '', show: false };
-
-export const ingredientDetailsReducer = (state = initialIngredientDetails, action) => {
-    switch(action.type) {
-        case SHOW_INGREDIENT_DETAILS:
-            return {
-                ...state,
-                id: action.id,
-                show: true
-            };
-        case HIDE_INGREDIENT_DETAILS:
-            return {
-                ...state,
-                show: false
-            };
-        default:
-            return {...state};
-    }
-};
-
+export default ingredientsReducer;
