@@ -4,7 +4,7 @@ import { useDrag } from 'react-dnd/dist/hooks';
 import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { showIngredientDetails } from '../../services/actions/ingredientDetails';
+import { SHOW_INGREDIENT_DETAILS } from '../../services/actions/ingredientDetails';
 
 
 const BurgerIngredientsCard = ({ ingredient }) => {
@@ -19,7 +19,7 @@ const BurgerIngredientsCard = ({ ingredient }) => {
     })
   });
 
-  const onShowIngredientDetails = useCallback(() => dispatch(showIngredientDetails(ingredient._id)), [dispatch, ingredient._id]);
+  const onShowIngredientDetails = useCallback(() => dispatch({type: SHOW_INGREDIENT_DETAILS, id: ingredient._id}), [dispatch, ingredient._id]);
   
   return (
     (<div  className={burgerIngredientsCard.main} ref={dragRef} style={{opacity}}

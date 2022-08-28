@@ -15,4 +15,3 @@ export const getOrder = ingredients => {
         })
     }
 };
-export const closeOrder = () => dispatch => dispatch({type: CLOSE_ORDER})

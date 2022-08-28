@@ -2,14 +2,14 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './burger-constructor-modal-order.module.css'
 import confirmImage from '../../images/modal-order/done.png';
-import { closeOrder } from '../../services/actions/orderDetails';
+import { CLOSE_ORDER } from '../../services/actions/orderDetails';
 
 
 const BurgerConstrctorModelOrder = () => {
     const order = useSelector(state => state.orderDetails.number);
     const dispatch = useDispatch();
     const onCloseOrder = useCallback(() => {
-        dispatch(closeOrder());
+        dispatch({type: CLOSE_ORDER});
     }, [dispatch]);
   
     return (

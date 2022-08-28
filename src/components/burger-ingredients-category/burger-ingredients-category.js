@@ -7,7 +7,7 @@ import BurgerIngredientsCard from '../burger-ingredients-card/burger-ingredients
 
 const BurgerIngredientsCategory = ({type}) => {
 
-  const {items, cats } = useSelector(state => ({items: state.ingredients.items, cats: state.ingredients.cats}));
+  const {items, cats } = useSelector(state => state.ingredients);
 
   const cat = useMemo(() => cats.find(c => c.type === type), [cats, type]);
  

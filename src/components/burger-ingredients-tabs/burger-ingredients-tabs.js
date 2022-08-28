@@ -2,7 +2,7 @@ import React, { useCallback }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-ingredients-tabs.module.css';
 import {  Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setActiveTab } from '../../services/actions/ingredients';
+import { SET_ACTIVE_TAB } from '../../services/actions/ingredients';
 
 
 export const BurgerIngredientsTabs = () => {
@@ -13,7 +13,7 @@ export const BurgerIngredientsTabs = () => {
   const onSetActive = useCallback( (type) => {
     console.log(type);
     cats.find(c => c.type === type).ref.current.scrollIntoView({ behavior: "smooth" });
-    dispatch(setActiveTab(type));
+    dispatch( {type: SET_ACTIVE_TAB, cat: type});
   }, [dispatch, cats]);
 
 

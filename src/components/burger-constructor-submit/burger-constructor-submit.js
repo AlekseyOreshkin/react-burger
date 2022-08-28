@@ -4,7 +4,8 @@ import styles from './burger-constructor-submit.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
-import { getOrder, closeOrder } from '../../services/actions/orderDetails';
+import { getOrder, CLOSE_ORDER } from '../../services/actions/orderDetails';
+import { validBunId } from '../../utils/validation';
 
 
 const BurgerConstructorSubmit = () => {
@@ -18,7 +19,7 @@ const BurgerConstructorSubmit = () => {
   
   const onOrderSubmit = useCallback(() => {
     const arr = [...ingredients] ?? [];
-    if (bun) {
+    if (validBunId(bun)) {
       arr.splice(-1, 0, bun, bun);
     }
     dispatch(getOrder(arr));
@@ -37,7 +38,7 @@ const BurgerConstructorSubmit = () => {
         <Button type="primary" size="large" onClick={onOrderSubmit} disabled={!price || !bun}>
             Оформить заказ
         </Button>
-        <Modal isShowing={showOrder} toggle={() => dispatch(closeOrder())}>
+        <Modal isShowing={showOrder} toggle={() => dispatch({type: CLOSE_ORDER})}>
             <BurgerConstructorModalOrder />
         </Modal>
       </div>

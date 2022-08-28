@@ -4,8 +4,8 @@ import burgerIngredientsBox from './burger-ingredients-box.module.css';
 import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ingredients-category';
 import Modal from '../modal/modal';
 import { BurgerIngredientsModalDetails } from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
-import { setActiveTab } from '../../services/actions/ingredients';
-import { hideIngredientDetails } from '../../services/actions/ingredientDetails';
+import { SET_ACTIVE_TAB } from '../../services/actions/ingredients';
+import { HIDE_INGREDIENT_DETAILS } from '../../services/actions/ingredientDetails';
 
 
 const BurgerIngredientsBox = () => {
@@ -32,7 +32,7 @@ const BurgerIngredientsBox = () => {
         closestCat.pos = top;
       }
     });
-    dispatch(setActiveTab(closestCat.type));
+    dispatch({type: SET_ACTIVE_TAB, cat: closestCat.type});
   },[cats, positionRef, dispatch]);
 
   return (<>
@@ -40,7 +40,7 @@ const BurgerIngredientsBox = () => {
         {cats.map(cat => (<BurgerIngredientsCategory 
           key={cat.type} type={cat.type}/>))};
     </div>
-    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={() => showDetails && dispatch(hideIngredientDetails())}>
+    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={() => showDetails && dispatch({type: HIDE_INGREDIENT_DETAILS})}>
         <BurgerIngredientsModalDetails />
     </Modal>
   </>);

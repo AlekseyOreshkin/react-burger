@@ -4,8 +4,8 @@ import { useDrop } from 'react-dnd/dist/hooks';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './burger-constructor-list.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setPrice, changeIngredients} from '../../services/actions/constructor';
-import { isBun } from '../../utils/validation';
+import { SET_PRICE, changeIngredients} from '../../services/actions/constructor';
+import { isBun, validBunId } from '../../utils/validation';
 import {BurgerConstructorItem} from '../burger-constructor-item/burger-constructor-item';
 
 
@@ -27,11 +27,11 @@ const BurgerConstructorList = () => {
 
   useEffect(() => {
     const arr = ids ? [...ids] : [];
-    if (bun_id) {
+    if (validBunId(bun_id)) {
       arr.splice(0, 0, bun_id, bun_id);
     }
     const price = arr.map(id => (id ? Number(ingredients.find(o => o._id === id)?.price) : 0)).reduce((acc, price) => acc + price, 0);
-    dispatch(setPrice(price))
+    dispatch({type: SET_PRICE, price});
   }, [bun_id, ids, ingredients, dispatch]);
 
   const onDropNewIngredientHandler = (item) => {

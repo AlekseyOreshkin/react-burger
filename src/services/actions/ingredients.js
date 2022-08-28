@@ -16,5 +16,4 @@ export const getIngredients = () => {
         })
     }
 };
-export const setActiveTab = cat => dispatch => dispatch({type: SET_ACTIVE_TAB, cat});
 

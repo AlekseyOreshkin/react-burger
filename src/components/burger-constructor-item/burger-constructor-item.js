@@ -1,47 +1,70 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd/dist/hooks';
 import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { changeIngredients } from '../../services/actions/constructor';
+import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions/constructor';
 
 export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
 
-  const {bun_id, ids} = useSelector(state => ({bun_id: state.constructor.bun, ids: state.constructor.items}));
+  const items = useSelector(state => state.constructor.items);
 
     const dispatch = useDispatch();
+    const ref = useRef(null);
     
-    const [, dropRef] = useDrop({
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+      const dragCard = items[dragIndex];
+      const newCards = [...items]
+      newCards.splice(dragIndex, 1)
+      newCards.splice(hoverIndex, 0, dragCard)
+      dispatch({type: UPDATE_INGREDIENTS_ORDER, items: [...newCards]}); 
+    }, [items, dispatch]);
+  
+    const [, drop] = useDrop({
         accept: 'constructor_item',
-        drop(item) {
-          onDrop(item);
+        collect(monitor) {
+          return {
+            handlerId: monitor.getHandlerId()
+          }
+        },
+        hover(item, monitor) {
+          if (!ref.current) {
+            return;
+          }
+          const dragIndex = item.index;
+          const hoverIndex = index;
+          if (dragIndex === hoverIndex) {
+            return;
+          }
+          const hoverBoundingRect = ref.current?.getBoundingClientRect();
+          const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+          const clientOffset = monitor.getClientOffset();
+          const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+          if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            return;
+          }
+          if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            return;
+          }
+          moveCard(dragIndex, hoverIndex);
+          item.index = hoverIndex;
         }
       });
     
-    const [{opacity}, dragRef] = useDrag({
+    const [{opacity}, drag] = useDrag({
         type: 'constructor_item',
         item: { index },
         collect: monitor => ({
-          opacity: monitor.isDragging() ? 0.5 : 1
+          opacity: monitor.isDragging() ? 0 : 1
         })
       });
     
-    
-    const onDrop = (from) => {
-      if (index === from.index) {
-        return;
-      }
-
-      const arr = [...ids];
-      const target_id = arr.splice(from.index, 1)[0];
-      arr.splice(index > from.index ? index - 1: index, 0, target_id);
-      dispatch(changeIngredients(bun_id, arr)); 
-    };
-    
-
-    return (<div className={styles.main} style={{opacity}} ref={dropRef} >
-        <div ref={dragRef} className={styles.ingredientWrapper}>
+      
+    drag(drop(ref));
+    const preventDefault = (e) => e.preventDefault();
+    return (<div className={styles.main} style={{opacity}} ref={ref} onDrop={preventDefault}>
+        <div className={styles.ingredientWrapper}>
           <div className={styles.dragIconWrapper} >
             <DragIcon />
           </div>

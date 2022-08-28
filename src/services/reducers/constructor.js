@@ -1,6 +1,7 @@
 import {  
     CHANGE_INGREDIENTS,
-    SET_PRICE
+    SET_PRICE,
+    UPDATE_INGREDIENTS_ORDER
  } from '../actions/constructor';
 
 const initialConstructor = { bun: '',  items: [], price: 0};
@@ -11,6 +12,11 @@ const constructorReducer = (state = initialConstructor, action) => {
         return {
             ...state,
             bun: action.bun,
+            items: action.items
+        };
+    case UPDATE_INGREDIENTS_ORDER:
+        return {
+            ...state,
             items: action.items
         };
     case SET_PRICE:
