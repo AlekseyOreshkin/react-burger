@@ -1,10 +1,11 @@
 import {  
     CHANGE_INGREDIENTS,
     SET_PRICE,
-    UPDATE_INGREDIENTS_ORDER
+    UPDATE_INGREDIENTS_ORDER,
+    ADD_KEY
  } from '../actions/constructor';
 
-const initialConstructor = { bun: '',  items: [], price: 0};
+const initialConstructor = { bun: '',  items: [], price: 0, keys: []};
 const constructorReducer = (state = initialConstructor, action) => {
     switch (action.type)
     {
@@ -24,7 +25,12 @@ const constructorReducer = (state = initialConstructor, action) => {
             ...state,
             price: action.price
         }
-    default:
+    case ADD_KEY:
+        return {
+            ...state,
+            keys: state.keys ? [...state.keys, action.key] : [action.key]
+        }
+        default:
         return {...state};    }
 };
 
