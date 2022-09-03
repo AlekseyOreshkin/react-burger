@@ -7,7 +7,7 @@ body {
   display: grid;
   height: 800px;
   grid-template-columns: 1fr  [left-border-line] 600px [center-line] 600px [right-border-line] 1fr;
-  grid-template-rows: [top-line] 88px [nav-bottom-lie] 100px [container-top-line] auto [container-bottom-line] 40px [bottom-line];
+  grid-template-rows: [top-line] 88px [nav-bottom-line] 100px [container-top-line] auto [container-bottom-line] 40px [bottom-line];
   grid-template-areas: 
     ". header header ."
     ". static-text . ."
@@ -52,4 +52,24 @@ body {
   align-items: stretch;
   justify-content: stretch;
   align-content: stretch;
+}
+
+.content-grid {
+  grid-area: nav-bottom-line / left-border-line / container-bottom-line / right-border-line;
+  display: grid;
+
+  grid-template-columns: 1fr 480px 1fr;
+  grid-template-rows: 120px 1fr;
+
+  grid-template-areas: 
+  ". . ."
+  "lk-menu form .";
+}
+
+.form-area {
+  grid-area: form;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
 }

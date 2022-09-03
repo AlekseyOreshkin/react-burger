@@ -4,6 +4,9 @@
     background-color: transparent;
     border: none;
 }
+.main:hover {
+    cursor: pointer;
+}
 .iconWrapper {
     display: inline-block;
     padding-right: 8px;
