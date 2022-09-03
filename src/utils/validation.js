@@ -1,8 +1,11 @@
 
-export function isValidIngredientsData(ingredientsData) {
-    return ingredientsData?.length > 0;
-};
-export function isValidConstructorData(constructorData) {
-    return constructorData?.bun?.length > 0 /*&& constructorData?.ingredients?.length > 0*/ ;
-};
+export const isValidIngredientsData = ingredientsData => ingredientsData?.length > 0;
+
+export const validBunId = id => typeof(id) === 'string' && id.length > 0;
+
+export const isValidConstructorData = constructorData => validBunId(constructorData?.bun); /*&& constructorData?.ingredients?.length > 0*/ ;
+
+export const isBun = ingredient => ingredient?.type === 'bun';
+
+
   

@@ -1,6 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import burgerIngredientsModalDetailsStyles from './burger-ingredients-modal-details.module.css'
+import React, { useMemo } from 'react';
+import {v4 as uuidv4} from 'uuid';
+import styles from './burger-ingredients-modal-details.module.css'
+import { useSelector } from 'react-redux';
 
 const detailsAccessors = [
     { name: 'Калории,ккал', accsessor: 'calories'},
@@ -9,15 +10,20 @@ const detailsAccessors = [
     { name: 'Углеводы, г', accsessor: 'carbohydrates'}
 ]
 
-const BurgerIngredientsModalDetails = ({ingredient}) => {
+export const BurgerIngredientsModalDetails = () => {
+
+    const id = useSelector(store => store.ingredientDetails.id);
+    const ingredients = useSelector(store => store.ingredients.items);
+
+    const ingredient = useMemo(() => ingredients.find(o => o._id === id), [id, ingredients]);
 
     return (
-        <div className={burgerIngredientsModalDetailsStyles.main} >
+        <div className={styles.main} >
            <img src={ingredient.image_large} alt={ingredient.name} />
             <p className='text text_type_main-medium'>{ingredient.name}</p>
-            <div className={burgerIngredientsModalDetailsStyles.details}>
+            <div className={styles.details}>
                 {detailsAccessors.map( (o, i) => (
-                    <div key={i} className={burgerIngredientsModalDetailsStyles.info}>
+                    <div key={uuidv4()} className={styles.info}>
                         <p className={`text text_type_main-small`}>{o.name}</p>
                         <p className={`text text_type_main-medium`}>{ingredient[o.accsessor]}</p>
                     </div>
@@ -27,8 +33,3 @@ const BurgerIngredientsModalDetails = ({ingredient}) => {
     );
 };
 
-BurgerIngredientsModalDetails.propTypes = {
-    ingredient : PropTypes.object
-}
-
-export default BurgerIngredientsModalDetails;

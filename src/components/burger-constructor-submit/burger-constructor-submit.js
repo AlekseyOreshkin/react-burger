@@ -1,82 +1,45 @@
-import React, { useContext, useEffect, useReducer} from 'react';
-import burgerConstructorSubmitStyles from './burger-constructor-submit.module.css';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './burger-constructor-submit.module.css';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import useModal from '../../hooks/use-modal';
 import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
-import { isValidIngredientsData, isValidConstructorData } from '../../utils/validation';
-import { ORDER_REQUEST_ENDPOINT } from '../../utils/constants';
-import { request } from '../../utils/request';
-import { reducer, initialState } from './reduser';
-import { SET_ORDER, SET_PRICE, RESET } from '../../actions/actions';
-
-import { ConstructorContext, IngredientsContext } from '../../contexts/contexts';
-
-const orderRequestParams = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-};
+import { getOrder, CLOSE_ORDER } from '../../services/actions/orderDetails';
+import { validBunId } from '../../utils/validation';
 
 
 const BurgerConstructorSubmit = () => {
 
-  const [ingredientsData, ] = useContext(IngredientsContext);
-  const [constructorData, ] = useContext(ConstructorContext);
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const makeOrder = useModal();
-
-  useEffect( () => {
-    dispatch({type: RESET});
-  }, []);
+  const {ingredients, bun} = useSelector(state => ({ingredients: state.constructor.items, bun: state.constructor.bun}));
   
-
-  useEffect( () => {
-      if (!isValidIngredientsData(ingredientsData) || !isValidConstructorData(constructorData)) {
-        dispatch({type: RESET});
-      }
-      else {
-        const selectedBun = ingredientsData.find(o => o._id === constructorData.bun);
-        const selectedIngredients = [...(ingredientsData.filter(o => constructorData.ingredients.includes(o._id))), selectedBun, selectedBun];
-        const price = selectedIngredients.map(o => Number(o.price)).reduce((prev, curr) => prev + curr);
-        dispatch({type: SET_PRICE, ingredients: selectedIngredients.map(o => o._id), price: price} );
-      }
-    }, [ingredientsData, constructorData] 
-  ); 
+  const price = useSelector(state => state.constructor.price);
+  const showOrder = useSelector(state => state.orderDetails.show);
   
+  const dispatch = useDispatch();
   
-  const requestOrder = () => {
-    const params = {...orderRequestParams, body: JSON.stringify({ingredients: state.ingredients})};
-    request(ORDER_REQUEST_ENDPOINT, params)
-    .then(([result, { name, order: {number}, success }]) => {
-      if (result && success) {
-        console.log(`Получен номер заказа: ${number}, Название: ${name}`);
-        dispatch({type: SET_ORDER, order: String(number), name: name});
-        makeOrder.toggle();
-      } else {
-        console.log('Ошибка выполнения запроса');}})
-    .catch(([ ,error]) => {
-      console.log(`Ошибка выполнения запроса ${error}`);
-    });
-  };
+  const onOrderSubmit = useCallback(() => {
+    const arr = [...ingredients] ?? [];
+    if (validBunId(bun)) {
+      arr.splice(-1, 0, bun, bun);
+    }
+    dispatch(getOrder(arr));
+  }, [dispatch, bun, ingredients]);
 
+  
   return (
-    <div className={burgerConstructorSubmitStyles.main}>
+    <div className={styles.main}>
       <p className="text text_type_digits-medium">
-        {state.price}
+        {price}
       </p>
-      <div className={burgerConstructorSubmitStyles.iconWrapper}>
+      <div className={styles.iconWrapper}>
         <CurrencyIcon type='primary' />
       </div>
-      <div className={burgerConstructorSubmitStyles.buttonWrapper}>
-        <Button type="primary" size="large" onClick={requestOrder}>
+      <div className={styles.buttonWrapper}>
+        <Button type="primary" size="large" onClick={onOrderSubmit} disabled={!price || !bun}>
             Оформить заказ
         </Button>
-        <Modal {...makeOrder} >
-            <BurgerConstructorModalOrder order={state.order} close={makeOrder.toggle}/>
+        <Modal isShowing={showOrder} toggle={() => dispatch({type: CLOSE_ORDER})}>
+            <BurgerConstructorModalOrder />
         </Modal>
       </div>
     </div>

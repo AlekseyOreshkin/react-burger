@@ -1,57 +1,92 @@
-import React, { useContext } from 'react';
-import burgerConstructorListStyles from './burger-constructor-list.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { isValidIngredientsData, isValidConstructorData } from '../../utils/validation';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd/dist/hooks';
+import { v4 as uuidv4 } from 'uuid';
+import styles from './burger-constructor-list.module.css';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { SET_PRICE, ADD_KEY, changeIngredients} from '../../services/actions/constructor';
+import { isBun, validBunId } from '../../utils/validation';
+import {BurgerConstructorItem} from '../burger-constructor-item/burger-constructor-item';
 
-import { ConstructorContext, IngredientsContext } from '../../contexts/contexts';
 
 const BurgerConstructorList = () => {
 
-  const [ingredientsData, ] = useContext(IngredientsContext);
-  const [constructorData, ] = useContext(ConstructorContext);
+  const ingredients = useSelector(state => state.ingredients.items);
+  const {bun_id, ids, keys} = useSelector(state => ({bun_id: state.constructor.bun, ids: state.constructor.items, keys: state.constructor.keys}));
   
-  if (!isValidIngredientsData(ingredientsData) || !isValidConstructorData(constructorData)) {
-    return null;
+  const dispatch = useDispatch();
+  
+  const [{ isHover }, dropNewRef] = useDrop({
+    accept: 'new_ingredient',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    }),
+    drop(item) {
+      onDropNewIngredientHandler(item);
+    }
+  });
+
+  useEffect(() => {
+    const arr = ids ? [...ids] : [];
+    if (validBunId(bun_id)) {
+      arr.splice(0, 0, bun_id, bun_id);
+    }
+    const price = arr.map(id => (id ? Number(ingredients.find(o => o._id === id)?.price) : 0)).reduce((acc, price) => acc + price, 0);
+    dispatch({type: SET_PRICE, price});
+  }, [bun_id, ids, ingredients, dispatch]);
+
+  const onDropNewIngredientHandler = (item) => {
+    const items = ids ? [...ids] : [];
+    let bun = bun_id;
+    if (isBun(item)) {
+      bun = item._id;
+    } else {
+      items.splice(-1, 0, item._id);
+    }
+    dispatch(changeIngredients(bun, items)); 
+  };
+  
+  const onRemoveIngredient = (index) => {
+    let arr = [...ids];
+    arr.splice(index, 1);
+    dispatch(changeIngredients(bun_id, arr));
   }
-  const topData = ingredientsData.find(o => o._id === constructorData.bun);
+  const getItemUuid = (id, index) => {
+    let key = keys?.find(k => (k.id === id && k.index === index));
+    if (!key) {
+      key = {id, index, uuid: uuidv4()}
+      dispatch({type: ADD_KEY, key});
+    }
+
+    return key.uuid;
+  }
+
+
+  const topData = ingredients.find(i => i._id === bun_id);
   const bottomData = topData;
-  const selectedIngredients = ingredientsData.filter(o => constructorData.ingredients.includes(o._id));
+  const selectedIngredients = ids?.map(id => ingredients.find(o => o._id === id));
   
   return (
-    <div className={burgerConstructorListStyles.main}>
-        <div className={burgerConstructorListStyles.topBun}>
+    <div className={`${styles.main} ${isHover ? styles.onHover : ''}`} ref={dropNewRef} >
+        {topData && <div className={styles.topBun}>
           <ConstructorElement
             type='top'
             isLocked='true'
             text={`${topData.name} (верх)`}
             thumbnail={topData.image}
             price={topData.price}/>
-        </div>
-        <div className={`${burgerConstructorListStyles.ingredients} scrollable`}>
-            {selectedIngredients.map((data) => {
-                return (
-                  data && 
-                    <div className={burgerConstructorListStyles.ingredientWrapper} key={data._id}>
-                      <div className={burgerConstructorListStyles.dragIconWrapper}>
-                        <DragIcon />
-                      </div>
-                      <ConstructorElement
-                        text={data.name}
-                        thumbnail={data.image}
-                        price={data.price}/>
-                    </div>
-                  )
-              })
-            }
-        </div>
-        <div className={burgerConstructorListStyles.bottomBun}>
+        </div>}
+        {ids && <div className={`${styles.ingredients} scrollable`} style={{margin: bun_id ? '0' : 'auto 0'}}>
+            {selectedIngredients.map((data, index) => <BurgerConstructorItem key={getItemUuid(data._id, index)} data={data} index={index} onRemoveIngredient={onRemoveIngredient}/>)}
+        </div>}
+        {bottomData && <div className={styles.bottomBun}>
           <ConstructorElement
             type='bottom'
             isLocked='true'
             text={`${bottomData.name} (низ)`}
             thumbnail={bottomData.image}
             price={bottomData.price}/>
-        </div>
+        </div>}
     </div>
   );
 };
