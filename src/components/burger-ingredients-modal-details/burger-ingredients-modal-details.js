@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import {v4 as uuidv4} from 'uuid';
 import styles from './burger-ingredients-modal-details.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/ingredients';
 
 const detailsAccessors = [
     { name: 'Калории,ккал', accsessor: 'calories'},
@@ -10,12 +12,22 @@ const detailsAccessors = [
     { name: 'Углеводы, г', accsessor: 'carbohydrates'}
 ]
 
-export const BurgerIngredientsModalDetails = () => {
+export const BurgerIngredientsModalDetails = ({pid}) => {
 
     const id = useSelector(store => store.ingredientDetails.id);
     const ingredients = useSelector(store => store.ingredients.items);
+    const dispatch = useDispatch();
 
-    const ingredient = useMemo(() => ingredients.find(o => o._id === id), [id, ingredients]);
+    const ingredient = useMemo(() => {
+        if (pid) {
+            return ingredients.find(o => o._id === pid)    
+        }
+        return ingredients.find(o => o._id === id)
+    }, [id, pid, ingredients]);
+    if (!ingredient) {
+        dispatch(getIngredients());
+        return null;
+    }
 
     return (
         <div className={styles.main} >
@@ -33,3 +45,6 @@ export const BurgerIngredientsModalDetails = () => {
     );
 };
 
+BurgerIngredientsModalDetails.propTypes = {
+    pid: PropTypes.string,
+  };

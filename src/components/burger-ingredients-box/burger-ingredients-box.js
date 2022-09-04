@@ -35,12 +35,18 @@ const BurgerIngredientsBox = () => {
     dispatch({type: SET_ACTIVE_TAB, cat: closestCat.type});
   },[cats, positionRef, dispatch]);
 
+  const onHideDetails = useCallback( (e, value) => {
+    if (showDetails) {
+      dispatch({type: HIDE_INGREDIENT_DETAILS});
+    }
+  }, [showDetails, dispatch]);
+
   return (<>
     <div  className={`${burgerIngredientsBox.main} scrollable`} onScroll={onScroll} ref={positionRef}>
         {cats.map(cat => (<BurgerIngredientsCategory 
           key={cat.type} type={cat.type}/>))};
     </div>
-    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={() => showDetails && dispatch({type: HIDE_INGREDIENT_DETAILS})}>
+    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={onHideDetails}>
         <BurgerIngredientsModalDetails />
     </Modal>
   </>);

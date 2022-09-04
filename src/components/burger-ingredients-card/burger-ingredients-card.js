@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 import burgerIngredientsCard from './burger-ingredients-card.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SHOW_INGREDIENT_DETAILS } from '../../services/actions/ingredientDetails';
+import { useHistory } from 'react-router-dom';
 
 
 const BurgerIngredientsCard = ({ ingredient }) => {
   
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [{ opacity }, dragRef] = useDrag({
     type: 'new_ingredient',
@@ -19,7 +21,15 @@ const BurgerIngredientsCard = ({ ingredient }) => {
     })
   });
 
-  const onShowIngredientDetails = useCallback(() => dispatch({type: SHOW_INGREDIENT_DETAILS, id: ingredient._id}), [dispatch, ingredient._id]);
+  const onShowIngredientDetails = useCallback((e) => {
+    e.persist();
+    e.stopPropagation();
+    if (e.ctrlKey) {
+      history.push({ pathname: `/ingredients/${ingredient._id}`})
+    } else {
+      dispatch({type: SHOW_INGREDIENT_DETAILS, id: ingredient._id})
+    }
+  }, [dispatch, ingredient, history]);
   
   return (
     (<div  className={burgerIngredientsCard.main} ref={dragRef} style={{opacity}}

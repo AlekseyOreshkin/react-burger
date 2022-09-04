@@ -2,7 +2,7 @@ import React  from 'react';
 
 import styles from './profile.module.css';
 import AppHeader from '../components/app-header/app-header'
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
