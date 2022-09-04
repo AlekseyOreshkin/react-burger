@@ -6,6 +6,7 @@ import Modal from '../modal/modal';
 import BurgerConstructorModalOrder from '../burger-constructor-modal-order/burger-constructor-modal-order';
 import { getOrder, CLOSE_ORDER } from '../../services/actions/orderDetails';
 import { validBunId } from '../../utils/validation';
+import { useHistory } from 'react-router-dom';
 
 
 const BurgerConstructorSubmit = () => {
@@ -16,14 +17,18 @@ const BurgerConstructorSubmit = () => {
   const showOrder = useSelector(state => state.orderDetails.show);
   
   const dispatch = useDispatch();
+  const history = useHistory();
   
   const onOrderSubmit = useCallback(() => {
+    if (true) {
+      history.replace({pathname: '/login'});
+    }
     const arr = [...ingredients] ?? [];
     if (validBunId(bun)) {
       arr.splice(-1, 0, bun, bun);
     }
     dispatch(getOrder(arr));
-  }, [dispatch, bun, ingredients]);
+  }, [dispatch, bun, ingredients, history]);
 
   
   return (

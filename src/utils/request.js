@@ -1,5 +1,11 @@
 import { createRef } from 'react';
-import { BASE_URL, INGREDIENTS_ENDPOINT, ORDER_REQUEST_ENDPOINT } from './constants';
+import {
+    BASE_URL,
+    INGREDIENTS_ENDPOINT,
+    ORDER_REQUEST_ENDPOINT,
+    PASSWORD_RESET_ENDPOINT,
+    PASSWORD_SET_ENDPOINT
+ } from './constants';
 
 const request = async (endopoint, initParams = {headers: {'Content-Type': 'application/json'}}) => {
     const url = BASE_URL + endopoint;
@@ -41,11 +47,12 @@ export const mapIngredientCategoryName = (category, single = false) => {
 };
 
 
-export const getIngredientsRequest = async () => {
+export const requestIngredients = async () => {
     try
     {
-        const [result, {success, data}] = await request(INGREDIENTS_ENDPOINT);
-        checkResult(INGREDIENTS_ENDPOINT, result, success);
+        const endpoint = INGREDIENTS_ENDPOINT;
+        const [result, {success, data}] = await request(endpoint);
+        checkResult(endpoint, result, success);
         const cats = [];
         data.map(o => o.type).forEach(type => { 
             
@@ -69,14 +76,37 @@ const postRequestParams = {
     }
 };
   
-export const getOrderRequest = async (ingredients) => {
+export const requestOrder = async (ingredients) => {
     try {
+        const endpoint = ORDER_REQUEST_ENDPOINT;
         const params = {...postRequestParams, body: JSON.stringify({ingredients: ingredients})};
-        const [result, { name, order: {number}, success }] = await request(ORDER_REQUEST_ENDPOINT, params);
-        checkResult(ORDER_REQUEST_ENDPOINT, result, success);
+        const [result, { name, order: {number}, success }] = await request(endpoint, params);
+        checkResult(endpoint, result, success);
         return Promise.resolve({ name, number });
-        //makeOrder.toggle();
     } catch (error) {
         return Promise.reject();
+    }
+  };
+
+  export const requestPasswordReset = async (email) => {
+    try {
+        const endpoint = PASSWORD_RESET_ENDPOINT;
+        const params = {...postRequestParams, body: JSON.stringify({email: email})};
+        const [result, { message, success }] = await request(endpoint, params);
+        checkResult(endpoint, result, success);
+        return Promise.resolve({ message });
+    } catch (error) {
+        return Promise.reject({ error });
+    }
+  };
+  export const requestPasswordSet = async (passwort, token) => {
+    try {
+        const endpoint = PASSWORD_SET_ENDPOINT;
+        const params = {...postRequestParams, body: JSON.stringify({passwort, token})};
+        const [result, { message, success }] = await request(endpoint, params);
+        checkResult(endpoint, result, success);
+        return Promise.resolve({ message });
+    } catch (error) {
+        return Promise.reject({ error });
     }
   };
