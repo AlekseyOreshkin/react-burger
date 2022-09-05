@@ -110,3 +110,14 @@ export const requestOrder = async (ingredients) => {
         return Promise.reject({ error });
     }
   };
+  const securedPostRequestParams = {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'
+  };
