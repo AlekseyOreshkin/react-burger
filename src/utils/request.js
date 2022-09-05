@@ -4,10 +4,32 @@ import {
     INGREDIENTS_ENDPOINT,
     ORDER_REQUEST_ENDPOINT,
     PASSWORD_RESET_ENDPOINT,
-    PASSWORD_SET_ENDPOINT
+    PASSWORD_SET_ENDPOINT,
+    //AUTH_LOGIN_ENDPOINT,        
+    AUTH_REGISTER_ENDPOINT,     
+    //AUTH_LOGOUT_ENDPOINT,       
+    //AUTH_REFRESH_TOKEN_ENDPOINT,
  } from './constants';
 
-const request = async (endopoint, initParams = {headers: {'Content-Type': 'application/json'}}) => {
+const getRequestParams = {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+};
+const postRequestParams = {
+    ...getRequestParams,
+    method: 'POST'
+};
+const securedPostRequestParams = {
+    ...postRequestParams,
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'
+};
+const request = async (endopoint, initParams) => {
     const url = BASE_URL + endopoint;
     try
     {
@@ -31,6 +53,20 @@ const checkResult = (endpoint, result, success) => {
         throw Error(`Сервер вернул ошибку: endpoint - ${endpoint}, result - ${result}, succes - ${success}`);
     }
 };
+const buildParams = (params, body) => { 
+    return {...params, body: JSON.stringify(body)}
+};
+const makeRequest = async (endpoint, params) => {
+    try {
+        const [result, response] = await request(endpoint, params);
+        checkResult(endpoint, result, response?.success);
+        console.log('request succeded', endpoint, params, result);
+        return Promise.resolve(response);
+    } catch(error) {
+        console.log('request failed', endpoint, params, error);
+        return Promise.reject(error);
+    }
+}
 
 export const mapIngredientCategoryName = (category, single = false) => {
     switch(category)
@@ -48,76 +84,37 @@ export const mapIngredientCategoryName = (category, single = false) => {
 
 
 export const requestIngredients = async () => {
-    try
-    {
-        const endpoint = INGREDIENTS_ENDPOINT;
-        const [result, {success, data}] = await request(endpoint);
-        checkResult(endpoint, result, success);
-        const cats = [];
-        data.map(o => o.type).forEach(type => { 
-            
-            if (!cats.find(c => c.type === type)) {
-                cats.splice(0, 0, {type, name: mapIngredientCategoryName(type), ref: createRef()});
-            }
-        });
-        return Promise.resolve([data, cats.sort((l,r) => l.type.localeCompare(r.type))]);
-    }
-    catch(error)
-    {
-        console.error(error);
-        return Promise.reject(error);
-    }
+    const {data} = await makeRequest(INGREDIENTS_ENDPOINT, getRequestParams);
+    const cats = [];
+    data.map(o => o.type).forEach(type => { 
+        
+        if (!cats.find(c => c.type === type)) {
+            cats.splice(0, 0, {type, name: mapIngredientCategoryName(type), ref: createRef()});
+        }
+    });
+    return Promise.resolve([data, cats.sort((l,r) => l.type.localeCompare(r.type))]);
 };
 
-const postRequestParams = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-};
-  
+
 export const requestOrder = async (ingredients) => {
-    try {
-        const endpoint = ORDER_REQUEST_ENDPOINT;
-        const params = {...postRequestParams, body: JSON.stringify({ingredients: ingredients})};
-        const [result, { name, order: {number}, success }] = await request(endpoint, params);
-        checkResult(endpoint, result, success);
-        return Promise.resolve({ name, number });
-    } catch (error) {
-        return Promise.reject();
-    }
-  };
+    const { name, order: {number} } = await makeRequest(ORDER_REQUEST_ENDPOINT,
+        buildParams(postRequestParams, {ingredients}));
+    return Promise.resolve({ name, number });
+};
+
 
   export const requestPasswordReset = async (email) => {
-    try {
-        const endpoint = PASSWORD_RESET_ENDPOINT;
-        const params = {...postRequestParams, body: JSON.stringify({email: email})};
-        const [result, { message, success }] = await request(endpoint, params);
-        checkResult(endpoint, result, success);
-        return Promise.resolve({ message });
-    } catch (error) {
-        return Promise.reject({ error });
-    }
+    const {message} = await makeRequest(PASSWORD_RESET_ENDPOINT, buildParams(postRequestParams, {email}));
+    return Promise.resolve({ message });
   };
+
   export const requestPasswordSet = async (passwort, token) => {
-    try {
-        const endpoint = PASSWORD_SET_ENDPOINT;
-        const params = {...postRequestParams, body: JSON.stringify({passwort, token})};
-        const [result, { message, success }] = await request(endpoint, params);
-        checkResult(endpoint, result, success);
-        return Promise.resolve({ message });
-    } catch (error) {
-        return Promise.reject({ error });
-    }
+    const {message} = await makeRequest(PASSWORD_SET_ENDPOINT, buildParams(postRequestParams, {passwort, token}));
+    return Promise.resolve({ message });
   };
-  const securedPostRequestParams = {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer'
-  };
+  
+  export const requestRegister = async (email, password, name) => {
+    const response = await makeRequest(AUTH_REGISTER_ENDPOINT, 
+        buildParams(securedPostRequestParams, {email, password, name}));
+    return Promise.resolve(response);
+  }
