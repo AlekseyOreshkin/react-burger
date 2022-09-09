@@ -87,6 +87,19 @@ const makeRequest = async (endpoint, params, parseHeaders) => {
         return Promise.reject(error);
     }
 }
+const makeSecuredRequest = async (endpoint, params, parseHeaders) => {
+    try {
+        const result = await makeRequest(endpoint, params, parseHeaders);
+        return Promise.resolve(result);
+    } catch(error) {
+        const success = await requestRefreshToken();
+        if (success) {
+            const result = await makeRequest(endpoint, params, parseHeaders);
+            return Promise.resolve(result);
+        }
+        return Promise.reject(error);
+    }
+}
 
 export const mapIngredientCategoryName = (category, single = false) => {
     switch(category)
@@ -117,7 +130,7 @@ export const requestIngredients = async () => {
 
 
 export const requestOrder = async (ingredients) => {
-    const { name, order: {number} } = await makeRequest(ORDER_REQUEST_ENDPOINT,
+    const { name, order: {number} } = await makeSecuredRequest(ORDER_REQUEST_ENDPOINT,
         buildParams(securedPostRequestParams, {ingredients}));
     return Promise.resolve({ name, number });
 };
@@ -152,8 +165,16 @@ export const requestOrder = async (ingredients) => {
     return Promise.resolve({message});
   };
 
-  export const requestRefreshToken = async token => {
-    const tokenData = await makeRequest(REFRESH_TOKEN_ENDPOINT, 
+  export const requestRefreshToken = async () => {
+    const token = localStorage.getItem('refreshToken');
+    if (!token) {
+        return Promise.resolve(false);
+    }
+    const data = await makeRequest(REFRESH_TOKEN_ENDPOINT, 
         buildParams(securedPostRequestParams, { token }));
-    return Promise.resolve({...tokenData});
+    if (data.success) {
+        localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+    }
+    return Promise.resolve(data.success);
   };

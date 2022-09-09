@@ -1,4 +1,4 @@
-import { requestLogin, requestLogout, requestRefreshToken, requestRegister } from "../../utils/request";
+import { requestLogin, requestLogout, requestRegister } from "../../utils/request";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -11,10 +11,6 @@ export const LOGIN_FAILED  =  'LOGIN_FAILED';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILED  =  'LOGOUT_FAILED';
-
-export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
-export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
-export const REFRESH_TOKEN_FAILED  =  'REFRESH_TOKEN_FAILED';
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
@@ -60,19 +56,6 @@ export const logout = () => {
             dispatch({type: LOGOUT_SUCCESS, message});
         }).catch(() => {
             dispatch({type: LOGOUT_FAILED});
-        })
-    }
-};
-
-export const refreshToken = token => {
-    return (dispatch) => {
-        dispatch({type: REFRESH_TOKEN_REQUEST});
-        requestRefreshToken(token).then((authInfo) => {
-            localStorage.setItem('token', authInfo.accessToken);
-            localStorage.setItem('refreshToken', authInfo.refreshToken);
-            dispatch({type: REFRESH_TOKEN_SUCCESS, authInfo});
-        }).catch(() => {
-            dispatch({type: REFRESH_TOKEN_FAILED});
         })
     }
 };

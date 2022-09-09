@@ -8,6 +8,7 @@ export const LOGIN_ENDPOINT        = '/auth/login';
 export const REGISTER_ENDPOINT     = '/auth/register';
 export const LOGOUT_ENDPOINT       = '/auth/logout'; 
 export const REFRESH_TOKEN_ENDPOINT = '/auth/token';
+export const USER_ENDPOINT = '/auth/user';
 
 
 export const RESET_PASSWORD_STEP_RECOVER = 'RESET_PASSWORD_STEP_RECOVER';

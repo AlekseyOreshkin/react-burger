@@ -8,9 +8,6 @@ import {
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_FAILED,
-    REFRESH_TOKEN_REQUEST,
-    REFRESH_TOKEN_SUCCESS,
-    REFRESH_TOKEN_FAILED
 } from '../actions/authInfo';
 
 const initialAuthState = {
@@ -20,8 +17,6 @@ const initialAuthState = {
         email: '',
         name: ''
     },
-    accessToken: '',
-    refreshToken: '',
   } ;
 
 export const authInfoReducer = (state = initialAuthState, action) => {
@@ -72,23 +67,6 @@ export const authInfoReducer = (state = initialAuthState, action) => {
             return initialAuthState;
         } 
         case LOGOUT_FAILED: return {
-            ...state,
-            request: false,
-        }; 
-        case REFRESH_TOKEN_REQUEST: return {
-            ...state,
-            request: true
-        }; 
-        case REFRESH_TOKEN_SUCCESS: {
-            const {accessToken, refreshToken} = action.authInfo;
-            return {
-                ...state,
-                request: false,
-                success: true,
-                accessToken: accessToken.split('Bearer ')[1],
-                refreshToken
-            }; 
-        } case REFRESH_TOKEN_FAILED: return {
             ...state,
             request: false,
         }; 

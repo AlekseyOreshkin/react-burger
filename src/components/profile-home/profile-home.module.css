@@ -1,3 +1,9 @@
 .main {
     composes: form-area from '../../index.css';
 }
+.main > div > div { 
+    width: 480px;
+}
+.main > * { 
+    margin-bottom: 24px;
+}
