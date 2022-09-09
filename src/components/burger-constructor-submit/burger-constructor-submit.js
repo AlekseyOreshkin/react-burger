@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 const BurgerConstructorSubmit = () => {
 
   const {ingredients, bun} = useSelector(state => ({ingredients: state.constructor.items, bun: state.constructor.bun}));
-  
+  const loggedIn = useSelector(state => state.authInfo.success);
   const price = useSelector(state => state.constructor.price);
   const showOrder = useSelector(state => state.orderDetails.show);
   
@@ -20,15 +20,16 @@ const BurgerConstructorSubmit = () => {
   const history = useHistory();
   
   const onOrderSubmit = useCallback(() => {
-    if (true) {
+    if (!loggedIn) {
       history.replace({pathname: '/login'});
+      return;
     }
     const arr = [...ingredients] ?? [];
     if (validBunId(bun)) {
       arr.splice(-1, 0, bun, bun);
     }
     dispatch(getOrder(arr));
-  }, [dispatch, bun, ingredients, history]);
+  }, [dispatch, bun, ingredients, history, loggedIn]);
 
   
   return (

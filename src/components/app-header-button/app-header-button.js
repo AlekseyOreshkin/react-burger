@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './app-header-button.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useMemo } from 'react';
 
 const getIcon = (icon) => {
     switch(icon)

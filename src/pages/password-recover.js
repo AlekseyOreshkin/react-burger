@@ -5,7 +5,7 @@ import AppHeader from '../components/app-header/app-header'
 import { CommonForm } from '../components/common-form';
 import { Link, useHistory } from 'react-router-dom';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword} from '../services/actions/reset-password';
+import { resetPassword} from '../services/actions/resetPassword';
 import { RESET_PASSWORD_STEP_RECOVER, RESET_PASSWORD_STEP_RESET } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -34,7 +34,7 @@ export const PasswordRecoverPage = () => {
         <div className={styles.main} >
             <div className='form-area'>
                 <CommonForm headerText='Восстановление пароля' submitText='Восстановить' onSubmit={onSubmit}>
-                    <EmailInput type='email' value={email} onChange={onChange} />
+                    <EmailInput name='email' value={email} onChange={onChange} />
                 </CommonForm>
                 <p className="text text_type_main-default text_color_inactive">{message}</p>
                 <p className="text text_type_main-default text_color_inactive">Вспомнили пароль? <Link to='/login'>Войти</Link></p>

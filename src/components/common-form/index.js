@@ -5,7 +5,7 @@ import styles from './common-form.module.css';
 
 
 export const CommonForm = ({children, headerText, submitText, onSubmit}) => {
-    return (<div className={styles.main} >
+    return (<form className={styles.main} >
         <h1 className={`text text_type_main-medium ${styles.header}`}>{headerText}</h1>
         {children}
         <div className={styles.buttonWrapper}>
@@ -13,7 +13,7 @@ export const CommonForm = ({children, headerText, submitText, onSubmit}) => {
             {submitText}
         </Button>
         </div>
-      </div>);
+      </form>);
 }
 CommonForm.defaultProps = {
     headerText: '',

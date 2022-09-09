@@ -1,29 +1,37 @@
-import React  from 'react';
+import React, { useCallback, useEffect }  from 'react';
 
 import styles from './profile.module.css';
 import AppHeader from '../components/app-header/app-header'
-//import { Link } from 'react-router-dom';
-import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ProfileMenu } from '../components/profile-menu/profile-menu';
+import { ProfileHome } from '../components/profile-home/profile-home';
+import { ProfileOrders } from '../components/profile-orders/profile-orders';
+import { Route } from '../utils/route';
 
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from '../services/actions/authInfo';
 
 export const ProfilePage = () => {
-  const name = '';
-  const email = '';
-  const password = '';
+  const { success } = useSelector(state => state.authInfo);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  useEffect(() => {
+    if (!success) {
+      history.replace({pathname: '/login'});
+    }
+  }, [success, history]);
+  
+  const handleLogout = useCallback(() => {
+      dispatch(logout())
+  }, [dispatch]);
+    
     return (<div className='main-grid' >
         <AppHeader />
         <div className={styles.main} >
-          <div className={styles.lkMenu}>
-            <p className="text text_type_main-medium">Профиль</p>
-            <p className="text text_type_main-medium text_color_inactive">История заказов</p>
-            <p className="text text_type_main-medium text_color_inactive">Выход</p>
-            <p className="text text_type_main-small text_color_inactive">В этом разделе вы можете изменить свои персональные данные</p>
-          </div>
-            <div className='form-area'>
-                  <Input type='text' value={name} placeholder='Имя' onChange={() => {}} />
-                  <Input type='email' value={email} placeholder='E-mail' onChange={() => {}} />
-                  <PasswordInput onChange={() => {}} value={password} name={'password'} />
-            </div>
+          <ProfileMenu onLogout={handleLogout}/>
+          <Route path='/profile'><ProfileHome /></Route>
+          <Route path='/profile/orders'><ProfileOrders /></Route>
         </div>
       </div>);
 }

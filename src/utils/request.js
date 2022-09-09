@@ -5,10 +5,10 @@ import {
     ORDER_REQUEST_ENDPOINT,
     PASSWORD_RESET_ENDPOINT,
     PASSWORD_SET_ENDPOINT,
-    //AUTH_LOGIN_ENDPOINT,        
-    AUTH_REGISTER_ENDPOINT,     
-    //AUTH_LOGOUT_ENDPOINT,       
-    //AUTH_REFRESH_TOKEN_ENDPOINT,
+    LOGIN_ENDPOINT,        
+    REGISTER_ENDPOINT,     
+    LOGOUT_ENDPOINT,       
+    REFRESH_TOKEN_ENDPOINT,
  } from './constants';
 
 const getRequestParams = {
@@ -21,13 +21,27 @@ const postRequestParams = {
     ...getRequestParams,
     method: 'POST'
 };
-const securedPostRequestParams = {
-    ...postRequestParams,
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer'
+const securedPostRequestParams = () => {
+    const token = localStorage.getItem('token');
+
+    let params = {
+        ...postRequestParams,
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+    };
+    if (token) {
+        params = {
+            ...params,
+            headers: {
+                ...params.headers,
+                Authorization: token
+            }
+        };
+    }
+    return params;
 };
 const request = async (endopoint, initParams) => {
     const url = BASE_URL + endopoint;
@@ -35,11 +49,10 @@ const request = async (endopoint, initParams) => {
     {
         const response = await fetch(url, initParams);
         if (response.ok) {
-            console.log(`Запрос выполнен`);
             const json = await response.json();
-            return Promise.resolve([true, json]);
+            return Promise.resolve([json, response.headers]);
         } else {
-            throw new Error(`Ошибка ${response.status}`);
+            throw new Error(`статус ${response.status}`);
         }
     }
     catch (error)
@@ -48,22 +61,29 @@ const request = async (endopoint, initParams) => {
     }
 };
 
-const checkResult = (endpoint, result, success) => {
-    if (!result || !success) {
-        throw Error(`Сервер вернул ошибку: endpoint - ${endpoint}, result - ${result}, succes - ${success}`);
+const checkResult = (success) => {
+    if (!success) {
+        throw Error(`Сервер вернул отрицательный результат`);
     }
 };
-const buildParams = (params, body) => { 
-    return {...params, body: JSON.stringify(body)}
+const buildParams = (params, body) => {
+    let p = params
+    if (typeof params === 'function') {
+        p = params();
+    } 
+    return {...p, body: JSON.stringify(body)};
 };
-const makeRequest = async (endpoint, params) => {
+const makeRequest = async (endpoint, params, parseHeaders) => {
     try {
-        const [result, response] = await request(endpoint, params);
-        checkResult(endpoint, result, response?.success);
-        console.log('request succeded', endpoint, params, result);
-        return Promise.resolve(response);
+        const [json, headers] = await request(endpoint, params);
+        checkResult(json?.success);
+        console.log('Запрос выполнен:', endpoint, params, headers, json);
+        if (typeof parseHeaders === 'function') {
+            parseHeaders(headers);
+        }
+        return Promise.resolve(json);
     } catch(error) {
-        console.log('request failed', endpoint, params, error);
+        console.log('Запрос завершен с ошибкой', endpoint, params, error);
         return Promise.reject(error);
     }
 }
@@ -98,23 +118,42 @@ export const requestIngredients = async () => {
 
 export const requestOrder = async (ingredients) => {
     const { name, order: {number} } = await makeRequest(ORDER_REQUEST_ENDPOINT,
-        buildParams(postRequestParams, {ingredients}));
+        buildParams(securedPostRequestParams, {ingredients}));
     return Promise.resolve({ name, number });
 };
 
 
   export const requestPasswordReset = async (email) => {
-    const {message} = await makeRequest(PASSWORD_RESET_ENDPOINT, buildParams(postRequestParams, {email}));
+    const {message} = await makeRequest(PASSWORD_RESET_ENDPOINT,
+        buildParams(postRequestParams, {email}));
     return Promise.resolve({ message });
   };
 
   export const requestPasswordSet = async (passwort, token) => {
-    const {message} = await makeRequest(PASSWORD_SET_ENDPOINT, buildParams(postRequestParams, {passwort, token}));
+    const {message} = await makeRequest(PASSWORD_SET_ENDPOINT, 
+        buildParams(postRequestParams, {passwort, token}));
     return Promise.resolve({ message });
   };
   
-  export const requestRegister = async (email, password, name) => {
-    const response = await makeRequest(AUTH_REGISTER_ENDPOINT, 
-        buildParams(securedPostRequestParams, {email, password, name}));
-    return Promise.resolve(response);
-  }
+  export const requestRegister = async form => {
+    const authInfo = await makeRequest(REGISTER_ENDPOINT, 
+        buildParams(postRequestParams, form));
+    return Promise.resolve(authInfo);
+  };
+
+  export const requestLogin = async (form) => {
+    const authInfo = await makeRequest(LOGIN_ENDPOINT, 
+        buildParams(postRequestParams, form));
+    return Promise.resolve(authInfo);
+  };
+  export const requestLogout = async token => {
+    const {message} = await makeRequest(LOGOUT_ENDPOINT, 
+        buildParams(securedPostRequestParams, { token }));
+    return Promise.resolve({message});
+  };
+
+  export const requestRefreshToken = async token => {
+    const tokenData = await makeRequest(REFRESH_TOKEN_ENDPOINT, 
+        buildParams(securedPostRequestParams, { token }));
+    return Promise.resolve({...tokenData});
+  };

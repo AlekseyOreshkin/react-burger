@@ -6,7 +6,7 @@ import { CommonForm } from '../components/common-form';
 import { Link, useHistory } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPassword } from '../services/actions/reset-password';
+import { setPassword } from '../services/actions/resetPassword';
 import { RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER } from '../utils/constants';
 
 
@@ -18,14 +18,13 @@ export const PasswordResetPage = () => {
     const history = useHistory();
 
     useEffect(() => {
-        
         if (step === RESET_PASSWORD_STEP_RECOVER) {
             history.replace({pathname: '/forgot-password'});
         } else if (step === RESET_PASSWORD_STEP_LOGIN) {
             history.replace({pathname: '/login'});
         }
     }, [history, step]);
-
+    // token - код из письма
     const onSubmit = useCallback(() => {
         dispatch(setPassword(password, token, RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER));
     }, [dispatch, password, token]);

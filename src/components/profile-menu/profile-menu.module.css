@@ -1,0 +1,9 @@
+.main {
+    padding-top: 16px;
+    padding-right: 60px;
+    grid-area: lk-menu;
+}
+
+.main > p {
+    margin-top: 80px;
+}

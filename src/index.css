@@ -5,7 +5,6 @@ body {
 
 .main-grid {
   display: grid;
-  height: 800px;
   grid-template-columns: 1fr  [left-border-line] 600px [center-line] 600px [right-border-line] 1fr;
   grid-template-rows: [top-line] 88px [nav-bottom-line] 100px [container-top-line] auto [container-bottom-line] 40px [bottom-line];
   grid-template-areas: 

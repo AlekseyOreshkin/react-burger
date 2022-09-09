@@ -44,7 +44,7 @@ const BurgerIngredientsBox = () => {
   return (<>
     <div  className={`${burgerIngredientsBox.main} scrollable`} onScroll={onScroll} ref={positionRef}>
         {cats.map(cat => (<BurgerIngredientsCategory 
-          key={cat.type} type={cat.type}/>))};
+          key={cat.type} type={cat.type}/>))}
     </div>
     <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={onHideDetails}>
         <BurgerIngredientsModalDetails />
