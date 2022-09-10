@@ -5,15 +5,15 @@ import styles from './common-form.module.css';
 
 
 export const CommonForm = ({children, headerText, submitText, onSubmit}) => {
-    return (<form className={styles.main} >
-        <h1 className={`text text_type_main-medium ${styles.header}`}>{headerText}</h1>
-        {children}
-        <div className={styles.buttonWrapper}>
-        <Button type='primary' size='large' onClick={onSubmit}>
-            {submitText}
-        </Button>
-        </div>
-      </form>);
+    return (
+        <form className={styles.main} onSubmit={onSubmit}>
+            <h1 className={`text text_type_main-medium ${styles.header}`}>{headerText}</h1>
+            {children}
+            <div className={styles.buttonWrapper}>
+                <Button type='primary' size='large'>{submitText}</Button>
+            </div>
+        </form>
+    );
 }
 CommonForm.defaultProps = {
     headerText: '',

@@ -1,7 +1,4 @@
 import {
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
-    REGISTER_FAILED,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILED,
@@ -16,44 +13,22 @@ const initialAuthState = {
     user: {
         email: '',
         name: ''
-    },
+    }
   } ;
 
 export const authInfoReducer = (state = initialAuthState, action) => {
     switch (action.type) {
-        case REGISTER_REQUEST: return {
-            ...state,
-            request: true,
-            success: false,
-        };
-        case REGISTER_SUCCESS: {
-            let {user, accessToken, refreshToken} = action.authInfo;
-            accessToken = accessToken.split('Bearer ')[1];
-            return {
-                ...state,
-                request: false,
-                success: true,
-                user,
-                accessToken,
-                refreshToken
-            };
-        } case REGISTER_FAILED: return {
-            ...state,
-            request: false,
-        }; 
         case LOGIN_REQUEST: return {
             ...state,
             request: true,
         }; 
         case LOGIN_SUCCESS: {
-            const {user, accessToken, refreshToken} = action.authInfo;
+            const { user } = action.authInfo;
             return {
                 ...state,
                 request: false,
                 success: true,
-                user,
-                accessToken: accessToken.split('Bearer ')[1],
-                refreshToken
+                user
             }; 
         } case LOGIN_FAILED: return {
             ...state,

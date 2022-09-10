@@ -16,10 +16,10 @@ export const resetPassword = (email, stepOnSuccess, stepOnFailed) => {
     }
 };
 
-export const setPassword = (password, token, stepOnSuccess, stepOnFailed) => {
+export const setPassword = (form, stepOnSuccess, stepOnFailed) => {
     return (dispatch) => {
         dispatch({type: RESET_PASSWORD_REQUEST});
-        requestPasswordSet({password, token}).then(({ message }) => {
+        requestPasswordSet(form).then(({ message }) => {
             dispatch({type: RESET_PASSWORD_SUCCESS, message, stepOnSuccess});
         }).catch(error => {
             dispatch({type: RESET_PASSWORD_FAILED, error, stepOnFailed});

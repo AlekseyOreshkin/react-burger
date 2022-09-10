@@ -1,8 +1,4 @@
-import { requestLogin, requestLogout, requestRegister } from "../../utils/request";
-
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_FAILED  =  'REGISTER_FAILED';
+import { requesPatchUser, requestLogin, requestLogout, requestRefreshToken, requestRegister, requestGetUser } from "../../utils/request";
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -22,13 +18,13 @@ export const PATCH_USER_FAILED  = 'PATCH_USER_FAILED';
 
 export const register = form => {
     return (dispatch) => {
-        dispatch({type: REGISTER_REQUEST});
+        dispatch({type: LOGIN_REQUEST});
         requestRegister(form).then((authInfo) => {
             localStorage.setItem('token', authInfo.accessToken);
             localStorage.setItem('refreshToken', authInfo.refreshToken);
-            dispatch({type: REGISTER_SUCCESS, authInfo});
+            dispatch({type: LOGIN_SUCCESS, authInfo});
         }).catch(() => {
-            dispatch({type: REGISTER_FAILED});
+            dispatch({type: LOGIN_FAILED});
         })
     }
 };
@@ -40,6 +36,18 @@ export const login = form => {
             localStorage.setItem('token', authInfo.accessToken);
             localStorage.setItem('refreshToken', authInfo.refreshToken);
             dispatch({type: LOGIN_SUCCESS, authInfo});
+        }).catch(() => {
+            dispatch({type: LOGIN_FAILED});
+        })
+    }
+};
+
+export const tokenLogin = () => {
+    return (dispatch) => {
+        requestRefreshToken().then(() => {
+            requestGetUser().then( authInfo => {
+                dispatch({type: LOGIN_SUCCESS, authInfo});
+            })
         }).catch(() => {
             dispatch({type: LOGIN_FAILED});
         })
@@ -60,14 +68,15 @@ export const logout = () => {
     }
 };
 
-export const requestGetUser = () => {
+export const getUser = () => {
     return (dispatch) => {
-
+        dispatch({type: LOGIN_REQUEST});
+        requestGetUser().then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}));
     }
 }
 
-export const requestPatchUser = form => {
+export const patchUser = form => {
     return (dispatch) => {
-
+        requesPatchUser(form).then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}));
     }
 }

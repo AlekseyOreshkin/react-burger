@@ -1,29 +1,31 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
   PasswordResetPage, ProfilePage, IngredientPage, NotFound404Page } from './pages';
+import { ProtectedRoute } from './components/protected-route/protected-route';
+import { UnauthorizedRoute } from './components/unauthorized-route/unauthorized-route';
 
 const App = () => {
   return (
       <Router>
         <Switch>
-          <Route path='/' exact={true}>
-            <HomePage />
-          </Route>
-          <Route path='/login' exact={true}>
-            <LoginPage />
-          </Route>
-          <Route path='/register' exact={true}>
+          <UnauthorizedRoute path='/login' exact={true}>
+              <LoginPage />
+          </UnauthorizedRoute>
+          <UnauthorizedRoute path='/register' exact={true}>
             <RegisterPage />
-          </Route>
-          <Route path='/forgot-password' exact={true}>
+          </UnauthorizedRoute>
+          <UnauthorizedRoute path='/forgot-password' exact={true}>
             <PasswordRecoverPage />
-          </Route>
-          <Route path='/reset-password' exact={true}>
+          </UnauthorizedRoute>
+          <UnauthorizedRoute path='/reset-password' exact={true}>
             <PasswordResetPage />
-          </Route>
-          <Route path='/profile'>
+          </UnauthorizedRoute>
+          <ProtectedRoute path='/'  exact={true}>
+            <HomePage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/profile' >
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
           <Route path='/ingredients/:id' exact={true}>
             <IngredientPage />
           </Route>

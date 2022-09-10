@@ -3,18 +3,17 @@ import React, { useState, useCallback }  from 'react';
 import styles from './login.module.css';
 import AppHeader from '../components/app-header/app-header'
 import { CommonForm } from '../components/common-form';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../services/actions/authInfo';
 
 
 export const LoginPage = () => {
-    const loggedIn = useSelector(state => state.authInfo.success);
     const email = useSelector(state => state.authInfo.user.email);
-
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [form, setValue] = useState({ email: email, password: '' });
+
     const onChange = e => {
         e.persist();
         e.preventDefault();
@@ -25,11 +24,8 @@ export const LoginPage = () => {
         e.preventDefault();
         dispatch(login(form));
     }, [form, dispatch]);
+    
 
-    if (loggedIn) {
-        return (<Redirect to={{ pathname: '/' }} />
-        );
-    }
     return (<div className='main-grid' >
         <AppHeader />
         <div className={styles.main} >

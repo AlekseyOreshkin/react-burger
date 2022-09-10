@@ -23,10 +23,13 @@ export const PasswordRecoverPage = () => {
 
     const onChange = useCallback(e => {
         e.persist();
+        e.preventDefault();
         setEmail(e.target.value);
     }, [setEmail])
     
-    const onSubmit = useCallback(() => {
+    const onSubmit = useCallback( e => {
+        e.persist();
+        e.preventDefault();
         dispatch(resetPassword(email, RESET_PASSWORD_STEP_RESET, RESET_PASSWORD_STEP_RECOVER));
     }, [email, dispatch]);
     return (<div className='main-grid' >

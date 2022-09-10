@@ -12,8 +12,7 @@ import { RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER } from '../utils
 
 export const PasswordResetPage = () => {
     const {step, message} = useSelector(state => state.resetPassword);
-    const [token, setToken] = useState('');
-    const [password, setPwd] = useState('');
+    const [form, setValue] = useState({password: '', token: ''});
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -25,25 +24,24 @@ export const PasswordResetPage = () => {
         }
     }, [history, step]);
     // token - код из письма
-    const onSubmit = useCallback(() => {
-        dispatch(setPassword(password, token, RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER));
-    }, [dispatch, password, token]);
+    const onSubmit = useCallback(e => {
+        e.persist();
+        e.preventDefault();
+        dispatch(setPassword(form, RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER));
+    }, [dispatch, form]);
 
-    const onChangePassword = useCallback(e => {
+    const onChangeValue = useCallback(e => {
         e.persist();
-        setPwd(e.target.value);
-    }, [setPwd]);
-    const onChangeToken = useCallback(e => {
-        e.persist();
-        setToken(e.target.value);
-    }, [setToken]);
+        e.preventDefault();
+        setValue( {...form, [e.target.name]: e.target.value});
+    }, [form, setValue]);
     return (<div className='main-grid' >
         <AppHeader />
         <div className={styles.main} >
             <div className='form-area'>
                 <CommonForm headerText='Восстановление пароля' submitText='Сохранить' onSubmit={onSubmit}>
-                    <PasswordInput value={password} password='Введите новый пароль' onChange={onChangePassword} />
-                    <Input type='text'  value={token} placeholder='Введите код из письма' onChange={onChangeToken} />
+                    <PasswordInput  name='password' value={form.password} placeholder='Введите новый пароль' onChange={onChangeValue} />
+                    <Input type='text' name='token'  value={form.token} placeholder='Введите код из письма' onChange={onChangeValue} />
                 </CommonForm>
                 <p className="text text_type_main-default text_color_inactive">{message}</p>
                 <p className="text text_type_main-default text_color_inactive">Вспомнили пароль? <Link to='/login'>Войти</Link></p>

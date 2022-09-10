@@ -3,14 +3,13 @@ import React, { useState, useCallback }  from 'react';
 import styles from './register.module.css';
 import AppHeader from '../components/app-header/app-header'
 import { CommonForm } from '../components/common-form';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { register } from '../services/actions/authInfo';
 
 
 export const RegisterPage = () => {
-    const loggedIn = useSelector(state => state.authInfo.success);
     const dispatch = useDispatch()
     const [form, setValue] = useState({ email: '', password: '', name: '' });
     const onChange = e => {
@@ -23,10 +22,7 @@ export const RegisterPage = () => {
         e.preventDefault();
         dispatch(register(form));
     }, [form, dispatch]);
-    if (loggedIn) {
-        return (<Redirect to={{ pathname: '/' }} />
-        );
-    }
+
     return (<div className='main-grid' >
         <AppHeader />
         <div className={styles.main} >

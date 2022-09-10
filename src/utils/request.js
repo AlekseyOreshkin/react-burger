@@ -9,6 +9,7 @@ import {
     REGISTER_ENDPOINT,     
     LOGOUT_ENDPOINT,       
     REFRESH_TOKEN_ENDPOINT,
+    USER_ENDPOINT
  } from './constants';
 
 const getRequestParams = {
@@ -21,11 +22,14 @@ const postRequestParams = {
     ...getRequestParams,
     method: 'POST'
 };
-const securedPostRequestParams = () => {
+const patchRequestParams = {
+    ...getRequestParams,
+    method: 'PATCH'
+};
+const securedRequestParams = (initParams) => {
     const token = localStorage.getItem('token');
-
     let params = {
-        ...postRequestParams,
+        ...initParams,
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
@@ -43,6 +47,10 @@ const securedPostRequestParams = () => {
     }
     return params;
 };
+const securedPostRequestParams  = () => securedRequestParams(postRequestParams);
+const securedGetRequestParams   = () => securedRequestParams(getRequestParams);
+const securedPatchRequestParams = () => securedRequestParams(patchRequestParams);
+
 const request = async (endopoint, initParams) => {
     const url = BASE_URL + endopoint;
     try
@@ -71,7 +79,12 @@ const buildParams = (params, body) => {
     if (typeof params === 'function') {
         p = params();
     } 
-    return {...p, body: JSON.stringify(body)};
+    if (body) {
+        return {...p, body: JSON.stringify(body)};
+    }
+    else {
+        return {...p};
+    }
 };
 const makeRequest = async (endpoint, params, parseHeaders) => {
     try {
@@ -131,7 +144,7 @@ export const requestIngredients = async () => {
 
 export const requestOrder = async (ingredients) => {
     const { name, order: {number} } = await makeSecuredRequest(ORDER_REQUEST_ENDPOINT,
-        buildParams(securedPostRequestParams, {ingredients}));
+        buildParams(postRequestParams, {ingredients}));
     return Promise.resolve({ name, number });
 };
 
@@ -142,9 +155,9 @@ export const requestOrder = async (ingredients) => {
     return Promise.resolve({ message });
   };
 
-  export const requestPasswordSet = async (passwort, token) => {
+  export const requestPasswordSet = async form => {
     const {message} = await makeRequest(PASSWORD_SET_ENDPOINT, 
-        buildParams(postRequestParams, {passwort, token}));
+        buildParams(postRequestParams, form));
     return Promise.resolve({ message });
   };
   
@@ -177,4 +190,19 @@ export const requestOrder = async (ingredients) => {
         localStorage.setItem('refreshToken', data.refreshToken);
     }
     return Promise.resolve(data.success);
+  };
+
+  export const requestGetUser = async () => {
+    try {
+        const authInfo = await makeRequest(USER_ENDPOINT, buildParams(securedGetRequestParams));
+        return Promise.resolve(authInfo);
+    } catch(error) {
+        console.log('не удалось восстановить контекст', error);
+        return Promise.reject(error);
+    }
+  };
+  export const requesPatchUser = async form => {
+    const authInfo = await makeRequest(USER_ENDPOINT, 
+        buildParams(securedPatchRequestParams, form));
+    return Promise.resolve(authInfo);
   };

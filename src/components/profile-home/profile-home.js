@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profile-home.module.css';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { patchUser } from "../../services/actions/authInfo";
 
 export const ProfileHome = () => {
     const { name, email } = useSelector(state => state.authInfo.user);
@@ -12,6 +13,8 @@ export const ProfileHome = () => {
     const [form, setValue] = useState(initForm);
 
     const [disabled, setDisabled] = useState(true);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setDisabled(form.name === initForm.name && form.email === initForm.email && form.password === initForm.password);
@@ -33,8 +36,8 @@ export const ProfileHome = () => {
     const onSubmit = useCallback((e) => {
         e.persist();
         e.preventDefault();
-        console.log('submit', e)
-    }, []);
+        dispatch(patchUser(form));
+    }, [form, dispatch]);
     
     const onReset = useCallback((e) => {
         e.persist();
@@ -47,8 +50,8 @@ export const ProfileHome = () => {
             <Input type='text' name='name' value={form.name} placeholder='Имя' onChange={onChange} />
             <EmailInput  name='email' value={form.email} onChange={onChange} />
             <PasswordInput name='password' value={form.password} onChange={onChange} />
-            <div> <Button type='primary' size='medium' disabled={disabled}>Сохранить</Button> 
-            <Button type='secondary' size='medium' disabled={disabled} onClick={onReset}>Отмена</Button></div>
+            {!disabled && (<div> <Button type='primary' size='medium' disabled={disabled}>Сохранить</Button> 
+            <Button type='secondary' size='medium' disabled={disabled} onClick={onReset}>Отмена</Button></div>)}
         </form>
     );
 }
