@@ -2,8 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './app-header-button.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const getIcon = (icon) => {
     switch(icon)
@@ -22,25 +21,19 @@ const getIcon = (icon) => {
 const AppHeaderButton = ({icon, text, path }) => {
 
     const { pathname } = useLocation();
-    const history = useHistory();
 
     const active = useMemo(() => {
         return pathname.toLowerCase() === path.toLowerCase();
     }, [pathname, path]);
 
-    const onClick= useCallback(() => {
-        if (!active) {
-            history.push({pathname: path, state: {from: pathname}});
-        }
-    }, [active, history, path, pathname]);
     
     return (
-        <button className={styles.main} onClick={onClick}>
+        <Link className={styles.main} to={ {pathname: path, state: { from: pathname }} } >
             <p className={styles.iconWrapper} >{getIcon(icon)}</p>
             <p className={`text text_type_main-default ${styles.textWrapper} ${active ? styles.active : ''}`}>
                 {text}
             </p>
-        </button>
+        </Link>
     );
 };
 AppHeaderButton.defaultProps = {

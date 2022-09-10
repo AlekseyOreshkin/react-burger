@@ -1,7 +1,7 @@
 import React, { useEffect }from 'react';
 import { useDispatch } from 'react-redux';
 
-import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { UnauthorizedRoute } from '../unauthorized-route/unauthorized-route';
 
@@ -21,8 +21,7 @@ const App = () => {
   
   const background = location.state && location.state.background;
 
-  return (<>
-      <Router >
+  return (
       <div className='main-grid'>
         <AppHeader />
         <Switch location={background || location}>
@@ -52,8 +51,7 @@ const App = () => {
           </Route>
         </Switch>
         </div>
-      </Router>
-    </>);
+    );
 }
 
 export default App;

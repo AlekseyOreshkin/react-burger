@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route, useHistory } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
 import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/authInfo';
 import PropTypes from 'prop-types';
@@ -9,8 +9,7 @@ export const UnauthorizedRoute = ({ children, ...rest }) => {
     const {success: authorized} = useSelector(state => state.authInfo);
     const dispatch = useDispatch();
     const [request, setRequest] = useState(false);
-// eslint-disable-next-line        
-const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
         setRequest(true);
@@ -38,14 +37,7 @@ const history = useHistory();
             <Route {...rest} render={() => ( children )} />
         );
     } else {
-        return (<Redirect to='/' />);
-        // if (history.length > 0) {
-        //     history.goBack();
-        //     return (<p>Перенаправляем</p>);
-        // } else {
-        //     return (<Redirect to='/' />);
-        // }
-        
+        return (<Redirect to={location?.state?.from || '/'} />);
     }
 
 } 

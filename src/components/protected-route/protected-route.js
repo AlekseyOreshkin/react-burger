@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
@@ -8,13 +8,18 @@ import PropTypes from 'prop-types'
 export const ProtectedRoute = ({ children, ...rest }) => {
     const authorized = useSelector(state => state.authInfo.success);
     const history = useHistory();
-// eslint-disable-next-line        
-const location = useLocation();
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const [request, setRequest] = useState(false);
+
     useEffect(() => {
         if (!authorized) {
             requestRefreshToken().then(() => {
                 requestGetUser().then( authInfo => {
                     dispatch({type: LOGIN_SUCCESS, authInfo});
+                }).catch( () => {
+                    dispatch({type: LOGIN_FAILED});
+                    setRequest(false);
                 })
             }).catch(() => {
                 dispatch({type: LOGIN_FAILED});
@@ -24,13 +29,14 @@ const location = useLocation();
 // eslint-disable-next-line        
     }, []);
     
-    const dispatch = useDispatch();
-    if (authorized) {
+    if (request) {
+        return (<p>Обновляем аворизацию</p>);
+    } else if (authorized) {
         return (
             <Route {...rest} render={() => ( children )} />
         );
     } else {
-        return (<Redirect to='/login' />)
+        return ( <Redirect to={{ pathname: "/login", state: { from: location } }} />);
     }
 
 } 
