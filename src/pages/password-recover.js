@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState }  from 'react';
 
 import styles from './password-recover.module.css';
-import AppHeader from '../components/app-header/app-header'
 import { CommonForm } from '../components/common-form';
 import { Link, useHistory } from 'react-router-dom';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -32,8 +31,7 @@ export const PasswordRecoverPage = () => {
         e.preventDefault();
         dispatch(resetPassword(email, RESET_PASSWORD_STEP_RESET, RESET_PASSWORD_STEP_RECOVER));
     }, [email, dispatch]);
-    return (<div className='main-grid' >
-        <AppHeader />
+    return (
         <div className={styles.main} >
             <div className='form-area'>
                 <CommonForm headerText='Восстановление пароля' submitText='Восстановить' onSubmit={onSubmit}>
@@ -43,5 +41,5 @@ export const PasswordRecoverPage = () => {
                 <p className="text text_type_main-default text_color_inactive">Вспомнили пароль? <Link to='/login'>Войти</Link></p>
             </div>
         </div>
-      </div>);
+      );
 }

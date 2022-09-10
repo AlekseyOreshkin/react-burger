@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useHistory, useLocation } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
 import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/authInfo';
 import PropTypes from 'prop-types'
 
 export const ProtectedRoute = ({ children, ...rest }) => {
     const authorized = useSelector(state => state.authInfo.success);
+    const history = useHistory();
+// eslint-disable-next-line        
+const location = useLocation();
     useEffect(() => {
         if (!authorized) {
             requestRefreshToken().then(() => {
@@ -16,7 +19,8 @@ export const ProtectedRoute = ({ children, ...rest }) => {
             }).catch(() => {
                 dispatch({type: LOGIN_FAILED});
             })
-        }
+        };
+        history.location.state = {}
 // eslint-disable-next-line        
     }, []);
     

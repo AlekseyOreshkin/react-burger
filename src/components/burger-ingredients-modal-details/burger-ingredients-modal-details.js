@@ -2,8 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {v4 as uuidv4} from 'uuid';
 import styles from './burger-ingredients-modal-details.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 
 const detailsAccessors = [
     { name: 'Калории,ккал', accsessor: 'calories'},
@@ -16,7 +15,6 @@ export const BurgerIngredientsModalDetails = ({pid}) => {
 
     const id = useSelector(store => store.ingredientDetails.id);
     const ingredients = useSelector(store => store.ingredients.items);
-    const dispatch = useDispatch();
 
     const ingredient = useMemo(() => {
         if (pid) {
@@ -24,10 +22,6 @@ export const BurgerIngredientsModalDetails = ({pid}) => {
         }
         return ingredients.find(o => o._id === id)
     }, [id, pid, ingredients]);
-    if (!ingredient) {
-        dispatch(getIngredients());
-        return null;
-    }
 
     return (
         <div className={styles.main} >

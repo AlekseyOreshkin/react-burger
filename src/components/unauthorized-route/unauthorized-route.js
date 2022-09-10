@@ -9,7 +9,8 @@ export const UnauthorizedRoute = ({ children, ...rest }) => {
     const {success: authorized} = useSelector(state => state.authInfo);
     const dispatch = useDispatch();
     const [request, setRequest] = useState(false);
-    const history = useHistory();
+// eslint-disable-next-line        
+const history = useHistory();
 
     useEffect(() => {
         setRequest(true);
@@ -17,6 +18,9 @@ export const UnauthorizedRoute = ({ children, ...rest }) => {
             requestRefreshToken().then(() => {
                 requestGetUser().then( authInfo => {
                     dispatch({type: LOGIN_SUCCESS, authInfo});
+                    setRequest(false);
+                }).catch( () => {
+                    dispatch({type: LOGIN_FAILED});
                     setRequest(false);
                 })
             }).catch(() => {
@@ -34,12 +38,13 @@ export const UnauthorizedRoute = ({ children, ...rest }) => {
             <Route {...rest} render={() => ( children )} />
         );
     } else {
-        if (history.length > 0) {
-            history.goBack();
-            return (<p>Перенаправляем</p>);
-        } else {
-            return (<Redirect to='/' />);
-        }
+        return (<Redirect to='/' />);
+        // if (history.length > 0) {
+        //     history.goBack();
+        //     return (<p>Перенаправляем</p>);
+        // } else {
+        //     return (<Redirect to='/' />);
+        // }
         
     }
 

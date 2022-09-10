@@ -1,7 +1,6 @@
 import React, { useCallback }  from 'react';
 
 import styles from './profile.module.css';
-import AppHeader from '../components/app-header/app-header'
 import { ProfileMenu } from '../components/profile-menu/profile-menu';
 import { ProfileHome } from '../components/profile-home/profile-home';
 import { ProfileOrders } from '../components/profile-orders/profile-orders';
@@ -17,12 +16,11 @@ export const ProfilePage = () => {
       dispatch(logout())
   }, [dispatch]);
     
-    return (<div className='main-grid' >
-        <AppHeader />
+    return (
         <div className={styles.main} >
           <ProfileMenu onLogout={handleLogout}/>
           <Route path='/profile'><ProfileHome /></Route>
           <Route path='/profile/orders'><ProfileOrders /></Route>
         </div>
-      </div>);
+      );
 }
