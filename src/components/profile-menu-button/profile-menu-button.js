@@ -19,10 +19,10 @@ export const ProfileMenuButton = ({path, text, onClick}) => {
             if (typeof onClick === 'function') {
                 return onClick();
             } else {
-                history.push({pathname: path});
+                history.push({pathname: path, state: {from: pathname}});
             }
         }
-    }, [active, history, path, onClick]);
+    }, [active, history, path, onClick, pathname]);
 
     return (
         <button className={styles.main} onClick={handleClick}>

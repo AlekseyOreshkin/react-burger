@@ -30,9 +30,9 @@ const AppHeaderButton = ({icon, text, path }) => {
 
     const onClick= useCallback(() => {
         if (!active) {
-            history.push({pathname: path});
+            history.push({pathname: path, state: {from: pathname}});
         }
-    }, [active, history, path]);
+    }, [active, history, path, pathname]);
     
     return (
         <button className={styles.main} onClick={onClick}>

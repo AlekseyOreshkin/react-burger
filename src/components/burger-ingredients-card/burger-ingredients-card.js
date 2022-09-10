@@ -25,7 +25,7 @@ const BurgerIngredientsCard = ({ ingredient }) => {
     e.persist();
     e.stopPropagation();
     if (e.ctrlKey) {
-      history.push({ pathname: `/ingredients/${ingredient._id}`})
+      history.push({ pathname: `/ingredients/${ingredient._id}`, state: {from: '/ingredients'}})
     } else {
       dispatch({type: SHOW_INGREDIENT_DETAILS, id: ingredient._id})
     }

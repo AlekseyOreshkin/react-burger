@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { patchUser } from "../../services/actions/authInfo";
 
 export const ProfileHome = () => {
-    const { name, email } = useSelector(state => state.authInfo.user);
+    const { request, user: {name, email} } = useSelector(state => state.authInfo);
 
     const initForm = useMemo(() => ({name, email, password: ''}), [name, email]);
     
@@ -17,8 +17,11 @@ export const ProfileHome = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setDisabled(form.name === initForm.name && form.email === initForm.email && form.password === initForm.password);
-    }, [form, initForm])
+        if (!initForm.password) {
+            initForm.password = form.password;
+        }
+        setDisabled(!request && form.name === initForm.name && form.email === initForm.email && form.password === initForm.password);
+    }, [form, initForm, request])
 
     
     const onChange = useCallback( e => {
@@ -26,12 +29,8 @@ export const ProfileHome = () => {
         e.preventDefault();
         const name = e.target.name;
         const value = e.target.value;
-        if (name === 'password' && !initForm.password)
-        {
-            initForm.password = value;
-        }
         setValue({ ...form, [name]: value });
-    }, [form, setValue, initForm]);
+    }, [form, setValue]);
     
     const onSubmit = useCallback((e) => {
         e.persist();

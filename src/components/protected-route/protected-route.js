@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
 import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/authInfo';
+import PropTypes from 'prop-types'
 
 export const ProtectedRoute = ({ children, ...rest }) => {
     const authorized = useSelector(state => state.authInfo.success);
@@ -29,3 +30,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
     }
 
 } 
+
+ProtectedRoute.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]).isRequired,
+}
