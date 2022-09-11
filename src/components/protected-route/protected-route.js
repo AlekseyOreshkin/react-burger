@@ -30,7 +30,7 @@ export const ProtectedRoute = ({ children, ...rest }) => {
     }, []);
     
     if (request) {
-        return (<p>Обновляем аворизацию</p>);
+        return null;
     } else if (authorized) {
         return (
             <Route {...rest} render={() => ( children )} />

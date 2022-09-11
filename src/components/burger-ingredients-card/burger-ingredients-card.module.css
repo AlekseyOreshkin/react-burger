@@ -3,6 +3,9 @@
     display: block;
     margin: 0 10px;
     cursor: pointer;
+    color: white;
+    text-decoration: none;
+    text-align: center;
 }
 .main:hover {
     

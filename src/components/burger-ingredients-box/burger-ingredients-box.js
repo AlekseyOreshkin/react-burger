@@ -2,17 +2,12 @@ import React, { useCallback, createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import burgerIngredientsBox from './burger-ingredients-box.module.css';
 import BurgerIngredientsCategory from '../burger-ingredients-category/burger-ingredients-category';
-import Modal from '../modal/modal';
-import { BurgerIngredientsModalDetails } from '../burger-ingredients-modal-details/burger-ingredients-modal-details';
 import { SET_ACTIVE_TAB } from '../../services/actions/ingredients';
-import { HIDE_INGREDIENT_DETAILS } from '../../services/actions/ingredientDetails';
 
 
 const BurgerIngredientsBox = () => {
 
   const cats = useSelector(state => state.ingredients.cats);
-  const showDetails = useSelector(state => state.ingredientDetails.show);
-
   const dispatch = useDispatch();
   
   const positionRef = createRef();
@@ -35,21 +30,12 @@ const BurgerIngredientsBox = () => {
     dispatch({type: SET_ACTIVE_TAB, cat: closestCat.type});
   },[cats, positionRef, dispatch]);
 
-  const onHideDetails = useCallback( (e, value) => {
-    if (showDetails) {
-      dispatch({type: HIDE_INGREDIENT_DETAILS});
-    }
-  }, [showDetails, dispatch]);
-
-  return (<>
+  return (
     <div  className={`${burgerIngredientsBox.main} scrollable`} onScroll={onScroll} ref={positionRef}>
         {cats.map(cat => (<BurgerIngredientsCategory 
           key={cat.type} type={cat.type}/>))}
     </div>
-    <Modal  headerText='Детали ингредиента'  isShowing={showDetails} toggle={onHideDetails}>
-        <BurgerIngredientsModalDetails />
-    </Modal>
-  </>);
+  );
 }
 
 export {

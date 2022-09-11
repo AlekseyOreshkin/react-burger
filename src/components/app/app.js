@@ -1,5 +1,5 @@
 import React, { useEffect }from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -10,16 +10,20 @@ import { HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
   PasswordResetPage, ProfilePage, IngredientPage, NotFound404Page } from '../../pages';
 
 import { getIngredients } from '../../services/actions/ingredients';
+import { ModalIngredient } from '../modal-ingredient/modal-ingredient';
 
 const App = () => {
+  const ingredients = useSelector(store => store.ingredients.items);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getIngredients());
- // eslint-disable-next-line
-  }, []);
   const location = useLocation();
   
   const background = location.state && location.state.background;
+
+   useEffect(() => {
+     if (!ingredients || ingredients.length === 0) {
+       dispatch(getIngredients());
+     }
+   }, [ingredients, dispatch]);
 
   return (
       <div className='main-grid'>
@@ -50,6 +54,7 @@ const App = () => {
             <NotFound404Page />
           </Route>
         </Switch>
+        {background && <Route path="/ingredients/:id" children={<ModalIngredient />} />}
         </div>
     );
 }
