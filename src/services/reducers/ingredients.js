@@ -36,7 +36,7 @@ const ingredientsReducer = (state = initialIngredients, action) => {
                 activeTab: action.cat
             }
         default:
-            return {...state};
+            return state;
     }
 };
 

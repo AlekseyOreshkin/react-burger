@@ -2,7 +2,7 @@ import React, { useCallback, useEffect }  from 'react';
 
 import styles from './password-recover.module.css';
 import { CommonForm } from '../components/common-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPassword } from '../services/actions/resetPassword';
@@ -14,16 +14,23 @@ export const PasswordResetPage = () => {
     const {step, message} = useSelector(state => state.resetPassword);
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
     const {form, handleChange} = useForm({password: '', token: ''});
 
 
     useEffect(() => {
-        if (step === RESET_PASSWORD_STEP_RECOVER) {
-            history.replace({pathname: '/forgot-password'});
-        } else if (step === RESET_PASSWORD_STEP_LOGIN) {
-            history.replace({pathname: '/login'});
+
+        const path = location?.state?.from.pathname;
+        if (path !== '/forgot-password' && path !== '/reset-password') {
+            history.replace({pathname: '/not-found', state: {from: location}});
+            return;
         }
-    }, [history, step]);
+
+        if (step === RESET_PASSWORD_STEP_RECOVER 
+            || step === RESET_PASSWORD_STEP_LOGIN) {
+            history.replace({pathname: '/login', state: {from: location}});
+        }
+    }, [history, step, location]);
     // token - код из письма
     const onSubmit = useCallback(e => {
         e.persist();

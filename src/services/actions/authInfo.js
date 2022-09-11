@@ -71,12 +71,16 @@ export const logout = () => {
 export const getUser = () => {
     return (dispatch) => {
         dispatch({type: LOGIN_REQUEST});
-        requestGetUser().then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}));
+        requestGetUser()
+            .then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}))
+            .catch(error => Promise.reject(error));
     }
 }
 
 export const patchUser = form => {
     return (dispatch) => {
-        requesPatchUser(form).then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}));
+        requesPatchUser(form)
+            .then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}))
+            .catch(error => Promise.reject(error));
     }
 }

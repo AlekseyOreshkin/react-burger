@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState }  from 'react';
 
 import styles from './password-recover.module.css';
 import { CommonForm } from '../components/common-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword} from '../services/actions/resetPassword';
 import { RESET_PASSWORD_STEP_RECOVER, RESET_PASSWORD_STEP_RESET } from '../utils/constants';
@@ -14,11 +14,12 @@ export const PasswordRecoverPage = () => {
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
     useEffect(() => {
         if (step === RESET_PASSWORD_STEP_RESET) {
-            history.replace({pathname: '/reset-password'});
+            history.replace({pathname: '/reset-password', state: {from: location}});
         }
-    }, [step, history, dispatch])
+    }, [step, history, dispatch, location])
 
     const onChange = useCallback(e => {
         e.persist();

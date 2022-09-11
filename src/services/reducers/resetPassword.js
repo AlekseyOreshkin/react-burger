@@ -32,7 +32,8 @@ const resetPasswordReducer = (state = initialResetPassword, action) => {
             step: action.stepOnFailed
         };
     default:
-        return {...state};    }
+        return state;
+    }
 };
 
 export default resetPasswordReducer;

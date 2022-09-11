@@ -25,7 +25,6 @@ export const ProtectedRoute = ({ children, ...rest }) => {
                 dispatch({type: LOGIN_FAILED});
             })
         };
-        history.location.state = {}
 // eslint-disable-next-line        
     }, []);
     

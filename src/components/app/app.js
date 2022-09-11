@@ -41,9 +41,9 @@ const App = () => {
           <UnauthorizedRoute path='/reset-password' exact={true}>
             <PasswordResetPage />
           </UnauthorizedRoute>
-          <ProtectedRoute path='/'  exact={true}>
+          <Route path='/'  exact={true}>
             <HomePage />
-          </ProtectedRoute>
+          </Route>
           <ProtectedRoute path='/profile' >
             <ProfilePage />
           </ProtectedRoute>
