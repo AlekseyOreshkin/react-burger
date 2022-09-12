@@ -3,6 +3,10 @@
     align-items: center;
     background-color: transparent;
     border: none;
+    padding-right: 10px;;
+}
+.main:hover {
+    cursor: pointer;
 }
 .iconWrapper {
     display: inline-block;

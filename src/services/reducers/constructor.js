@@ -31,7 +31,8 @@ const constructorReducer = (state = initialConstructor, action) => {
             keys: state.keys ? [...state.keys, action.key] : [action.key]
         }
         default:
-        return {...state};    }
+        return state;
+    }
 };
 
 export default constructorReducer;

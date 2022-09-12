@@ -5,13 +5,13 @@ import confirmImage from '../../images/modal-order/done.png';
 import { CLOSE_ORDER } from '../../services/actions/orderDetails';
 
 
-const BurgerConstrctorModelOrder = () => {
+export const BurgerConstrctorModalOrder = () => {
     const order = useSelector(state => state.orderDetails.number);
     const dispatch = useDispatch();
     const onCloseOrder = useCallback(() => {
         dispatch({type: CLOSE_ORDER});
     }, [dispatch]);
-  
+      
     return (
         <div className={styles.main} >
             <p className={`text text_type_digits-large ${styles.orderNumber}`}>{order}</p>
@@ -24,4 +24,4 @@ const BurgerConstrctorModelOrder = () => {
     );
 };
 
-export default BurgerConstrctorModelOrder;
+

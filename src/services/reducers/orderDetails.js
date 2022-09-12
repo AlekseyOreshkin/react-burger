@@ -36,7 +36,8 @@ const orderDetailsReducer = (state = initialOrderDetails, action) => {
             show: false,
         };
     default:
-        return {...state};    }
+        return state;    
+    }
 };
 
 export default orderDetailsReducer;

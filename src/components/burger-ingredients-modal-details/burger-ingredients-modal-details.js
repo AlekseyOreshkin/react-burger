@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, } from 'react';
 import {v4 as uuidv4} from 'uuid';
 import styles from './burger-ingredients-modal-details.module.css'
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
 
 const detailsAccessors = [
     { name: 'Калории,ккал', accsessor: 'calories'},
@@ -12,11 +14,16 @@ const detailsAccessors = [
 
 export const BurgerIngredientsModalDetails = () => {
 
-    const id = useSelector(store => store.ingredientDetails.id);
+    const { id } = useParams();
     const ingredients = useSelector(store => store.ingredients.items);
 
-    const ingredient = useMemo(() => ingredients.find(o => o._id === id), [id, ingredients]);
-
+   
+    const ingredient = useMemo(() => {
+        return ingredients.find(o => o._id === id)
+    }, [id, ingredients]);
+    if (!ingredient) {
+        return null;
+    }
     return (
         <div className={styles.main} >
            <img src={ingredient.image_large} alt={ingredient.name} />

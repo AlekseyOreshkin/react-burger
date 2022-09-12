@@ -1,17 +1,66 @@
 import { createRef } from 'react';
-import { BASE_URL, INGREDIENTS_ENDPOINT, ORDER_REQUEST_ENDPOINT } from './constants';
+import {
+    BASE_URL,
+    INGREDIENTS_ENDPOINT,
+    ORDER_REQUEST_ENDPOINT,
+    PASSWORD_RESET_ENDPOINT,
+    PASSWORD_SET_ENDPOINT,
+    LOGIN_ENDPOINT,        
+    REGISTER_ENDPOINT,     
+    LOGOUT_ENDPOINT,       
+    REFRESH_TOKEN_ENDPOINT,
+    USER_ENDPOINT
+ } from './constants';
 
-const request = async (endopoint, initParams = {headers: {'Content-Type': 'application/json'}}) => {
+const getRequestParams = {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+};
+const postRequestParams = {
+    ...getRequestParams,
+    method: 'POST'
+};
+const patchRequestParams = {
+    ...getRequestParams,
+    method: 'PATCH'
+};
+const securedRequestParams = (initParams) => {
+    const token = localStorage.getItem('token');
+    let params = {
+        ...initParams,
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+    };
+    if (token) {
+        params = {
+            ...params,
+            headers: {
+                ...params.headers,
+                Authorization: token
+            }
+        };
+    }
+    return params;
+};
+const securedPostRequestParams  = () => securedRequestParams(postRequestParams);
+const securedGetRequestParams   = () => securedRequestParams(getRequestParams);
+const securedPatchRequestParams = () => securedRequestParams(patchRequestParams);
+
+const request = async (endopoint, initParams) => {
     const url = BASE_URL + endopoint;
     try
     {
         const response = await fetch(url, initParams);
         if (response.ok) {
-            console.log(`Запрос выполнен`);
             const json = await response.json();
-            return Promise.resolve([true, json]);
+            return Promise.resolve([json, response.headers]);
         } else {
-            throw new Error(`Ошибка ${response.status}`);
+            throw new Error(`статус ${response.status}`);
         }
     }
     catch (error)
@@ -20,11 +69,50 @@ const request = async (endopoint, initParams = {headers: {'Content-Type': 'appli
     }
 };
 
-const checkResult = (endpoint, result, success) => {
-    if (!result || !success) {
-        throw Error(`Сервер вернул ошибку: endpoint - ${endpoint}, result - ${result}, succes - ${success}`);
+const checkResult = (success) => {
+    if (!success) {
+        throw Error(`Сервер вернул отрицательный результат`);
     }
 };
+const buildParams = (params, body) => {
+    let p = params
+    if (typeof params === 'function') {
+        p = params();
+    } 
+    if (body) {
+        return {...p, body: JSON.stringify(body)};
+    }
+    else {
+        return {...p};
+    }
+};
+const makeRequest = async (endpoint, params, parseHeaders) => {
+    try {
+        const [json, headers] = await request(endpoint, params);
+        checkResult(json?.success);
+        console.log('Запрос выполнен:', endpoint, params, headers, json);
+        if (typeof parseHeaders === 'function') {
+            parseHeaders(headers);
+        }
+        return Promise.resolve(json);
+    } catch(error) {
+        console.log('Запрос завершен с ошибкой', endpoint, params, error);
+        return Promise.reject(error);
+    }
+}
+const makeSecuredRequest = async (endpoint, params, parseHeaders) => {
+    try {
+        const result = await makeRequest(endpoint, params, parseHeaders);
+        return Promise.resolve(result);
+    } catch(error) {
+        const success = await requestRefreshToken();
+        if (success) {
+            const result = await makeRequest(endpoint, params, parseHeaders);
+            return Promise.resolve(result);
+        }
+        return Promise.reject(error);
+    }
+}
 
 export const mapIngredientCategoryName = (category, single = false) => {
     switch(category)
@@ -41,42 +129,80 @@ export const mapIngredientCategoryName = (category, single = false) => {
 };
 
 
-export const getIngredientsRequest = async () => {
-    try
-    {
-        const [result, {success, data}] = await request(INGREDIENTS_ENDPOINT);
-        checkResult(INGREDIENTS_ENDPOINT, result, success);
-        const cats = [];
-        data.map(o => o.type).forEach(type => { 
-            
-            if (!cats.find(c => c.type === type)) {
-                cats.splice(0, 0, {type, name: mapIngredientCategoryName(type), ref: createRef()});
-            }
-        });
-        return Promise.resolve([data, cats.sort((l,r) => l.type.localeCompare(r.type))]);
-    }
-    catch(error)
-    {
-        console.error(error);
-        return Promise.reject(error);
-    }
+export const requestIngredients = async () => {
+    const {data} = await makeRequest(INGREDIENTS_ENDPOINT, getRequestParams);
+    const cats = [];
+    data.map(o => o.type).forEach(type => { 
+        
+        if (!cats.find(c => c.type === type)) {
+            cats.splice(0, 0, {type, name: mapIngredientCategoryName(type), ref: createRef()});
+        }
+    });
+    return Promise.resolve([data, cats.sort((l,r) => l.type.localeCompare(r.type))]);
 };
 
-const postRequestParams = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    }
+
+export const requestOrder = async (ingredients) => {
+    const { name, order: {number} } = await makeSecuredRequest(ORDER_REQUEST_ENDPOINT,
+        buildParams(postRequestParams, {ingredients}));
+    return Promise.resolve({ name, number });
 };
+
+
+  export const requestPasswordReset = async (email) => {
+    const {message} = await makeRequest(PASSWORD_RESET_ENDPOINT,
+        buildParams(postRequestParams, {email}));
+    return Promise.resolve({ message });
+  };
+
+  export const requestPasswordSet = async form => {
+    const {message} = await makeRequest(PASSWORD_SET_ENDPOINT, 
+        buildParams(postRequestParams, form));
+    return Promise.resolve({ message });
+  };
   
-export const getOrderRequest = async (ingredients) => {
-    try {
-        const params = {...postRequestParams, body: JSON.stringify({ingredients: ingredients})};
-        const [result, { name, order: {number}, success }] = await request(ORDER_REQUEST_ENDPOINT, params);
-        checkResult(ORDER_REQUEST_ENDPOINT, result, success);
-        return Promise.resolve({ name, number });
-        //makeOrder.toggle();
-    } catch (error) {
-        return Promise.reject();
+  export const requestRegister = async form => {
+    const authInfo = await makeRequest(REGISTER_ENDPOINT, 
+        buildParams(postRequestParams, form));
+    return Promise.resolve(authInfo);
+  };
+
+  export const requestLogin = async (form) => {
+    const authInfo = await makeRequest(LOGIN_ENDPOINT, 
+        buildParams(postRequestParams, form));
+    return Promise.resolve(authInfo);
+  };
+  export const requestLogout = async token => {
+    const {message} = await makeRequest(LOGOUT_ENDPOINT, 
+        buildParams(securedPostRequestParams, { token }));
+    return Promise.resolve({message});
+  };
+
+  export const requestRefreshToken = async () => {
+    const token = localStorage.getItem('refreshToken');
+    if (!token) {
+        return Promise.resolve(false);
     }
+    const data = await makeRequest(REFRESH_TOKEN_ENDPOINT, 
+        buildParams(securedPostRequestParams, { token }));
+    if (data.success) {
+        localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+    }
+    return Promise.resolve(data.success);
+  };
+
+  export const requestGetUser = async () => {
+    try {
+        const authInfo = await makeRequest(USER_ENDPOINT, buildParams(securedGetRequestParams));
+        return Promise.resolve(authInfo);
+    } catch(error) {
+        console.log('не удалось восстановить контекст', error);
+        return Promise.reject(error);
+    }
+  };
+  export const requesPatchUser = async form => {
+    const authInfo = await makeRequest(USER_ENDPOINT, 
+        buildParams(securedPatchRequestParams, form));
+    return Promise.resolve(authInfo);
   };

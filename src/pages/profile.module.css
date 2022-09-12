@@ -1,0 +1,7 @@
+.main {
+    composes: content-grid from '../index.css';
+}
+.main > div > div > div { 
+    width: 480px;
+    margin-bottom: 24px;
+}
