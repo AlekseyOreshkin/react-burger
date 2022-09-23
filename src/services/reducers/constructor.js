@@ -5,8 +5,8 @@ import {
     ADD_KEY
  } from '../actions/constructor';
 
-const initialConstructor = { bun: '',  items: [], price: 0, keys: []};
-const constructorReducer = (state = initialConstructor, action) => {
+export const initialConstructor = { bun: '',  items: [], price: 0, keys: []};
+export const constructorReducer = (state = initialConstructor, action) => {
     switch (action.type)
     {
     case CHANGE_INGREDIENTS:
@@ -34,5 +34,3 @@ const constructorReducer = (state = initialConstructor, action) => {
         return state;
     }
 };
-
-export default constructorReducer;

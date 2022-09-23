@@ -5,17 +5,17 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import Modal from '../modal/modal';
 import { BurgerConstrctorModalOrder } from '../burger-constructor-modal-order/burger-constructor-modal-order';
 import { getOrder, CLOSE_ORDER } from '../../services/actions/orderDetails';
-import { validBunId } from '../../utils/validation';
 import { useHistory, useLocation } from 'react-router-dom';
+import { IConstructorState, IIngredientsState, IState } from '../../utils/types';
 
 
 const BurgerConstructorSubmit = () => {
-  const authorized = useSelector(state => state.authInfo.success);
+  const authorized = useSelector<IState, boolean>(state => state.authInfo.success);
   const location = useLocation();
-  const {ingredients, bun} = useSelector(state => ({ingredients: state.constructor.items, bun: state.constructor.bun}));
+  const {items: ingredients, bun} = useSelector<IState, IConstructorState>(state => state.constructor);
   const history = useHistory();
-  const price = useSelector(state => state.constructor.price);
-  const showOrder = useSelector(state => state.orderDetails.show);
+  const price = useSelector<IState, number>(state => state.constructor.price);
+  const showOrder = useSelector<IState, bool>(state => state.orderDetails.show);
   
   const dispatch = useDispatch();
   
@@ -25,7 +25,7 @@ const BurgerConstructorSubmit = () => {
       return;
     }
     const arr = [...ingredients] ?? [];
-    if (validBunId(bun)) {
+    if (bun?.length > 0) {
       arr.splice(-1, 0, bun, bun);
     }
     dispatch(getOrder(arr));

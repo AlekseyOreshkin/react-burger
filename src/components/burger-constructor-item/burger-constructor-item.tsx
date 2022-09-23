@@ -1,19 +1,27 @@
-import React, { useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { FC, SyntheticEvent, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd/dist/hooks';
 import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions/constructor';
+import { IIngredient, IState } from '../../utils/types';
 
-export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
+interface IProps {
+  data: IIngredient;
+  index: number;
+  onRemoveIngredient: (arg0: number) => void;
+}
+interface IDropItem {
+  index: number;
+}
+export const BurgerConstructorItem : FC<IProps> = ({data, index, onRemoveIngredient}) => {
 
-  const items = useSelector(state => state.constructor.items);
+  const items = useSelector<IState, string[]>(state => state.constructor.items);
 
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const moveCard = useCallback((dragIndex : number, hoverIndex : number) => {
       const dragCard = items[dragIndex];
       const newCards = [...items]
       newCards.splice(dragIndex, 1)
@@ -21,7 +29,7 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
       dispatch({type: UPDATE_INGREDIENTS_ORDER, items: [...newCards]}); 
     }, [items, dispatch]);
   
-    const [, drop] = useDrop({
+    const [, drop] = useDrop<IDropItem>({
         accept: 'constructor_item',
         collect(monitor) {
           return {
@@ -40,7 +48,7 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
           const hoverBoundingRect = ref.current?.getBoundingClientRect();
           const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
           const clientOffset = monitor.getClientOffset();
-          const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+          const hoverClientY = clientOffset ? (clientOffset.y - hoverBoundingRect.top) : 0;
           if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
             return;
           }
@@ -62,11 +70,14 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
     
       
     drag(drop(ref));
-    const preventDefault = (e) => e.preventDefault();
-    return (<div className={styles.main} style={{opacity}} ref={ref} onDrop={preventDefault}>
+    const handleDrop = (e : SyntheticEvent) => {
+      e.persist();
+      e.preventDefault();
+    }
+    return (<div className={styles.main} style={{opacity}} ref={ref} onDrop={handleDrop}>
         <div className={styles.ingredientWrapper}>
           <div className={styles.dragIconWrapper} >
-            <DragIcon />
+            <DragIcon type='primary'/>
           </div>
           <ConstructorElement
             text={data.name}
@@ -75,9 +86,4 @@ export const BurgerConstructorItem = ({data, index, onRemoveIngredient}) => {
             handleClose={()=> onRemoveIngredient(index)}/>
         </div>
       </div>);
-};
-BurgerConstructorItem.propTypes = {
-  data: PropTypes.object.isRequired,
-  index: PropTypes.number.isRequired,
-  onRemoveIngredient: PropTypes.func.isRequired
 };

@@ -1,21 +1,26 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { FC, useCallback, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd/dist/hooks';
 import styles from './burger-constructor-list.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { SET_PRICE, changeIngredients} from '../../services/actions/constructor';
-import { isBun, validBunId } from '../../utils/validation';
+import { SET_PRICE, CHANGE_INGREDIENTS} from '../../services/actions/constructor';
 import {BurgerConstructorItem} from '../burger-constructor-item/burger-constructor-item';
+import { IIngredient, IState, IConstructorState } from '../../utils/types';
 
+export const isBun = (ingredient : IIngredient) : boolean =>  ingredient.type === 'bun';
 
-const BurgerConstructorList = () => {
+export const BurgerConstructorList : FC = () => {
 
-  const ingredients = useSelector(state => state.ingredients.items);
-  const {bun_id, ids} = useSelector(state => ({bun_id: state.constructor.bun, ids: state.constructor.items}));
+  const ingredients = useSelector<IState, IIngredient[]>(state => state.ingredients.items);
+  const {bun : bun_id, items : ids} = useSelector<IState, IConstructorState>(state => state.constructor);
   
   const dispatch = useDispatch();
   
-  const [{ isHover }, dropNewRef] = useDrop({
+  interface IDropResult {
+    isHover: boolean;
+  }
+ 
+  const [{ isHover }, dropNewRef] = useDrop<IIngredient, any, IDropResult>({
     accept: 'new_ingredient',
     collect: monitor => ({
       isHover: monitor.isOver()
@@ -27,14 +32,14 @@ const BurgerConstructorList = () => {
 
   useEffect(() => {
     const arr = ids ? [...ids] : [];
-    if (validBunId(bun_id)) {
+    if (bun_id) {
       arr.splice(0, 0, bun_id, bun_id);
     }
-    const price = arr.map(id => (id ? Number(ingredients.find(o => o._id === id)?.price) : 0)).reduce((acc, price) => acc + price, 0);
+    const price = arr.map(id => (id ? ingredients.find(o => o._id === id)?.price : 0)).reduce((acc, price) => (acc ?? 0) + (price ?? 0), 0);
     dispatch({type: SET_PRICE, price});
   }, [bun_id, ids, ingredients, dispatch]);
 
-  const onDropNewIngredientHandler = useCallback((item) => {
+  const onDropNewIngredientHandler = useCallback((item: IIngredient) => {
     const items = ids ? [...ids] : [];
     let bun = bun_id;
     if (isBun(item)) {
@@ -42,13 +47,13 @@ const BurgerConstructorList = () => {
     } else {
       items.splice(-1, 0, item._id);
     }
-    dispatch(changeIngredients(bun, items)); 
+    dispatch({type: CHANGE_INGREDIENTS, bun: bun, items}); 
   }, [dispatch, ids, bun_id]);
   
-  const onRemoveIngredient = useCallback((index) => {
-    let arr = [...ids];
+  const onRemoveIngredient = useCallback((index : number) => {
+    const arr = [...ids];
     arr.splice(index, 1);
-    dispatch(changeIngredients(bun_id, arr));
+    dispatch({type: CHANGE_INGREDIENTS, bun: bun_id, items: arr});
   }, [ids, bun_id, dispatch]);
   
 
@@ -61,18 +66,23 @@ const BurgerConstructorList = () => {
         {topData && <div className={styles.topBun}>
           <ConstructorElement
             type='top'
-            isLocked='true'
+            isLocked={true}
             text={`${topData.name} (верх)`}
             thumbnail={topData.image}
             price={topData.price}/>
         </div>}
         {ids && <div className={`${styles.ingredients} scrollable`} style={{margin: bun_id ? '0' : 'auto 0'}}>
-            {selectedIngredients.map((data, index) => <BurgerConstructorItem key={`${data._id}@${index}`} data={data} index={index} onRemoveIngredient={onRemoveIngredient}/>)}
-        </div>}
+            {selectedIngredients.map((data : IIngredient | undefined, index : number) => {
+              return (data && <BurgerConstructorItem
+                key={`${data._id}@${index}`} 
+                data={data} index={index} 
+                onRemoveIngredient={onRemoveIngredient}/>);})
+              }
+            </div>}
         {bottomData && <div className={styles.bottomBun}>
           <ConstructorElement
             type='bottom'
-            isLocked='true'
+            isLocked={true}
             text={`${bottomData.name} (низ)`}
             thumbnail={bottomData.image}
             price={bottomData.price}/>
@@ -80,6 +90,3 @@ const BurgerConstructorList = () => {
     </div>
   );
 };
-
-
-export default BurgerConstructorList;

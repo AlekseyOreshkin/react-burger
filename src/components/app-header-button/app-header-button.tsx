@@ -1,10 +1,9 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { FC, ReactElement, useMemo } from 'react';
 import styles from './app-header-button.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom';
 
-const getIcon = (icon) => {
+const getIcon = (icon : string) : ReactElement | null => {
     switch(icon)
     {
         case 'burger':
@@ -18,17 +17,24 @@ const getIcon = (icon) => {
     }
 };
 
-const AppHeaderButton = ({icon, text, path }) => {
+interface IProps {
+    icon: string;
+    text: string;
+    path?: string;
+};
+
+
+export const AppHeaderButton : FC<IProps> = ({ icon, text, path}) => {
 
     const { pathname } = useLocation();
 
     const active = useMemo(() => {
-        return pathname.toLowerCase() === path.toLowerCase();
+        return pathname.toLowerCase() === path?.toLowerCase();
     }, [pathname, path]);
 
     
     return (
-        <Link className={styles.main} to={ {pathname: path, state: { from: pathname }} } >
+        <Link className={styles.main} to={ {pathname: path ?? '', state: { from: pathname }} } >
             <p className={styles.iconWrapper} >{getIcon(icon)}</p>
             <p className={`text text_type_main-default ${styles.textWrapper} ${active ? styles.active : ''}`}>
                 {text}
@@ -36,16 +42,3 @@ const AppHeaderButton = ({icon, text, path }) => {
         </Link>
     );
 };
-AppHeaderButton.defaultProps = {
-    icon: '',
-    text: '',
-    path: ''
-};
-AppHeaderButton.propTypes = {
-    icon: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired
-};
-
-
-export default AppHeaderButton;

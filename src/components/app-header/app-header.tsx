@@ -1,12 +1,12 @@
-import React from 'react';
+import { FC } from 'react';
 import styles from './app-header.module.css';
 import logoPath from '../../images/logo.svg'
-import AppHeaderButton from '../app-header-button/app-header-button';
+import {AppHeaderButton} from '../app-header-button/app-header-button';
 
 const ROOT = '/';
 const LK = '/profile';
 
-const AppHeader = () => {
+export const AppHeader : FC = () => {
   return (
     <header className={styles.nav} style={{backgroundImage: `url(${logoPath})`}}>
       <AppHeaderButton path={ROOT} icon='burger' text='Конструктор' />
@@ -17,5 +17,3 @@ const AppHeader = () => {
     </header>
   );
 }
-
-export default AppHeader;

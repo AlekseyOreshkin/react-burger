@@ -5,7 +5,7 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { UnauthorizedRoute } from '../unauthorized-route/unauthorized-route';
 
-import AppHeader from '../app-header/app-header'
+import {AppHeader} from '../app-header/app-header'
 import { HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
   PasswordResetPage, ProfilePage, IngredientPage, NotFound404Page } from '../../pages';
 

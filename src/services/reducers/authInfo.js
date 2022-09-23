@@ -7,7 +7,7 @@ import {
     LOGOUT_FAILED,
 } from '../actions/authInfo';
 
-const initialAuthState = {
+export const initialAuthState = {
     request: false,
     success: false,
     user: {
