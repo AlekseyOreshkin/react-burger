@@ -21,7 +21,7 @@ export const PasswordResetPage = () => {
 
     useEffect(() => {
 
-        const path = location.state.from.pathname;
+        const path = location.state?.from?.pathname;
         if (path !== '/forgot-password' && path !== '/reset-password') {
             history.replace({pathname: '/not-found', state: {from: location}});
             return;
