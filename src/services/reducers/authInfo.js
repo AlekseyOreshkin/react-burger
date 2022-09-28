@@ -14,7 +14,7 @@ export const initialAuthState = {
         email: '',
         name: ''
     }
-  } ;
+};
 
 export const authInfoReducer = (state = initialAuthState, action) => {
     switch (action.type) {

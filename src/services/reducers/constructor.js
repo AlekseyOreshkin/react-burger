@@ -2,6 +2,7 @@ import {
     CHANGE_INGREDIENTS,
     SET_PRICE,
     UPDATE_INGREDIENTS_ORDER,
+    CLEAR_CONSTRUCTOR,
     ADD_KEY
  } from '../actions/constructor';
 
@@ -20,6 +21,8 @@ export const constructorReducer = (state = initialConstructor, action) => {
             ...state,
             items: action.items
         };
+    case CLEAR_CONSTRUCTOR:
+        return initialConstructor;
     case SET_PRICE:
         return {
             ...state,
