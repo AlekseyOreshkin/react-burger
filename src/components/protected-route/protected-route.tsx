@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route, useLocation } from 'react-router-dom';
+import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
 import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/authInfo';
 import { IState } from '../../utils/types';
 
-export const ProtectedRoute : FC<{path?: string}> = ({ children, ...rest }) => {
+export const ProtectedRoute : FC<RouteProps> = ({ children, ...rest }) => {
     const authorized = useSelector<IState, boolean>(state => state.authInfo.success);
     const location = useLocation();
     const dispatch = useDispatch();

@@ -1,7 +1,5 @@
-import { useCallback }  from 'react';
-
 import styles from './login.module.css';
-import { CommonForm } from '../components/common-form';
+import { CommonForm, IFormData } from '../components/common-form';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,11 +15,9 @@ export const LoginPage = () => {
     const location = useLocation<{from: string}>();
 
 
-    const handleLogin = useCallback(e => {
-        e.persist();
-        e.preventDefault();
-        dispatch(login(form));
-    }, [form, dispatch]);
+    const handleLogin = ({email, password} : IFormData) => {
+        dispatch(login({ email, password}));
+    };
 
     if(authorized) {
         return (<Redirect to={location?.state?.from || '/'} />);

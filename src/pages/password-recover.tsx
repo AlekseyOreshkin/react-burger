@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState }  from 'react';
 
 import styles from './password-recover.module.css';
-import { CommonForm } from '../components/common-form';
+import { CommonForm, IFormData } from '../components/common-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword} from '../services/actions/resetPassword';
@@ -28,11 +28,9 @@ export const PasswordRecoverPage = () => {
         setEmail(e.target.value);
     }, [setEmail])
     
-    const onSubmit = useCallback( e => {
-        e.persist();
-        e.preventDefault();
+    const onSubmit = ({email} : IFormData) => {
         dispatch(resetPassword(email, RESET_PASSWORD_STEP_RESET, RESET_PASSWORD_STEP_RECOVER));
-    }, [email, dispatch]);
+    }
     return (
         <div className={styles.main} >
             <div className='form-area'>

@@ -1,7 +1,7 @@
-import { useCallback, useEffect }  from 'react';
+import { useEffect }  from 'react';
 
 import styles from './password-recover.module.css';
-import { CommonForm } from '../components/common-form';
+import { CommonForm, IFormData } from '../components/common-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,11 +33,9 @@ export const PasswordResetPage = () => {
         }
     }, [history, step, location]);
     // token - код из письма
-    const onSubmit = useCallback(e => {
-        e.persist();
-        e.preventDefault();
-        dispatch(setPassword(form, RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER));
-    }, [dispatch, form]);
+    const onSubmit = ({password, token} : IFormData) => {
+        dispatch(setPassword({password, token}, RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER));
+    };
 
     return (
         <div className={styles.main} >

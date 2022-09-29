@@ -55,7 +55,6 @@ export const Modal : FC<IProps> = (props) => {
                 </div>
             </div>
             <ModalOverlay isShowing={props.isShowing} toggle={props.toggle} />
-            {/* @ts-ignore */}
-        </React.Fragment>, document.getElementById("react-modals"))
+        </React.Fragment>, document.getElementById("react-modals")!)
         : null;
 };

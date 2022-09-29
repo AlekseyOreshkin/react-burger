@@ -1,7 +1,6 @@
-import { useCallback }  from 'react';
 
 import styles from './register.module.css';
-import { CommonForm } from '../components/common-form';
+import { CommonForm, IFormData } from '../components/common-form';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
@@ -15,11 +14,9 @@ export const RegisterPage = () => {
 
     const {form, handleChange} = useForm<IProfileForm>({ email: '', password: '', name: '' });
 
-    const handleRegister = useCallback(e => {
-        e.persist();
-        e.preventDefault();
-        dispatch(register(form));
-    }, [form, dispatch]);
+    const handleRegister = ({ name, email, password } : IFormData) => {
+        dispatch(register({name, email, password}));
+    };
 
     return (
         <div className={styles.main} >
