@@ -1,9 +1,9 @@
 import { useCallback }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-ingredients-tabs.module.css';
-import {  Tab } from '../ui/tab';
 import { SET_ACTIVE_TAB } from '../../services/actions/ingredients';
 import { IIngredientsState, IState } from '../../utils/types';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
 export const BurgerIngredientsTabs = () => {

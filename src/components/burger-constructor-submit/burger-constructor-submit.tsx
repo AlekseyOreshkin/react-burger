@@ -1,8 +1,7 @@
 import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-constructor-submit.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Button } from '../ui/button'
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Modal } from '../modal/modal';
 import { BurgerConstrctorModalOrder } from '../burger-constructor-modal-order/burger-constructor-modal-order';
 import { getOrder, CLOSE_ORDER } from '../../services/actions/orderDetails';
