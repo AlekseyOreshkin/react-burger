@@ -6,9 +6,9 @@ import {
 } from "../actions/ingredients";
 
 
-const initialIngredients = {items: [], cats: [], activeTab: 'bun', request: false, failed: false};
+export const initialIngredients  = {items: [], cats: [], activeTab: 'bun', request: false, failed: false};
 
-const ingredientsReducer = (state = initialIngredients, action) => {
+export const ingredientsReducer = (state = initialIngredients, action ) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {
@@ -40,4 +40,3 @@ const ingredientsReducer = (state = initialIngredients, action) => {
     }
 };
 
-export default ingredientsReducer;

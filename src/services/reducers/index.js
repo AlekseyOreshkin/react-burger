@@ -1,9 +1,17 @@
 import { combineReducers } from "redux";
-import ingredientsReducer from "./ingredients";
-import constructorReducer from "./constructor";
-import orderDetailsReducer from "./orderDetails";
-import resetPasswordReducer from "./resetPassword";
-import { authInfoReducer } from "./authInfo";
+import { ingredientsReducer, initialIngredients} from "./ingredients";
+import { constructorReducer, initialConstructor } from "./constructor";
+import { orderDetailsReducer, initialOrderDetails } from "./orderDetails";
+import { resetPasswordReducer, initialResetPassword } from "./resetPassword";
+import { authInfoReducer, initialAuthState } from "./authInfo";
+
+export const preloadedState = {
+    ingredients: initialIngredients,
+    constructor: initialConstructor,
+    orderDetails: initialOrderDetails,
+    resetPassword: initialResetPassword,
+    authInfo: initialAuthState,
+}
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,

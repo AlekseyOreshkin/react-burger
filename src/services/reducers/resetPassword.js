@@ -5,8 +5,8 @@ import {
  } from '../actions/resetPassword';
 
 
-const initialResetPassword = { message: '', step: '', request: false, failed: false};
-const resetPasswordReducer = (state = initialResetPassword, action) => {
+export const initialResetPassword = { message: '', step: '', request: false, failed: false};
+export const resetPasswordReducer = (state = initialResetPassword, action) => {
     switch(action.type)
     {
     case RESET_PASSWORD_REQUEST:
@@ -36,5 +36,4 @@ const resetPasswordReducer = (state = initialResetPassword, action) => {
     }
 };
 
-export default resetPasswordReducer;
 
