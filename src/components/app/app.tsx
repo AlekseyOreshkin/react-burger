@@ -1,5 +1,4 @@
 import { useEffect }from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
@@ -11,10 +10,11 @@ import { HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
 
 import { getIngredients } from '../../services/actions/ingredients';
 import { ModalIngredient } from '../modal-ingredient/modal-ingredient';
-import { IIngredient, ILocationState, IState } from '../../utils/types';
+import { ILocationState } from '../../utils/types';
+import { useDispatch, useSelector } from '../..';
 
 const App = () => {
-  const ingredients = useSelector<IState, IIngredient[]>(store => store.ingredients.items);
+  const ingredients = useSelector(store => store.ingredients.items);
   const dispatch = useDispatch();
   const location = useLocation<ILocationState>();
   

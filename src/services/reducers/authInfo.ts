@@ -1,3 +1,4 @@
+import { IAuthUserInfo } from '../../utils/types';
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -5,9 +6,17 @@ import {
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_FAILED,
+    TAuthInfoActions,
 } from '../actions/authInfo';
 
-export const initialAuthState = {
+interface IAuthInfoState
+{
+    request: boolean;
+    success: boolean;
+    user: IAuthUserInfo;
+};
+
+export const initialAuthState : IAuthInfoState = {
     request: false,
     success: false,
     user: {
@@ -16,19 +25,18 @@ export const initialAuthState = {
     }
 };
 
-export const authInfoReducer = (state = initialAuthState, action) => {
+export const authInfoReducer = (state = initialAuthState, action : TAuthInfoActions) => {
     switch (action.type) {
         case LOGIN_REQUEST: return {
             ...state,
             request: true,
         }; 
         case LOGIN_SUCCESS: {
-            const { user } = action.authInfo;
             return {
                 ...state,
                 request: false,
                 success: true,
-                user
+                user: action.authInfo
             }; 
         } case LOGIN_FAILED: return {
             ...state,
@@ -46,7 +54,7 @@ export const authInfoReducer = (state = initialAuthState, action) => {
             request: false,
         }; 
         default: {
-            return state ?? initialAuthState;
+            return state;
         } 
     }
 };

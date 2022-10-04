@@ -1,23 +1,25 @@
-import { useCallback }  from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useContext }  from 'react';
 import styles from './burger-ingredients-tabs.module.css';
 import { SET_ACTIVE_TAB } from '../../services/actions/ingredients';
-import { IIngredientsState, IState } from '../../utils/types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CategoryContext } from '../../hooks/category-context';
+import { useDispatch, useSelector } from '../..';
 
 
 export const BurgerIngredientsTabs = () => {
   
-  const {activeTab, cats} = useSelector<IState, IIngredientsState>(state => state.ingredients);
+  const {activeTab, cats} = useSelector(state => state.ingredients);
+  const categoryContext = useContext(CategoryContext);
+
   const dispatch = useDispatch();
 
   const onSetActive = useCallback( (type : string) => {
     const cat = cats.find(c => c.type === type);
     if (cat) {
-      cat.ref.current?.scrollIntoView({ behavior: "smooth" });
-      dispatch( {type: SET_ACTIVE_TAB, cat: type});
+      categoryContext[cat.type].current?.scrollIntoView({ behavior: "smooth" });
+      dispatch( {type: SET_ACTIVE_TAB, active: cat.type});
     }
-  }, [dispatch, cats]);
+  }, [dispatch, cats, categoryContext]);
 
 
   return (

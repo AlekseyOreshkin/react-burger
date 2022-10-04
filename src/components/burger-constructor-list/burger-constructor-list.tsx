@@ -1,18 +1,18 @@
 import { FC, useCallback, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd/dist/hooks';
 import styles from './burger-constructor-list.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SET_PRICE, CHANGE_INGREDIENTS} from '../../services/actions/constructor';
 import {BurgerConstructorItem} from '../burger-constructor-item/burger-constructor-item';
-import { IIngredient, IState, IConstructorState } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
+import { useDispatch, useSelector } from '../..';
 
 export const isBun = (ingredient : IIngredient) : boolean =>  ingredient.type === 'bun';
 
 export const BurgerConstructorList : FC = () => {
 
-  const ingredients = useSelector<IState, IIngredient[]>(state => state.ingredients.items);
-  const {bun : bun_id, items : ids} = useSelector<IState, IConstructorState>(state => state.constructor);
+  const ingredients = useSelector(state => state.ingredients.items);
+  const {bun : bun_id, items : ids} = useSelector(state => state.constructor);
   
   const dispatch = useDispatch();
   

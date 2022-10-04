@@ -1,33 +1,35 @@
 import { requestPatchUser, requestLogin, requestLogout, requestRefreshToken, requestRegister, requestGetUser } from "../../utils/request";
-import { IBasicAction, ILoginForm, IProfileForm, TAuthResponse } from "../../utils/types";
+import { AppDispatch, AppThunk, IAuthUserInfo, IBasicAction, ILoginForm, IProfileForm } from "../../utils/types";
 
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILED  =  'LOGIN_FAILED';
+export const LOGIN_REQUEST : 'LOGIN_REQUEST' = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS : 'LOGIN_SUCCESS' = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED : 'LOGIN_FAILED'  =  'LOGIN_FAILED';
 
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAILED  =  'LOGOUT_FAILED';
+export const LOGOUT_REQUEST : 'LOGOUT_REQUEST' = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS : 'LOGOUT_SUCCESS' = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILED : 'LOGOUT_FAILED'  =  'LOGOUT_FAILED';
 
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const GET_USER_FAILED  = 'GET_USER_FAILED';
-
-export const PATCH_USER_REQUEST = 'PATCH_USER_REQUEST';
-export const PATCH_USER_SUCCESS = 'PATCH_USER_SUCCESS';
-export const PATCH_USER_FAILED  = 'PATCH_USER_FAILED';
-
-interface IAuthAction extends IBasicAction
+interface ILoginRequestAction extends IBasicAction<typeof LOGIN_REQUEST> {};
+interface ILoginSuccessAction extends IBasicAction<typeof LOGIN_SUCCESS>
 {
-    authInfo: TAuthResponse;
+    authInfo: IAuthUserInfo;
 };
-interface IAuthInfoAction extends IBasicAction
+interface ILoginFailedAction extends IBasicAction<typeof LOGIN_FAILED> {};
+
+interface ILogoutRequestAction extends IBasicAction<typeof LOGOUT_REQUEST> {};
+interface ILogoutSuccessAction extends IBasicAction<typeof LOGOUT_SUCCESS>
 {
     message: string;
 };
+interface ILogoutFailedAction extends IBasicAction<typeof LOGOUT_FAILED> {};
 
-export const register = (form : IProfileForm) : any => {
-    return (dispatch: (arg: IBasicAction | IAuthAction) => void) => {
+export type TAuthInfoActions = ILoginRequestAction | ILoginSuccessAction | ILoginFailedAction
+    | ILogoutRequestAction | ILogoutSuccessAction | ILogoutFailedAction;
+
+
+
+export const register : AppThunk = (form : IProfileForm) => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: LOGIN_REQUEST});
         requestRegister(form).then((authInfo) => {
             localStorage.setItem('token', authInfo.accessToken);
@@ -39,8 +41,8 @@ export const register = (form : IProfileForm) : any => {
     }
 };
 
-export const login = (form : ILoginForm) : any => {
-    return (dispatch: (arg: IBasicAction | IAuthAction) => void) => {
+export const login : AppThunk = (form : ILoginForm) => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: LOGIN_REQUEST});
         requestLogin(form).then( authInfo => {
             localStorage.setItem('token', authInfo.accessToken);
@@ -52,8 +54,8 @@ export const login = (form : ILoginForm) : any => {
     }
 };
 
-export const tokenLogin = () : any => {
-    return (dispatch: (arg: IBasicAction | IAuthAction) => void) => {
+export const tokenLogin : AppThunk = () => {
+    return (dispatch: AppDispatch) => {
         requestRefreshToken().then(() => {
             requestGetUser().then( authInfo => {
                 dispatch({type: LOGIN_SUCCESS, authInfo});
@@ -64,8 +66,8 @@ export const tokenLogin = () : any => {
     }
 };
 
-export const logout = () : any => {
-    return (dispatch: (arg: IBasicAction | IAuthInfoAction) => void) => {
+export const logout : AppThunk = () => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: LOGOUT_REQUEST});
         const token = localStorage.getItem('refreshToken');
         if (token === null) {
@@ -81,16 +83,16 @@ export const logout = () : any => {
     }
 };
 
-export const getUser = () : any => {
-    return (dispatch: (arg: IBasicAction | IAuthAction) => void) => {
+export const getUser : AppThunk = () => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: LOGIN_REQUEST});
         requestGetUser()
             .then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}))
             .catch(error => Promise.reject(error));
     }
 }
-export const patchUser = (form : IProfileForm) : any => {
-    return (dispatch : (arg: IBasicAction | IAuthAction) => void) => {
+export const patchUser : AppThunk = (form : IProfileForm) => {
+    return (dispatch : AppDispatch) => {
         requestPatchUser(form)
             .then(authInfo => dispatch({type: LOGIN_SUCCESS, authInfo}))
             .catch(error => Promise.reject(error));

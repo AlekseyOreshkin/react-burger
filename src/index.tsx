@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { compose, createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { compose, createStore, applyMiddleware, Action, ActionCreator } from 'redux';
+import { Provider, TypedUseSelectorHook, useSelector as selectorHook, useDispatch as dispatchHook } from 'react-redux';
 import './index.css';
 import App from './components/app/app';
 import { rootReducer } from './services/reducers';
-import thunk from 'redux-thunk';
+import thunk, { ThunkAction } from 'redux-thunk';
 import { BrowserRouter as Router} from 'react-router-dom';
+import { TApplicationActions } from './services/actions';
 
 declare global {
   interface Window {
@@ -19,6 +20,18 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
 
+export type RootState = ReturnType<typeof store.getState>;
+
+// Типизация thunk'ов в нашем приложении
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
+
+// Типизация метода dispatch для проверки на валидность отправляемого экшена
+export type AppDispatch = typeof store.dispatch; 
+/* @ts-ignore */
+export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
+
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 ReactDOM.render(
   <React.StrictMode>

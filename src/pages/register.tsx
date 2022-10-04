@@ -3,10 +3,10 @@ import styles from './register.module.css';
 import { CommonForm, IFormData } from '../components/common-form';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { register } from '../services/actions/authInfo';
-import { useForm } from '../hooks/useForm';
+import { useForm } from '../hooks/use-form';
 import { IProfileForm } from '../utils/types';
+import { useDispatch } from '..';
 
 
 export const RegisterPage = () => {

@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profile-home.module.css';
-import { useDispatch, useSelector } from "react-redux";
 import { patchUser } from "../../services/actions/authInfo";
-import { useForm } from "../../hooks/useForm";
-import { IAuthInfoState, IProfileForm, IState } from "../../utils/types";
+import { useForm } from "../../hooks/use-form";
+import { IProfileForm } from "../../utils/types";
+import { useDispatch, useSelector } from "../..";
 
 export const ProfileHome = () => {
-    const { request, user: {name, email} } = useSelector<IState, IAuthInfoState>(state => state.authInfo);
+    const { request, user: {name, email} } = useSelector(state => state.authInfo);
 
     const initForm = useMemo<IProfileForm>(() => ({name, email, password: ''}), [name, email]);
     

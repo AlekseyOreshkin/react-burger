@@ -1,13 +1,28 @@
 import { requestPasswordReset, requestPasswordSet  } from "../../utils/request";
-import { IResetPasswordForm } from "../../utils/types";
+import { AppDispatch, AppThunk, IBasicAction, IResetPasswordForm } from "../../utils/types";
 
-export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
-export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
-export const RESET_PASSWORD_FAILED  = 'RESET_PASSWORD_FAILED';
+export const RESET_PASSWORD_REQUEST : 'RESET_PASSWORD_REQUEST' = 'RESET_PASSWORD_REQUEST';
+export const RESET_PASSWORD_SUCCESS : 'RESET_PASSWORD_SUCCESS' = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILED  : 'RESET_PASSWORD_FAILED'  = 'RESET_PASSWORD_FAILED';
 
+interface IResetPasswordAction extends IBasicAction<typeof RESET_PASSWORD_REQUEST> {};
 
-export const resetPassword = (email : string, stepOnSuccess: string, stepOnFailed: string) : any => {
-    return (dispatch: (arg0: { type: string; message?: string; stepOnSuccess?: string; error?: any; stepOnFailed?: string; }) => void) => {
+interface IResetPasswordSuccessAction extends IBasicAction<typeof RESET_PASSWORD_SUCCESS>
+{
+    message: string;
+    stepOnSuccess: string;
+};
+
+interface IResetPasswordFailedAction extends IBasicAction<typeof RESET_PASSWORD_FAILED>
+{
+    error: string;
+    stepOnFailed: string;
+};
+
+export type TResetPasswordActions = IResetPasswordAction | IResetPasswordSuccessAction | IResetPasswordFailedAction;
+
+export const resetPassword : AppThunk = (email : string, stepOnSuccess: string, stepOnFailed: string) => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: RESET_PASSWORD_REQUEST});
         requestPasswordReset(email).then(({ message }) => {
             dispatch({type: RESET_PASSWORD_SUCCESS, message, stepOnSuccess});
@@ -17,8 +32,8 @@ export const resetPassword = (email : string, stepOnSuccess: string, stepOnFaile
     }
 };
 
-export const setPassword = (form : IResetPasswordForm, stepOnSuccess: string, stepOnFailed: string) : any => {
-    return (dispatch: (arg0: { type: string; message?: any; stepOnSuccess?: string; error?: any; stepOnFailed?: string; }) => void) => {
+export const setPassword : AppThunk = (form : IResetPasswordForm, stepOnSuccess: string, stepOnFailed: string) => {
+    return (dispatch: AppDispatch) => {
         dispatch({type: RESET_PASSWORD_REQUEST});
         requestPasswordSet(form).then(({ message }) => {
             dispatch({type: RESET_PASSWORD_SUCCESS, message, stepOnSuccess});

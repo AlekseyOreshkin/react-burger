@@ -4,15 +4,15 @@ import styles from './password-recover.module.css';
 import { CommonForm, IFormData } from '../components/common-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { setPassword } from '../services/actions/resetPassword';
 import { RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER } from '../utils/constants';
-import { useForm } from '../hooks/useForm';
-import { ILocationState, IResetPasswordState, IState } from '../utils/types';
+import { useForm } from '../hooks/use-form';
+import { ILocationState } from '../utils/types';
+import { useDispatch, useSelector } from '..';
 
 
 export const PasswordResetPage = () => {
-    const {step, message} = useSelector<IState, IResetPasswordState>(state => state.resetPassword);
+    const {step, message} = useSelector(state => state.resetPassword);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<ILocationState>();

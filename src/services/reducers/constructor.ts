@@ -3,11 +3,20 @@ import {
     SET_PRICE,
     UPDATE_INGREDIENTS_ORDER,
     CLEAR_CONSTRUCTOR,
-    ADD_KEY
+    TConstructorActions
  } from '../actions/constructor';
 
-export const initialConstructor = { bun: '',  items: [], price: 0, keys: []};
-export const constructorReducer = (state = initialConstructor, action) => {
+ interface IConstructorState
+ {
+    bun: string;
+    items: string[];
+    price: number;
+ }
+export const initialConstructor : IConstructorState =
+{
+     bun: '',  items: [], price: 0
+};
+export const constructorReducer = (state = initialConstructor, action: TConstructorActions) => {
     switch (action.type)
     {
     case CHANGE_INGREDIENTS:
@@ -28,12 +37,7 @@ export const constructorReducer = (state = initialConstructor, action) => {
             ...state,
             price: action.price
         }
-    case ADD_KEY:
-        return {
-            ...state,
-            keys: state.keys ? [...state.keys, action.key] : [action.key]
-        }
-        default:
+    default:
         return state;
     }
 };

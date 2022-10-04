@@ -1,4 +1,12 @@
-import React from "react";
+import { RootState, AppThunk, AppDispatch } from "..";
+import { TApplicationActions } from "../services/actions";
+
+export {
+    type RootState,
+    type AppThunk,
+    type AppDispatch,
+    type TApplicationActions
+};
 
 export type TIngredientName = 'Булки' | 'Начинки' | 'Соусы';
 export type TIngredientType = 'bun' | 'main' | 'sauce';
@@ -6,7 +14,6 @@ export type TIngredientType = 'bun' | 'main' | 'sauce';
 export interface IIngredientCategory
 {
     name: TIngredientName;
-    ref: React.RefObject<HTMLParagraphElement>;
     type: TIngredientType;
 };
 
@@ -26,22 +33,6 @@ export interface IIngredient
     __v: 0
 };
 
-export interface IConstructorState
-{
-    bun: string;
-    items: string[];
-    price: number;
-};
-
-export interface IIngredientsState
-{
-    items: IIngredient[];
-    cats: IIngredientCategory[];
-    activeTab: TIngredientType;
-    request: boolean;
-    failed: boolean;
-};
-
 export interface IAuthUserInfo
 {
     email: string;
@@ -59,39 +50,6 @@ export type TAuthResponse = IAuthUserInfo & IAuthToken;
 export interface ILogoutResponse
 {
     message: string;
-};
-
-export interface IAuthInfoState
-{
-    request: boolean;
-    success: boolean;
-    user: IAuthUserInfo;
-};
-
-export interface IOrderDetailsState
-{ 
-    number: string;
-    name: string;
-    request: boolean;
-    failed: boolean;
-    show: boolean
-};
-
-export interface IResetPasswordState
-{ 
-    message: string;
-    step: string;
-    request: boolean;
-    failed: boolean;
-};
-
-export interface IState
-{
-    resetPassword: IResetPasswordState;
-    constructor: IConstructorState;
-    ingredients: IIngredientsState;
-    authInfo: IAuthInfoState;
-    orderDetails: IOrderDetailsState;
 };
 
 export interface ILocationState
@@ -119,9 +77,9 @@ export interface ILoginForm
     password: string;
 };
 
-export interface IBasicAction 
+export interface IBasicAction<T>
 {
-    type: string;
+    readonly type: T;
 };
 
 export interface ILocationState

@@ -2,11 +2,29 @@ import {
     GET_ORDER_REQUEST, 
     GET_ORDER_SUCCESS, 
     GET_ORDER_FAILED,
-    CLOSE_ORDER, 
+    CLOSE_ORDER,
+    TOrderDetailsActions, 
  } from '../actions/orderDetails';
 
-export const initialOrderDetails = { number: '', name: '', request: false, failed: false, show: false};
-export const orderDetailsReducer = (state = initialOrderDetails, action) => {
+ interface IOrderDetailsState
+ {
+    number: string;
+    name: string;
+    request: boolean;
+    failed: boolean;
+    show: boolean;
+ }
+
+export const initialOrderDetails : IOrderDetailsState =
+{ 
+    number: '', 
+    name: '', 
+    request: false, 
+    failed: false, 
+    show: false
+};
+
+export const orderDetailsReducer = (state = initialOrderDetails, action: TOrderDetailsActions)  => {
     switch(action.type)
     {
     case GET_ORDER_REQUEST:
@@ -20,7 +38,7 @@ export const orderDetailsReducer = (state = initialOrderDetails, action) => {
             ...state,
             request: false,
             failed: false,
-            number: String(action.number),
+            number: action.number,
             name: action.name,
             show: true
         };

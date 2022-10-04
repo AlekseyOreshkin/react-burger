@@ -1,10 +1,10 @@
 import { FC, SyntheticEvent, useCallback, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd/dist/hooks';
 import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { UPDATE_INGREDIENTS_ORDER } from '../../services/actions/constructor';
-import { IIngredient, IState } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
+import { useDispatch, useSelector } from '../..';
 
 interface IProps {
   data: IIngredient;
@@ -16,7 +16,7 @@ interface IDropItem {
 }
 export const BurgerConstructorItem : FC<IProps> = ({data, index, onRemoveIngredient}) => {
 
-  const items = useSelector<IState, string[]>(state => state.constructor.items);
+  const items = useSelector(state => state.constructor.items);
 
     const dispatch = useDispatch();
     const ref = useRef<HTMLDivElement>(null);

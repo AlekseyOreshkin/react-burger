@@ -1,4 +1,3 @@
-import { createRef } from 'react';
 import {
     BASE_URL,
     INGREDIENTS_ENDPOINT,
@@ -166,7 +165,7 @@ export const requestIngredients = async () => {
     data.map(o => o.type).forEach(type => { 
         
         if (!cats.find(c => c.type === type)) {
-            cats.splice(0, 0, {type, name: mapIngredientCategoryName(type), ref: createRef()});
+            cats.splice(0, 0, {type, name: mapIngredientCategoryName(type)});
         }
     });
     return Promise.resolve<[IIngredient[], IIngredientCategory[]]>([data, cats.sort((l,r) => l.type.localeCompare(r.type))]);
@@ -175,7 +174,7 @@ export const requestIngredients = async () => {
 export const requestOrder = async (ingredients: string[]) => {
     const { name, order: {number} } = await makeSecuredRequest<{name: string, order: {number: number}}>(ORDER_REQUEST_ENDPOINT,
         buildParams(postRequestParams, {ingredients}));
-    return Promise.resolve({ name, number });
+    return Promise.resolve({ name, number: String(number) });
 };
 
 export const requestPasswordReset = async (email: string) => {

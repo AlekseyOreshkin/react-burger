@@ -2,11 +2,25 @@ import {
     RESET_PASSWORD_REQUEST, 
     RESET_PASSWORD_SUCCESS, 
     RESET_PASSWORD_FAILED,
+    TResetPasswordActions,
  } from '../actions/resetPassword';
 
+ interface IResetPasswordState
+ { 
+     message: string;
+     step: string;
+     request: boolean;
+     failed: boolean;
+ };
+export const initialResetPassword : IResetPasswordState = 
+{ 
+    message: '',
+    step: '',
+    request: false,
+    failed: false
+};
 
-export const initialResetPassword = { message: '', step: '', request: false, failed: false};
-export const resetPasswordReducer = (state = initialResetPassword, action) => {
+export const resetPasswordReducer = (state = initialResetPassword, action : TResetPasswordActions) => {
     switch(action.type)
     {
     case RESET_PASSWORD_REQUEST:
@@ -28,7 +42,7 @@ export const resetPasswordReducer = (state = initialResetPassword, action) => {
             ...state,
             request: false,
             failed: true,
-            message: action.message,
+            message: action.error,
             step: action.stepOnFailed
         };
     default:

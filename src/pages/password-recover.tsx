@@ -6,12 +6,11 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPassword} from '../services/actions/resetPassword';
 import { RESET_PASSWORD_STEP_RECOVER, RESET_PASSWORD_STEP_RESET } from '../utils/constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { IResetPasswordState, IState } from '../utils/types';
+import { useDispatch, useSelector } from '..';
 
 
 export const PasswordRecoverPage = () => {
-    const {step, message} = useSelector<IState, IResetPasswordState>(state => state.resetPassword);
+    const {step, message} = useSelector(state => state.resetPassword);
     const [email, setEmail] = useState('');
     const dispatch = useDispatch();
     const history = useHistory();
