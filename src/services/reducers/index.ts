@@ -4,6 +4,7 @@ import { constructorReducer, initialConstructor } from "./constructor";
 import { orderDetailsReducer, initialOrderDetails } from "./orderDetails";
 import { resetPasswordReducer, initialResetPassword } from "./resetPassword";
 import { authInfoReducer, initialAuthState } from "./authInfo";
+import { initialWsState, wsReducer } from "./socket-middleware";
 
 export const preloadedState = {
     ingredients: initialIngredients,
@@ -11,6 +12,7 @@ export const preloadedState = {
     orderDetails: initialOrderDetails,
     resetPassword: initialResetPassword,
     authInfo: initialAuthState,
+    wsState: initialWsState
 }
 
 export const rootReducer = combineReducers({
@@ -18,5 +20,6 @@ export const rootReducer = combineReducers({
     constructor: constructorReducer,
     orderDetails: orderDetailsReducer,
     resetPassword: resetPasswordReducer,
-    authInfo: authInfoReducer
+    authInfo: authInfoReducer,
+    wsReducer: wsReducer
 });

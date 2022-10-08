@@ -88,3 +88,7 @@ export interface ILocationState
         pathname: string;
     };
 }
+
+export interface IMessage {
+    [key: string] : string;
+}

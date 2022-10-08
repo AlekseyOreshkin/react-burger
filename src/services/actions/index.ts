@@ -3,6 +3,7 @@ import { TConstructorActions } from "./constructor";
 import { TIngredientsActions } from "./ingredients";
 import { TOrderDetailsActions } from "./orderDetails";
 import { TResetPasswordActions } from "./resetPassword";
+import { TSocketMiddlewareActions } from "./socket-middleware";
 
 
 // Типизация всех экшенов приложения
@@ -11,4 +12,5 @@ export type TApplicationActions =
     | TConstructorActions
     | TIngredientsActions 
     | TOrderDetailsActions
-    | TResetPasswordActions;
+    | TResetPasswordActions
+    | TSocketMiddlewareActions;
