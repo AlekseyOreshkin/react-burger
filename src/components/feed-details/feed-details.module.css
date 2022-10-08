@@ -1,0 +1,7 @@
+.main
+{
+    display: block;
+    background-color: red;
+    grid-area: constructor;
+    
+}

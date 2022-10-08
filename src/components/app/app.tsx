@@ -12,6 +12,12 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { ModalIngredient } from '../modal-ingredient/modal-ingredient';
 import { ILocationState } from '../../utils/types';
 import { useDispatch, useSelector } from '../..';
+import { FeedPage } from '../../pages/feed';
+import { FeedItemPage } from '../../pages/feed-item';
+import { OrdersPage } from '../../pages/orders';
+import { OrdersItemPage } from '../../pages/orders-item';
+import { ModalFeedItem } from '../modal-feed-item/modal-feed-item';
+import { ModalOrdersItem } from '../modal-orders-item/modal-orders-item';
 
 const App = () => {
   const ingredients = useSelector(store => store.ingredients.items);
@@ -45,8 +51,20 @@ const App = () => {
           <Route path='/'  exact={true}>
             <HomePage />
           </Route>
+          <Route path='/feed' exact={true}>
+            <FeedPage />
+          </Route>
+          <ProtectedRoute path='/feed/:id' exact={true}>
+            <FeedItemPage />
+          </ProtectedRoute>
           <ProtectedRoute path='/profile' >
             <ProfilePage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders' exact={true}>
+            <OrdersPage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders/:id' exact={true}>
+            <OrdersItemPage />
           </ProtectedRoute>
           <Route path='/ingredients/:id' exact={true}>
             <IngredientPage />
@@ -56,7 +74,9 @@ const App = () => {
           </Route>
         </Switch>
         {background && <Route path="/ingredients/:id" children={<ModalIngredient />} />}
-        </div>
+        {background && <Route path="/profile/orders/:id" children={<ModalFeedItem />} />}
+        {background && <Route path="/profile/orders/:id" children={<ModalOrdersItem />} />}
+      </div>
     );
 }
 

@@ -28,8 +28,11 @@ export type AppThunk<TReturn = void> = ActionCreator<
 
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type AppDispatch = typeof store.dispatch; 
-/* @ts-ignore */
-export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
+
+//export const useDispatch = () => dispatchHook<ThunkDispatch<RootState, never, TApplicationActions>>();
+/* @ts-ignore*/
+export const useDispatch = () => dispatchHook<AppThunk | AppDispatch>();
+
 
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
