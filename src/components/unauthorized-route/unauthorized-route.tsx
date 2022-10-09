@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Redirect, Route, useLocation } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
-import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/authInfo';
+import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/auth-info';
 import { useDispatch, useSelector } from '../..';
 
 export const UnauthorizedRoute : FC<{path: string, exact: boolean}> = ({ children, ...rest }) => {

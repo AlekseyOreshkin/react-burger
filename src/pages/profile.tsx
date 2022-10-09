@@ -6,7 +6,7 @@ import { ProfileHome } from '../components/profile-home/profile-home';
 import { ProfileOrders } from '../components/profile-orders/profile-orders';
 import { Route } from '../components/route/route';
 
-import { logout } from '../services/actions/authInfo';
+import { logout } from '../services/actions/auth-info';
 import { useDispatch } from '..';
 
 export const ProfilePage = () => {

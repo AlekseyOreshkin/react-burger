@@ -4,7 +4,7 @@ import styles from './password-recover.module.css';
 import { CommonForm, IFormData } from '../components/common-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setPassword } from '../services/actions/resetPassword';
+import { setPassword } from '../services/actions/reset-password';
 import { RESET_PASSWORD_STEP_LOGIN, RESET_PASSWORD_STEP_RECOVER } from '../utils/constants';
 import { useForm } from '../hooks/use-form';
 import { ILocationState } from '../utils/types';

@@ -3,7 +3,7 @@ import {
     RESET_PASSWORD_SUCCESS, 
     RESET_PASSWORD_FAILED,
     TResetPasswordActions,
- } from '../actions/resetPassword';
+ } from '../actions/reset-password';
 
  interface IResetPasswordState
  { 

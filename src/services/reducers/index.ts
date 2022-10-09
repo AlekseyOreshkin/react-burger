@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import { ingredientsReducer, initialIngredients} from "./ingredients";
 import { constructorReducer, initialConstructor } from "./constructor";
-import { orderDetailsReducer, initialOrderDetails } from "./orderDetails";
-import { resetPasswordReducer, initialResetPassword } from "./resetPassword";
-import { authInfoReducer, initialAuthState } from "./authInfo";
+import { orderDetailsReducer, initialOrderDetails } from "./order-details";
+import { resetPasswordReducer, initialResetPassword } from "./reset-password";
+import { authInfoReducer, initialAuthState } from "./auth-info";
 import { initialWsState, wsReducer } from "./socket-middleware";
 
 export const preloadedState = {
@@ -21,5 +21,5 @@ export const rootReducer = combineReducers({
     orderDetails: orderDetailsReducer,
     resetPassword: resetPasswordReducer,
     authInfo: authInfoReducer,
-    wsReducer: wsReducer
+    feed: wsReducer
 });

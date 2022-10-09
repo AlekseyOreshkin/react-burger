@@ -87,8 +87,26 @@ export interface ILocationState
     from: {
         pathname: string;
     };
-}
+};
 
-export interface IMessage {
-    [key: string] : string;
-}
+const TFeedOrderStatusDone: 'done' = 'done';
+type TFeedOrderStatus = typeof TFeedOrderStatusDone;
+
+export interface IFeedOrder<TNumber>
+{
+    _id: string;
+    ingredients: string[];
+    status: TFeedOrderStatus;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: TNumber;
+};
+
+export interface IFeedOrdersMessage<TNumber> 
+{
+    success: boolean;
+    orders: IFeedOrder<TNumber>[];
+    total: number;
+    totalToday: number;
+};

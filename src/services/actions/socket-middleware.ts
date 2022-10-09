@@ -7,17 +7,24 @@ export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSE
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 export const WS_SEND_MESSAGE: 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
 
-interface IWsAction<T, P = unknown> extends IBasicAction<T>
+interface IWsServiceAction<T, P = Event> extends IBasicAction<T>
+{
+    payload: P;
+} 
+interface ISendMessage {
+
+}
+interface IWsMessageAction<T, P> extends IBasicAction<T>
 {
     payload: P;
 } 
 
-type TWsConnectionStartAction = IWsAction<typeof WS_CONNECTION_START>;
-type TWsConnectionSuccessAction = IWsAction<typeof WS_CONNECTION_SUCCESS>;
-type TWsConnectionErrorAction = IWsAction<typeof WS_CONNECTION_ERROR>;
-type TWsConnectionClosedAction = IWsAction<typeof WS_CONNECTION_CLOSED>;
-type TWsGetMessageAction = IWsAction<typeof WS_GET_MESSAGE>;
-type TWsSendMessageAction = IWsAction<typeof WS_SEND_MESSAGE>;
+type TWsConnectionStartAction = IWsServiceAction<typeof WS_CONNECTION_START>;
+type TWsConnectionSuccessAction = IWsServiceAction<typeof WS_CONNECTION_SUCCESS>;
+type TWsConnectionErrorAction = IWsServiceAction<typeof WS_CONNECTION_ERROR>;
+type TWsConnectionClosedAction = IWsServiceAction<typeof WS_CONNECTION_CLOSED>;
+type TWsGetMessageAction = IWsMessageAction<typeof WS_GET_MESSAGE, string>;
+type TWsSendMessageAction = IWsMessageAction<typeof WS_SEND_MESSAGE, ISendMessage>;
 
 export type TSocketMiddlewareActions = TWsConnectionStartAction | TWsConnectionSuccessAction
     | TWsConnectionErrorAction | TWsConnectionClosedAction | TWsGetMessageAction | TWsSendMessageAction;

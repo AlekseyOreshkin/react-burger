@@ -7,7 +7,7 @@ import {
     LOGOUT_SUCCESS,
     LOGOUT_FAILED,
     TAuthInfoActions,
-} from '../actions/authInfo';
+} from '../actions/auth-info';
 
 interface IAuthInfoState
 {

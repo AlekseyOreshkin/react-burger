@@ -2,7 +2,7 @@ import styles from './login.module.css';
 import { CommonForm, IFormData } from '../components/common-form';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { login } from '../services/actions/authInfo';
+import { login } from '../services/actions/auth-info';
 import { useForm } from '../hooks/use-form';
 import { ILoginForm } from '../utils/types';
 import { useDispatch, useSelector } from '..';

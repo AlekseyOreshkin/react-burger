@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import styles from './burger-constructor-modal-order.module.css'
 import confirmImage from '../../images/modal-order/done.png';
-import { CLOSE_ORDER } from '../../services/actions/orderDetails';
+import { CLOSE_ORDER } from '../../services/actions/order-details';
 import { useDispatch, useSelector } from '../..';
 
 

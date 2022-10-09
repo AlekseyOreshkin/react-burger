@@ -1,8 +1,8 @@
-import { TAuthInfoActions } from "./authInfo";
+import { TAuthInfoActions } from "./auth-info";
 import { TConstructorActions } from "./constructor";
 import { TIngredientsActions } from "./ingredients";
-import { TOrderDetailsActions } from "./orderDetails";
-import { TResetPasswordActions } from "./resetPassword";
+import { TOrderDetailsActions } from "./order-details";
+import { TResetPasswordActions } from "./reset-password";
 import { TSocketMiddlewareActions } from "./socket-middleware";
 
 

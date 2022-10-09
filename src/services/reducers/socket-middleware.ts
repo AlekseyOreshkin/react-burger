@@ -1,21 +1,27 @@
-import { IMessage } from "../../utils/types";
+import { IFeedOrdersMessage } from "../../utils/types";
+import { padOrderNumber } from "../../utils/utils";
 import { TSocketMiddlewareActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket-middleware";
 
 interface IWsState
 {
     wsConnected: boolean;
-    messages: IMessage[];
+    data: IFeedOrdersMessage<string>;
     
     error?: Event;
 };
 
 export const initialWsState : IWsState = {
     wsConnected: false,
-    messages: []
+    data: {
+      success: false,
+      orders: [],
+      total: 0,
+      totalToday: 0
+    }
 };
 
 // Создадим редьюсер для WebSocket
-export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActions) => {
+export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActions) : IWsState => {
     switch (action.type) {
           // Опишем обработку экшена с типом WS_CONNECTION_SUCCESS
           // Установим флаг wsConnected в состояние true
@@ -47,12 +53,17 @@ export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActio
           // Опишем обработку экшена с типом WS_GET_MESSAGE
           // Обработка происходит, когда с сервера возвращаются данные
           // В messages передадим данные, которые пришли с сервера
-      case WS_GET_MESSAGE:
+      case WS_GET_MESSAGE: {
+        const message: IFeedOrdersMessage<number>  = JSON.parse(action.payload);
         return {
           ...state,
-                  error: undefined,
-          messages: [...state.messages, action.payload]
+          error: undefined,
+          data: {
+            ...message,
+            orders: message.orders.map(o => ({...o, number: padOrderNumber(o.number)}))
+          }
         };
+      }
       default:
         return state;
     }

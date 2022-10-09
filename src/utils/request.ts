@@ -20,6 +20,7 @@ import { IIngredient,
     IAuthToken, 
     TAuthResponse, 
     ILogoutResponse } from './types';
+import { padOrderNumber } from './utils';
 
 
 type TRequestParams = {
@@ -49,7 +50,7 @@ const patchRequestParams : TRequestParams = {
     method: 'PATCH'
 };
 
-type TResponseBoty<T> = {success: boolean} & T;
+export type TResponseBoty<T> = {success: boolean} & T;
 
 
 const securedRequestParams = (initParams : TRequestParams) : TRequestParams => {
@@ -174,7 +175,7 @@ export const requestIngredients = async () => {
 export const requestOrder = async (ingredients: string[]) => {
     const { name, order: {number} } = await makeSecuredRequest<{name: string, order: {number: number}}>(ORDER_REQUEST_ENDPOINT,
         buildParams(postRequestParams, {ingredients}));
-    return Promise.resolve({ name, number: String(number) });
+    return Promise.resolve({ name, number: padOrderNumber(number) });
 };
 
 export const requestPasswordReset = async (email: string) => {

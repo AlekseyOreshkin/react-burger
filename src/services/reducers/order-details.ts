@@ -4,7 +4,7 @@ import {
     GET_ORDER_FAILED,
     CLOSE_ORDER,
     TOrderDetailsActions, 
- } from '../actions/orderDetails';
+ } from '../actions/order-details';
 
  interface IOrderDetailsState
  {

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './profile-home.module.css';
-import { patchUser } from "../../services/actions/authInfo";
+import { patchUser } from "../../services/actions/auth-info";
 import { useForm } from "../../hooks/use-form";
 import { IProfileForm } from "../../utils/types";
 import { useDispatch, useSelector } from "../..";

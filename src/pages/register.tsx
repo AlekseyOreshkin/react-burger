@@ -3,7 +3,7 @@ import styles from './register.module.css';
 import { CommonForm, IFormData } from '../components/common-form';
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { register } from '../services/actions/authInfo';
+import { register } from '../services/actions/auth-info';
 import { useForm } from '../hooks/use-form';
 import { IProfileForm } from '../utils/types';
 import { useDispatch } from '..';
