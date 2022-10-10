@@ -89,8 +89,8 @@ export interface ILocationState
     };
 };
 
-const TFeedOrderStatusDone: 'done' = 'done';
-type TFeedOrderStatus = typeof TFeedOrderStatusDone;
+export const TFeedOrderStatusDone: 'done' = 'done';
+export type TFeedOrderStatus = typeof TFeedOrderStatusDone;
 
 export interface IFeedOrder<TNumber>
 {

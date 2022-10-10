@@ -1,6 +1,63 @@
 .main
 {
-    display: block;
+    display: flex;
+    flex-direction: column;
     grid-area: constructor;
-    
+    width: calc(100% - 30px);
+    margin: 0 0 0 auto;
+
+}
+.row
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.firstRow
+{
+    composes: row;
+    flex-direction: row;
+}
+
+.leftColumn
+{
+    width: calc(50% - 18px);
+    margin: 0 auto 0 0;
+}
+
+.rightColumn
+{
+    width: calc(50% - 18px);
+    margin: 0 0 0 auto;
+}
+.header
+{
+    display: block;
+    width: 100%;
+}
+.firstHeader
+{
+    composes: header;
+    padding-bottom: 12px;
+}
+.nums
+{
+    /*
+    composes: scrollable from '../../index.css';
+    */
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.nums > p {
+    padding-right: 10px;
+}
+.leftNums
+{
+    composes: nums;
+    color: #00CCCC;
 }
