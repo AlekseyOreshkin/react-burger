@@ -62,7 +62,7 @@ body {
 
   grid-template-areas: 
   ". . ."
-  "lk-menu form .";
+  "lk-menu form free";
 }
 
 .form-area {
@@ -71,4 +71,11 @@ body {
   flex-direction: column;
   justify-content: top;
   align-items: center;
+}
+
+.orders-area {
+    grid-row-start: form;
+    grid-column-start: form;
+    grid-row-end: free;
+    grid-column-end: free;
 }

@@ -13,7 +13,7 @@ export const FeedList = () => {
     return (<div className={`${styles.main} scrollable`}>
         {feed.data.orders.map(order => 
             <Link className={styles.link} key={order._id} 
-                to={{pathname: `/feed/${order._id}`, state: {background: location} }} > 
+                to={{pathname: `${location.pathname}/${order._id}`, state: {background: location} }} > 
                 <FeedOrder order={order} />
             </Link>)}
         </div>);

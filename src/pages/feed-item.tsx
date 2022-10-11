@@ -1,16 +1,25 @@
 import styles from './feed-item.module.css'
 import { OrderDetails } from "../components/order-details/order-details";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/socket-middleware';
+import { openWsConnection, WS_CONNECTION_CLOSED } from '../services/actions/socket-middleware';
 import { useDispatch, useSelector } from '..';
 import { useEffect } from 'react';
+import { WS_FEED_URL, WS_ORDERS_URL } from '../utils/constants';
 
-export const FeedItemPage = () => {
+interface IProps {
+    orders?: boolean;
+}
+export const FeedItemPage = ({orders = false}: IProps) => {
     const ws = useSelector(state => state.feed);
 
     const dispatch = useDispatch();
     useEffect(() => {
         if (!ws.wsConnected || !ws.data.success) {
-            dispatch({type : WS_CONNECTION_START});
+            if (orders) {
+                dispatch(openWsConnection(WS_ORDERS_URL, true));
+            } else {
+                dispatch(openWsConnection(WS_FEED_URL));
+            }
+
         }
         return () => {dispatch({type: WS_CONNECTION_CLOSED})};
     // eslint-disable-next-line 

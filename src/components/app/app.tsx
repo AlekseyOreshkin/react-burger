@@ -9,15 +9,12 @@ import { HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
   PasswordResetPage, ProfilePage, IngredientPage, NotFound404Page } from '../../pages';
 
 import { getIngredients } from '../../services/actions/ingredients';
-import { ModalIngredient } from '../modal-ingredient/modal-ingredient';
 import { ILocationState } from '../../utils/types';
 import { useDispatch, useSelector } from '../..';
 import { FeedPage } from '../../pages/feed';
 import { FeedItemPage } from '../../pages/feed-item';
-import { OrdersPage } from '../../pages/orders';
-import { OrdersItemPage } from '../../pages/orders-item';
 import { ModalFeedItem } from '../modal-feed-item/modal-feed-item';
-import { ModalOrdersItem } from '../modal-orders-item/modal-orders-item';
+import { ModalIngredient } from '../modal-ingredient/modal-ingredient';
 
 const App = () => {
   const ingredients = useSelector(store => store.ingredients.items);
@@ -57,14 +54,11 @@ const App = () => {
           <ProtectedRoute path='/feed/:id' exact={true}>
             <FeedItemPage />
           </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders/:id' exact={true}>
+            <FeedItemPage orders={true}/>
+          </ProtectedRoute>
           <ProtectedRoute path='/profile' >
             <ProfilePage />
-          </ProtectedRoute>
-          <ProtectedRoute path='/profile/orders' exact={true}>
-            <OrdersPage />
-          </ProtectedRoute>
-          <ProtectedRoute path='/profile/orders/:id' exact={true}>
-            <OrdersItemPage />
           </ProtectedRoute>
           <Route path='/ingredients/:id' exact={true}>
             <IngredientPage />
@@ -75,7 +69,7 @@ const App = () => {
         </Switch>
         {background && <Route path="/ingredients/:id" children={<ModalIngredient />} />}
         {background && <Route path="/feed/:id" children={<ModalFeedItem />} />}
-        {background && <Route path="/profile/orders/:id" children={<ModalOrdersItem />} />}
+        {background && <Route path="/profile/orders/:id" children={<ModalFeedItem />} />}
       </div>
     );
 }

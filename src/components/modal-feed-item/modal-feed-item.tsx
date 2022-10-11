@@ -4,13 +4,14 @@ import { Modal } from "../modal/modal";
 import { OrderDetails } from "../order-details/order-details";
 
 export const ModalFeedItem = () => {
-    const location=useLocation<{from: string;}>();
+    const location=useLocation();
     const [show, setShow] = useState(true);
     const onHideDetails = useCallback( () => {
         setShow(false);
     }, [setShow]);
     if (!show) {
-      return (<Redirect to={location?.state?.from || '/feed'} />);
+        /* @ts-ignore */
+      return (<Redirect to={location.state?.background?.pathname} />);
     }
     return (
     <div >

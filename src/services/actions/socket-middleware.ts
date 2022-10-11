@@ -1,4 +1,4 @@
-import { IBasicAction } from "../../utils/types";
+import { AppThunk, IBasicAction } from "../../utils/types";
 
 export const WS_CONNECTION_START : 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
@@ -19,7 +19,18 @@ interface IWsMessageAction<T, P> extends IBasicAction<T>
     payload: P;
 } 
 
-type TWsConnectionStartAction = IWsServiceAction<typeof WS_CONNECTION_START>;
+export const openWsConnection : AppThunk = (url : string, secured = false) => 
+    dispatch => {
+        let payload = url;
+        if (secured) {
+            const token = localStorage.getItem('token')?.split(' ')[1];
+            payload += `?token=${token}`;
+        }
+        dispatch({type: WS_CONNECTION_START, payload});
+    }
+
+
+type TWsConnectionStartAction = IWsServiceAction<typeof WS_CONNECTION_START, string>;
 type TWsConnectionSuccessAction = IWsServiceAction<typeof WS_CONNECTION_SUCCESS>;
 type TWsConnectionErrorAction = IWsServiceAction<typeof WS_CONNECTION_ERROR>;
 type TWsConnectionClosedAction = IWsServiceAction<typeof WS_CONNECTION_CLOSED>;

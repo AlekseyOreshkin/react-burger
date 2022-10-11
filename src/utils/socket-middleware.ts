@@ -4,7 +4,7 @@ import { TSocketMiddlewareActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS
 import { AppDispatch, RootState } from './types';
 
 
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 
@@ -14,7 +14,9 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
  
       if (type === WS_CONNECTION_START) {
             // объект класса WebSocket
-        socket = new WebSocket(wsUrl);
+        if (typeof payload === 'string') {
+          socket = new WebSocket(payload);
+        }
       }
       if (socket) {
 

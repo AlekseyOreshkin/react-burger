@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import { useDispatch } from '..';
 import { FeedSummary } from '../components/feed-summary/feed-summary';
 import { FeedList } from '../components/feed-list/feed-list';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/actions/socket-middleware';
+import { openWsConnection, WS_CONNECTION_CLOSED } from '../services/actions/socket-middleware';
 import styles from './feed.module.css';
+import { WS_FEED_URL } from '../utils/constants';
 
 
 export const FeedPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch({type : WS_CONNECTION_START});
+        dispatch(openWsConnection(WS_FEED_URL));
         return () => {dispatch({type: WS_CONNECTION_CLOSED})};
     // eslint-disable-next-line 
     }, []);
