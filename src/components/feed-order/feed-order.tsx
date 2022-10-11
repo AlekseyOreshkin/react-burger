@@ -3,6 +3,7 @@ import styles from './feed-order.module.css';
 import {IFeedOrder} from '../../utils/types'
 import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IngredientIcon } from '../../ui/ingredient-icon/ingredient-icon';
 
 interface IProps {
     order: IFeedOrder<string>;
@@ -22,9 +23,9 @@ export const FeedOrder = ({ order } : IProps) => {
                 <div className={styles.ingredients}>
                     {
                         ingredients.map((i, idx) => (
-                          <div key={`${i}_${idx}`} className={styles.ingredientBg} style={{zIndex: `${1000 - idx}`}}>
-                            <div className={styles.ingredient} style={{backgroundImage: `url(${i.image})`}}/>
-                          </div>
+                            <div className={styles.icon} style={{zIndex: `${1000 - idx}`}} key={`${i}_${idx}`}>
+                                <IngredientIcon image={i.image} />
+                            </div>
                         ))
                     }
                 </div>

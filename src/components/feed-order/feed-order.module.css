@@ -22,27 +22,11 @@
 {
     display: flex;
 }
-.ingredientBg
-{
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(to right, rgba(128, 26, 178, 1), rgba(76, 76, 255, 1));
-    border-radius: 32px;
-    margin-right: -24px;
-}
-.ingredient
-{
-    width: 60px;
-    height: 60px;
-    margin: 2px;
-    background-color: #1C1C21;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 30px;
-}
 .price
 {
     display: flex;
     align-items: center;
+}
+.icon {
+    margin-right: -24px;
 }

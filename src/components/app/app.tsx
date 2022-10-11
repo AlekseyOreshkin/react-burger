@@ -74,7 +74,7 @@ const App = () => {
           </Route>
         </Switch>
         {background && <Route path="/ingredients/:id" children={<ModalIngredient />} />}
-        {background && <Route path="/profile/orders/:id" children={<ModalFeedItem />} />}
+        {background && <Route path="/feed/:id" children={<ModalFeedItem />} />}
         {background && <Route path="/profile/orders/:id" children={<ModalOrdersItem />} />}
       </div>
     );
