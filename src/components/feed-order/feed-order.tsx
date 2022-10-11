@@ -8,10 +8,17 @@ import { IngredientIcon } from '../../ui/ingredient-icon/ingredient-icon';
 interface IProps {
     order: IFeedOrder<string>;
 }
+const MAX_ITEMS_COUNT = 7;
 export const FeedOrder = ({ order } : IProps) => {
     const ingredients = useSelector(store => store.ingredients.items)?.filter(i => order.ingredients.includes(i._id));
+
+    const {items, extra} = useMemo(() => {const count = ingredients.length;
+        return (count > MAX_ITEMS_COUNT) ?
+            {items : ingredients.slice(0, MAX_ITEMS_COUNT), extra: '+' + (count - MAX_ITEMS_COUNT).toString()} 
+            : {items: ingredients, extra: ''};}, [ingredients]);
+
     const date = useMemo(() => new Date(order.createdAt), [order.createdAt]);
-    const price = useMemo(() => ingredients ? ingredients.map(i => Number(i.price)).reduce((acc, p) => acc += p) : 0, [ingredients]);
+    const price = useMemo(() => {return ingredients ? ingredients.map(i => Number(i.price)).reduce((acc, p) => acc += p) : 0}, [ingredients]);
     return (
         <div className={styles.main}>
             <div className={styles.content}>
@@ -22,9 +29,9 @@ export const FeedOrder = ({ order } : IProps) => {
             <div className={styles.content}>
                 <div className={styles.ingredients}>
                     {
-                        ingredients.map((i, idx) => (
+                        items.map((i, idx) => (
                             <div className={styles.icon} style={{zIndex: `${1000 - idx}`}} key={`${i}_${idx}`}>
-                                <IngredientIcon image={i.image} />
+                                <IngredientIcon image={i.image} info={idx === items.length - 1 ? extra : ''}/>
                             </div>
                         ))
                     }

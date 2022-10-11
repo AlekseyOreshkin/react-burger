@@ -34,16 +34,30 @@ export const OrderDetails = () => {
     const date = new Date(order.createdAt);
     return (
         <div className={styles.main}>
-            <div className={styles.firstRow}><p>#{order.number}</p></div>
-            <div className={styles.row}><p>{order.name}</p></div>
-            <div className={styles.row}><p>Состав:</p>{
-                groups.map(g =>(<div className={styles.ingredient}>
+            <div className={styles.firstRow}><p className='text text_type_digits-default'>#{order.number}</p></div>
+            <div className={styles.nameRow}>
+                <p className='text text_type_main-default'>{order.name}</p>
+                {(order.status === 'done') && <p className={`text text_type_main-small ${styles.done}`}>Выполнен</p>}
+            </div>
+            <div className={styles.itemsRow}>
+                <p className='text text_type_main-default'>Состав:</p>
+                <div className={styles.items}>
+                  {groups.map(g =>(<div className={styles.ingredient} key={g.item._id}>
                     <IngredientIcon image={g.item.image}/>
-                    <p className={``}>{g.item.name}</p>
-                    <p className={``}>{g.count}x{g.item.price} <CurrencyIcon type='primary'/></p>
-                    </div>))
-            }</div>
-            <div className={styles.row}><p>{date.toUTCString()}</p><p>{price} <CurrencyIcon type='primary'/></p></div>
-        </div>
+                    <p className={`text text_type_main-default`}>{g.item.name}</p>
+                    <div className={styles.itemPrice}>
+                        <p className={`text text_type_digits-default`}>{g.count}x{g.item.price}&nbsp;</p>
+                        <CurrencyIcon type='primary'/>
+                    </div>
+                  </div>))
+                }</div>
+            </div>
+            <div className={styles.lastRow}>
+                <p className={`text text_type_main-small ${styles.time}`}>{date.toUTCString()}</p>
+                <div className={styles.itemPrice}>
+                    <p className={`text text_type_digits-default`}>{price}&nbsp;</p>
+                    <CurrencyIcon type='primary'/></div>
+                </div>
+            </div>
     );
 }
