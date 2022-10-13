@@ -11,12 +11,12 @@ export const FeedList = () => {
         return null;
     }
     return (<div className={`${styles.main} scrollable`}>
-        {feed.data.orders.map(order => 
-            <Link className={styles.link} key={order._id} 
-                to={{pathname: `${location.pathname}/${order._id}`, state: {background: location} }} > 
+        {feed.data.orders.map(order =>
+            <Link className={styles.link} key={order._id}
+                to={{ pathname: `${location.pathname}/${order._id}`, state: { background: location } }} >
                 <FeedOrder order={order} />
             </Link>)}
-        </div>);
+    </div>);
 }
 
 

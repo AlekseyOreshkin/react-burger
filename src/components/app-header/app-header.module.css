@@ -10,9 +10,9 @@
   justify-content: left;
   align-content: center;
 }
-.rightItems{
+
+.rightItems {
   display: flex;
   flex-grow: 100;
   justify-content: right;
 }
-

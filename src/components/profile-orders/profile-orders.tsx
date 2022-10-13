@@ -10,8 +10,8 @@ export const ProfileOrders = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(openWsConnection(WS_ORDERS_URL, true));
-        return () => {dispatch({type: WS_CONNECTION_CLOSED})};
-    // eslint-disable-next-line 
+        return () => { dispatch({ type: WS_CONNECTION_CLOSED }) };
+        // eslint-disable-next-line 
     }, []);
 
     return (<div className={styles.main}>

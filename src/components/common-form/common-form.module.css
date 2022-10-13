@@ -1,18 +1,20 @@
 .main {
-    /*background-color: green;*/
     width: 100%;
     justify-content: center;
     align-items: center;
     align-content: center;
 }
-.main > div > div {
+
+.main>div>div {
     width: 480px;
     margin-bottom: 24px;
 }
+
 .header {
     margin: 60px 0 24px 0;
     text-align: center;
 }
+
 .buttonWrapper {
     display: flex;
     flex-direction: row;

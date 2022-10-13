@@ -1,32 +1,30 @@
 import { AppThunk, IBasicAction } from "../../utils/types";
 
-export const WS_CONNECTION_START : 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
+export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
 export const WS_GET_MESSAGE: 'WS_GET_MESSAGE' = 'WS_GET_MESSAGE';
 export const WS_SEND_MESSAGE: 'WS_SEND_MESSAGE' = 'WS_SEND_MESSAGE';
 
-interface IWsServiceAction<T, P = Event> extends IBasicAction<T>
-{
+interface IWsServiceAction<T, P = Event> extends IBasicAction<T> {
     payload: P;
-} 
+}
 interface ISendMessage {
 
 }
-interface IWsMessageAction<T, P> extends IBasicAction<T>
-{
+interface IWsMessageAction<T, P> extends IBasicAction<T> {
     payload: P;
-} 
+}
 
-export const openWsConnection : AppThunk = (url : string, secured = false) => 
+export const openWsConnection: AppThunk = (url: string, secured = false) =>
     dispatch => {
         let payload = url;
         if (secured) {
             const token = localStorage.getItem('token')?.split(' ')[1];
             payload += `?token=${token}`;
         }
-        dispatch({type: WS_CONNECTION_START, payload});
+        dispatch({ type: WS_CONNECTION_START, payload });
     }
 
 

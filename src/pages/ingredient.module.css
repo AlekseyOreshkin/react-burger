@@ -1,9 +1,11 @@
 .main {
     composes: content-grid from '../index.css';
 }
+
 .box {
     width: 520px;
 }
+
 .header {
     margin: 0;
     text-align: center;

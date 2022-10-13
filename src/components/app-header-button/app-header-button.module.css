@@ -3,15 +3,19 @@
     align-items: center;
     background-color: transparent;
     border: none;
-    padding-right: 10px;;
+    padding-right: 10px;
+    ;
 }
+
 .main:hover {
     cursor: pointer;
 }
+
 .iconWrapper {
     display: inline-block;
     padding-right: 8px;
 }
+
 .textWrapper {
     display: inline-block;
     color: #8585AD;

@@ -7,10 +7,10 @@ import { TSocketMiddlewareActions } from "./socket-middleware";
 
 
 // Типизация всех экшенов приложения
-export type TApplicationActions = 
-    TAuthInfoActions 
+export type TApplicationActions =
+    TAuthInfoActions
     | TConstructorActions
-    | TIngredientsActions 
+    | TIngredientsActions
     | TOrderDetailsActions
     | TResetPasswordActions
     | TSocketMiddlewareActions;

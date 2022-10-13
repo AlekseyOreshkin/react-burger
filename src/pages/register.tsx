@@ -12,10 +12,10 @@ import { useDispatch } from '..';
 export const RegisterPage = () => {
     const dispatch = useDispatch()
 
-    const {form, handleChange} = useForm<IProfileForm>({ email: '', password: '', name: '' });
+    const { form, handleChange } = useForm<IProfileForm>({ email: '', password: '', name: '' });
 
-    const handleRegister = ({ name, email, password } : IFormData) => {
-        dispatch(register({name, email, password}));
+    const handleRegister = ({ name, email, password }: IFormData) => {
+        dispatch(register({ name, email, password }));
     };
 
     return (
@@ -29,5 +29,5 @@ export const RegisterPage = () => {
                 <p className="text text_type_main-default text_color_inactive">Уже зарегистрированы? <Link to='/login'>Войти</Link></p>
             </div>
         </div>
-      );
+    );
 }

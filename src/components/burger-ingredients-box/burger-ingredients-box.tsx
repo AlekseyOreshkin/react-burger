@@ -12,33 +12,32 @@ export const BurgerIngredientsBox = () => {
   const categoryContext = useContext(CategoryContext);
 
   const dispatch = useDispatch();
-  
+
   const positionRef = createRef<HTMLDivElement>();
 
-  const onScroll = useCallback( (e : SyntheticEvent)  => {
+  const onScroll = useCallback((e: SyntheticEvent) => {
     e.persist();
     e.preventDefault();
-    const getYPos = (ref : React.RefObject<HTMLDivElement>) => ref.current ? Math.abs(Math.floor(ref.current.getBoundingClientRect().top)) : 0;
+    const getYPos = (ref: React.RefObject<HTMLDivElement>) => ref.current ? Math.abs(Math.floor(ref.current.getBoundingClientRect().top)) : 0;
     const parentTop = positionRef.current ? positionRef.current.getBoundingClientRect().top + 2 : 0;
-    const closestCat = {type: cats[0].type, pos: getYPos(categoryContext[cats[0].type])};
+    const closestCat = { type: cats[0].type, pos: getYPos(categoryContext[cats[0].type]) };
     cats.forEach(cat => {
       if (closestCat.type === cat.type) {
-          return;
+        return;
       }
       const top = Math.abs(parentTop - getYPos(categoryContext[cat.type]));
-      if (closestCat.pos > top)
-      {
+      if (closestCat.pos > top) {
         closestCat.type = cat.type;
         closestCat.pos = top;
       }
     });
-    dispatch({type: SET_ACTIVE_TAB, active: closestCat.type});
-  },[cats, positionRef, dispatch, categoryContext]);
+    dispatch({ type: SET_ACTIVE_TAB, active: closestCat.type });
+  }, [cats, positionRef, dispatch, categoryContext]);
 
   return (
-    <div  className={`${styles.main} scrollable`} onScroll={onScroll} ref={positionRef}>
-        {cats.map(cat => (<BurgerIngredientsCategory 
-          key={cat.type} type={cat.type}/>))}
+    <div className={`${styles.main} scrollable`} onScroll={onScroll} ref={positionRef}>
+      {cats.map(cat => (<BurgerIngredientsCategory
+        key={cat.type} type={cat.type} />))}
     </div>
   );
 }

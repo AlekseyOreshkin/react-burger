@@ -1,11 +1,11 @@
 import { IConstructorCounter } from "./types";
 
-export const padOrderNumber = (num: number) : string => {
+export const padOrderNumber = (num: number): string => {
     return String(num).padStart(6, '0');
 }
 
-export const calcConstructorCounter = (bun : string, items: string[]) : IConstructorCounter => {
-    let counter : IConstructorCounter = {};
+export const calcConstructorCounter = (bun: string, items: string[]): IConstructorCounter => {
+    let counter: IConstructorCounter = {};
     if (bun) {
         counter[bun] = 2;
     }

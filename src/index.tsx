@@ -6,7 +6,7 @@ import './index.css';
 import App from './components/app/app';
 import { rootReducer } from './services/reducers';
 import thunk, { ThunkAction } from 'redux-thunk';
-import { BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { TApplicationActions } from './services/actions';
 import { socketMiddleware } from './utils/socket-middleware';
 
@@ -28,7 +28,7 @@ export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
 
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
-export type AppDispatch = typeof store.dispatch; 
+export type AppDispatch = typeof store.dispatch;
 
 //export const useDispatch = () => dispatchHook<ThunkDispatch<RootState, never, TApplicationActions>>();
 /* @ts-ignore*/
@@ -40,9 +40,9 @@ export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-    <Router >
-      <App />
-    </Router>
+      <Router >
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

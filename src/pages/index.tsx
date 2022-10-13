@@ -7,5 +7,7 @@ import { ProfilePage } from "./profile";
 import { IngredientPage } from "./ingredient";
 import { NotFound404Page } from "./not-found-404";
 
-export { HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
-    PasswordResetPage, ProfilePage, IngredientPage, NotFound404Page };
+export {
+    HomePage, LoginPage, RegisterPage, PasswordRecoverPage,
+    PasswordResetPage, ProfilePage, IngredientPage, NotFound404Page
+};

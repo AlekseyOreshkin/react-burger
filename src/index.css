@@ -1,18 +1,17 @@
-
 body {
   background: #131316;
 }
 
 .main-grid {
   display: grid;
-  grid-template-columns: 1fr  [left-border-line] 600px [center-line] 600px [right-border-line] 1fr;
+  grid-template-columns: 1fr [left-border-line] 600px [center-line] 600px [right-border-line] 1fr;
   grid-template-rows: [top-line] 88px [nav-bottom-line] 100px [container-top-line] auto [container-bottom-line] 40px [bottom-line];
-  grid-template-areas: 
+  grid-template-areas:
     ". header header ."
     ". static-text . ."
     ". ingredients constructor ."
     "footer footer footer footer";
-  
+
   justify-items: stretch;
   align-items: stretch;
   justify-content: stretch;
@@ -42,11 +41,11 @@ body {
   grid-template-columns: 40px 1fr 40px;
   grid-template-rows: 100px 1fr 60px;
 
-  grid-template-areas: 
+  grid-template-areas:
     ". header ."
     ". content ."
     ". footer .";
-  
+
   justify-items: stretch;
   align-items: stretch;
   justify-content: stretch;
@@ -60,9 +59,9 @@ body {
   grid-template-columns: 1fr 480px 1fr;
   grid-template-rows: 120px 1fr;
 
-  grid-template-areas: 
-  ". . ."
-  "lk-menu form free";
+  grid-template-areas:
+    ". . ."
+    "lk-menu form free";
 }
 
 .form-area {
@@ -74,8 +73,8 @@ body {
 }
 
 .orders-area {
-    grid-row-start: form;
-    grid-column-start: form;
-    grid-row-end: free;
-    grid-column-end: free;
+  grid-row-start: form;
+  grid-column-start: form;
+  grid-row-end: free;
+  grid-column-end: free;
 }

@@ -11,14 +11,14 @@ export const FeedPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(openWsConnection(WS_FEED_URL));
-        return () => {dispatch({type: WS_CONNECTION_CLOSED})};
-    // eslint-disable-next-line 
+        return () => { dispatch({ type: WS_CONNECTION_CLOSED }) };
+        // eslint-disable-next-line 
     }, []);
 
     return (<>
         <h1 className={`text_type_main-medium ${styles.staticText}`}>Лента заказов</h1>
-          <FeedList />
-          <FeedSummary />
+        <FeedList />
+        <FeedSummary />
     </>);
 }
 

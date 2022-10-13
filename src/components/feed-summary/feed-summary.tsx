@@ -7,12 +7,12 @@ import styles from './feed-summary.module.css';
 export const FeedSummary = () => {
     const state = useSelector(state => state.feed);
 
-    const [today, total, waiting, done] = useMemo( () => {
-        if (!state.wsConnected || ! state.data.success) {
+    const [today, total, waiting, done] = useMemo(() => {
+        if (!state.wsConnected || !state.data.success) {
             return [0, 0, undefined, undefined];
         }
-        const done : string[] = [];
-        const waiting : string[] = [];
+        const done: string[] = [];
+        const waiting: string[] = [];
         state.data.orders.forEach(o => {
             if (o.status === TFeedOrderStatusDone) {
                 done.push(o.number);
@@ -27,13 +27,13 @@ export const FeedSummary = () => {
             <div className={styles.firstRow}>
                 <div className={styles.leftColumn}>
                     <p className={`text text_type_main-default ${styles.firstHeader}`}>Готовы:</p>
-                    <div className={styles.leftNums}>{ 
+                    <div className={styles.leftNums}>{
                         done?.map(s => (<p key={s} className={`text text_type_digits-default`}>{s}</p>))
                     }</div>
                 </div>
                 <div className={styles.rightColumn}>
                     <p className={`text text_type_main-default ${styles.firstHeader}`}>В работе:</p>
-                    <div className={styles.nums}>{ 
+                    <div className={styles.nums}>{
                         waiting?.map(s => (<p key={s} className={`text text_type_digits-default`}>{s}</p>))
                     }</div>
                 </div>

@@ -1,14 +1,13 @@
 import { IIngredient, IIngredientCategory, TIngredientType } from "../../utils/types";
-import { 
-    GET_INGREDIENTS_REQUEST, 
-    GET_INGREDIENTS_SUCCESS, 
+import {
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
     SET_ACTIVE_TAB,
     TIngredientsActions
 } from "../actions/ingredients";
 
-interface IIngredientsState
-{
+interface IIngredientsState {
     items: IIngredient[];
     cats: IIngredientCategory[];
     activeTab: TIngredientType;
@@ -16,15 +15,15 @@ interface IIngredientsState
     failed: boolean;
 }
 
-export const initialIngredients : IIngredientsState = {
+export const initialIngredients: IIngredientsState = {
     items: [],
     cats: [],
-    activeTab: 'bun', 
+    activeTab: 'bun',
     request: false,
     failed: false
 };
 
-export const ingredientsReducer = (state = initialIngredients, action : TIngredientsActions) => {
+export const ingredientsReducer = (state = initialIngredients, action: TIngredientsActions) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

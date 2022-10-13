@@ -1,18 +1,13 @@
 .main {
-
-}
-.main:hover {
-
-}
-
-.main  {
     color: #F2F2F3;
     background-color: transparent;
     border: none;
 }
+
 .main:hover {
     cursor: pointer;
 }
-.main > p {
+
+.main>p {
     min-height: 60px;
 }

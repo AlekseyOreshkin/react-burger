@@ -1,5 +1,4 @@
-.main
-{
+.main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -11,22 +10,22 @@
     margin: 8px;
 }
 
-.content
-{
+.content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-.ingredients
-{
+
+.ingredients {
     display: flex;
 }
-.price
-{
+
+.price {
     display: flex;
     align-items: center;
 }
+
 .icon {
     margin-right: -24px;
 }

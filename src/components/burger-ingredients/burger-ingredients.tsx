@@ -5,13 +5,13 @@ import { CategoryContext, initialCategoryContext } from '../../hooks/category-co
 
 
 export const BurgerIngredients = () => {
-  
+
   return (
-  <div  className={burgerIngredients.main}>
-    <CategoryContext.Provider value={initialCategoryContext}>
-      <BurgerIngredientsTabs />
-      <BurgerIngredientsBox />
-    </CategoryContext.Provider>
-  </div>
+    <div className={burgerIngredients.main}>
+      <CategoryContext.Provider value={initialCategoryContext}>
+        <BurgerIngredientsTabs />
+        <BurgerIngredientsBox />
+      </CategoryContext.Provider>
+    </div>
   );
 };

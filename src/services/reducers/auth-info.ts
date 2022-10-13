@@ -9,14 +9,13 @@ import {
     TAuthInfoActions,
 } from '../actions/auth-info';
 
-interface IAuthInfoState
-{
+interface IAuthInfoState {
     request: boolean;
     success: boolean;
     user: IAuthUserInfo;
 };
 
-export const initialAuthState : IAuthInfoState = {
+export const initialAuthState: IAuthInfoState = {
     request: false,
     success: false,
     user: {
@@ -25,36 +24,36 @@ export const initialAuthState : IAuthInfoState = {
     }
 };
 
-export const authInfoReducer = (state = initialAuthState, action : TAuthInfoActions) => {
+export const authInfoReducer = (state = initialAuthState, action: TAuthInfoActions) => {
     switch (action.type) {
         case LOGIN_REQUEST: return {
             ...state,
             request: true,
-        }; 
+        };
         case LOGIN_SUCCESS: {
             return {
                 ...state,
                 request: false,
                 success: true,
                 user: action.authInfo
-            }; 
+            };
         } case LOGIN_FAILED: return {
             ...state,
             request: false,
-        }; 
+        };
         case LOGOUT_REQUEST: return {
             ...state,
             request: true
-        } 
+        }
         case LOGOUT_SUCCESS: {
             return initialAuthState;
-        } 
+        }
         case LOGOUT_FAILED: return {
             ...state,
             request: false,
-        }; 
+        };
         default: {
             return state;
-        } 
+        }
     }
 };

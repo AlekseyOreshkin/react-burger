@@ -11,35 +11,35 @@ interface IProps {
   count?: number;
 }
 
-export const BurgerIngredientsCard : FC<IProps> = ({ ingredient, count }) => {
+export const BurgerIngredientsCard: FC<IProps> = ({ ingredient, count }) => {
   const location = useLocation();
   const [{ showCount, opacity }, dragRef] = useDrag({
     type: 'new_ingredient',
-    item: {...ingredient},
+    item: { ...ingredient },
     collect: monitor => ({
       showCount: !monitor.isDragging(),
       opacity: monitor.isDragging() ? 0.5 : 1
     })
   });
-  
+
   return (
-    <Link  className={styles.main}  style={{opacity}}
-      to={{pathname: `/ingredients/${ingredient._id}`, state: {background: location} }} > 
-        {showCount && <Counter count={count} />}
-        <div ref={dragRef}>
+    <Link className={styles.main} style={{ opacity }}
+      to={{ pathname: `/ingredients/${ingredient._id}`, state: { background: location } }} >
+      {showCount && <Counter count={count} />}
+      <div ref={dragRef}>
         <img src={ingredient.image} alt={ingredient.name} />
         <div className={styles.priceWrapper}>
           <p className={`text_type_digits-default ${styles.textWrapper}`}>
-              {ingredient.price}
+            {ingredient.price}
           </p>
           <div className={styles.logoWrapper}>
             <CurrencyIcon type="primary" />
           </div>
         </div>
         <p className="text text_type_main-small">
-            {ingredient.name}
+          {ingredient.name}
         </p>
-        </div>
+      </div>
     </Link>
   );
 };

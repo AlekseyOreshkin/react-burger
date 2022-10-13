@@ -1,4 +1,4 @@
-import { useCallback }  from 'react';
+import { useCallback } from 'react';
 
 import styles from './profile.module.css';
 import { ProfileMenu } from '../components/profile-menu/profile-menu';
@@ -11,16 +11,16 @@ import { useDispatch } from '..';
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
-  
+
   const handleLogout = useCallback(() => {
-      dispatch(logout())
+    dispatch(logout())
   }, [dispatch]);
-    
-    return (
-        <div className={styles.main} >
-          <ProfileMenu onLogout={handleLogout}/>
-          <Route path='/profile'><ProfileHome /></Route>
-          <Route path='/profile/orders'><ProfileOrders /></Route>
-        </div>
-      );
+
+  return (
+    <div className={styles.main} >
+      <ProfileMenu onLogout={handleLogout} />
+      <Route path='/profile'><ProfileHome /></Route>
+      <Route path='/profile/orders'><ProfileOrders /></Route>
+    </div>
+  );
 }

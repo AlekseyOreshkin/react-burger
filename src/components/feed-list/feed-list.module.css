@@ -1,5 +1,4 @@
-.main
-{
+.main {
     display: block;
     grid-area: ingredients;
     width: calc(100% - 30px);

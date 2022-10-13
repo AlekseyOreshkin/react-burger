@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ingredientsReducer, initialIngredients} from "./ingredients";
+import { ingredientsReducer, initialIngredients } from "./ingredients";
 import { constructorReducer, initialConstructor } from "./constructor";
 import { orderDetailsReducer, initialOrderDetails } from "./order-details";
 import { resetPasswordReducer, initialResetPassword } from "./reset-password";

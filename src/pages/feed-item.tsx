@@ -8,7 +8,7 @@ import { WS_FEED_URL, WS_ORDERS_URL } from '../utils/constants';
 interface IProps {
     orders?: boolean;
 }
-export const FeedItemPage = ({orders = false}: IProps) => {
+export const FeedItemPage = ({ orders = false }: IProps) => {
     const ws = useSelector(state => state.feed);
 
     const dispatch = useDispatch();
@@ -21,11 +21,11 @@ export const FeedItemPage = ({orders = false}: IProps) => {
             }
 
         }
-        return () => {dispatch({type: WS_CONNECTION_CLOSED})};
-    // eslint-disable-next-line 
+        return () => { dispatch({ type: WS_CONNECTION_CLOSED }) };
+        // eslint-disable-next-line 
     }, []);
 
-    return ( <div className={styles.main} > 
+    return (<div className={styles.main} >
         <div className={`form-area ${styles.box}`}>
             <OrderDetails />
         </div>

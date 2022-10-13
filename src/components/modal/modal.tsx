@@ -10,41 +10,42 @@ interface IProps {
     headerText: string;
 };
 
-export const Modal : FC<IProps> = (props) => {
+export const Modal: FC<IProps> = (props) => {
 
-    const isOpen = props.isShowing 
+    const isOpen = props.isShowing
 
     const closeModal = useCallback(() => {
-       if (isOpen) {
-        props.toggle();
-       }
+        if (isOpen) {
+            props.toggle();
+        }
     }, [isOpen, props]);
 
     useEffect(() => {
-        function closeByEscape(evt : KeyboardEvent) {
-            if(evt.key === 'Escape') {
+        function closeByEscape(evt: KeyboardEvent) {
+            if (evt.key === 'Escape') {
                 closeModal();
             }
         }
-        if(isOpen) {
+        if (isOpen) {
             document.addEventListener('keydown', closeByEscape);
             return () => {
                 document.removeEventListener('keydown', closeByEscape);
             }
         }
-    }, [isOpen, closeModal]) 
+    }, [isOpen, closeModal])
 
-    const renderHeader = (text : string) => {
+    const renderHeader = (text: string) => {
         return (<>
             <p className={`text text_type_main-large`}>
                 {text}
             </p>
             <button className={styles.closeButton} onClick={closeModal}><CloseIcon type='primary' /></button>
-    </>)}
-    
+        </>)
+    }
+
     return props.isShowing ? ReactDOM.createPortal(
         <React.Fragment>
-            <div  className={styles.main}>
+            <div className={styles.main}>
                 <div className='modal-grid'>
                     <div className={styles.modalHeader}>
                         {renderHeader(props.headerText)}

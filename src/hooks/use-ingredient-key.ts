@@ -15,9 +15,9 @@ export const useIngredientKey = () => {
             return uuid;
         }
         uuid = uuidv4();
-        state[position] = {[id] :uuid};
+        state[position] = { [id]: uuid };
         setState({ ...state });
         return uuid;
     };
-    return {state, handleUuid, setState};
+    return { state, handleUuid, setState };
 }

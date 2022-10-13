@@ -11,18 +11,18 @@ export const LoginPage = () => {
     const email = useSelector(state => state.authInfo.user.email);
     const authorized = useSelector(state => state.authInfo.success);
     const dispatch = useDispatch();
-    const {form, handleChange} = useForm<ILoginForm>({ email: email, password: '' });
-    const location = useLocation<{from: string}>();
+    const { form, handleChange } = useForm<ILoginForm>({ email: email, password: '' });
+    const location = useLocation<{ from: string }>();
 
 
-    const handleLogin = ({email, password} : IFormData) => {
-        dispatch(login({ email, password}));
+    const handleLogin = ({ email, password }: IFormData) => {
+        dispatch(login({ email, password }));
     };
 
-    if(authorized) {
+    if (authorized) {
         return (<Redirect to={location?.state?.from || '/'} />);
     }
-    
+
 
     return (
         <div className={styles.main} >
@@ -35,5 +35,5 @@ export const LoginPage = () => {
                 <p className="text text_type_main-default text_color_inactive"> Забыли пароль? <Link to='/forgot-password'>Восстановить пароль</Link></p>
             </div>
         </div>
-      );
+    );
 };
