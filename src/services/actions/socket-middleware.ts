@@ -24,6 +24,7 @@ export const openWsConnection: AppThunk = (url: string, secured = false) =>
             const token = localStorage.getItem('token')?.split(' ')[1];
             payload += `?token=${token}`;
         }
+
         dispatch({ type: WS_CONNECTION_START, payload });
     }
 
@@ -37,3 +38,29 @@ type TWsSendMessageAction = IWsMessageAction<typeof WS_SEND_MESSAGE, ISendMessag
 
 export type TSocketMiddlewareActions = TWsConnectionStartAction | TWsConnectionSuccessAction
     | TWsConnectionErrorAction | TWsConnectionClosedAction | TWsGetMessageAction | TWsSendMessageAction;
+
+
+type TWsActionCreator<TEvent = Event> = (event: TEvent) => TSocketMiddlewareActions;
+
+export interface IWsActions
+{
+    wsStart: typeof WS_CONNECTION_START;
+    wsSend: typeof WS_SEND_MESSAGE;
+    onOpen: TWsActionCreator;
+    onError: TWsActionCreator;
+    onMessage: TWsActionCreator<MessageEvent<string>>;
+    onClose: TWsActionCreator;
+};
+
+export const wsActions : IWsActions = {
+    wsStart: WS_CONNECTION_START,
+    wsSend: WS_SEND_MESSAGE,
+    onOpen: (event) => ({ type: WS_CONNECTION_SUCCESS, payload: event }),
+    onError: (event) => ({ type: WS_CONNECTION_ERROR, payload: event }),
+    onMessage: (event) => {
+        const { data } = event;
+        return ({ type: WS_GET_MESSAGE, payload: data })
+    },
+    onClose: (event) => ({ type: WS_CONNECTION_CLOSED, payload: event }),
+};
+

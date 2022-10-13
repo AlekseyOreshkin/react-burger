@@ -1,10 +1,10 @@
 // socketMiddleware.ts
 import type { Middleware, MiddlewareAPI } from 'redux';
-import { TSocketMiddlewareActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE, WS_SEND_MESSAGE } from '../services/actions/socket-middleware';
+import { IWsActions, TSocketMiddlewareActions } from '../services/actions/socket-middleware';
 import { AppDispatch, RootState } from './types';
 
 
-export const socketMiddleware = (): Middleware => {
+export const socketMiddleware = (wsActions : IWsActions) : Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
@@ -12,35 +12,33 @@ export const socketMiddleware = (): Middleware => {
       const { dispatch } = store;
       const { type, payload } = action;
 
-      if (type === WS_CONNECTION_START) {
+      if (type === wsActions.wsStart) {
         // объект класса WebSocket
-        if (typeof payload === 'string') {
-          socket = new WebSocket(payload);
-        }
+        socket = new WebSocket(payload);
       }
+
       if (socket) {
 
         // функция, которая вызывается при открытии сокета
         socket.onopen = event => {
-          dispatch({ type: WS_CONNECTION_SUCCESS, payload: event });
+          dispatch(wsActions.onOpen(event));
         };
 
         // функция, которая вызывается при ошибке соединения
         socket.onerror = event => {
-          dispatch({ type: WS_CONNECTION_ERROR, payload: event });
+          dispatch(wsActions.onError(event));
         };
 
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
-          const { data } = event;
-          dispatch({ type: WS_GET_MESSAGE, payload: data });
+          dispatch(wsActions.onMessage(event));
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
-          dispatch({ type: WS_CONNECTION_CLOSED, payload: event });
+          dispatch(wsActions.onClose(event));
         };
 
-        if (type === WS_SEND_MESSAGE) {
+        if (type === wsActions.wsSend) {
           const message = payload;
           // функция для отправки сообщения на сервер
           socket.send(JSON.stringify(message));
