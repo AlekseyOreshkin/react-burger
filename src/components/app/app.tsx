@@ -17,6 +17,7 @@ import { FeedPage } from '../../pages/feed';
 import { FeedItemPage } from '../../pages/feed-item';
 import { ModalFeedItem } from '../modal-feed-item/modal-feed-item';
 import { ModalIngredient } from '../modal-ingredient/modal-ingredient';
+import { ModalRequest } from '../modal-request/moddal-request';
 
 const App = () => {
   const ingredients = useSelector(store => store.ingredients.items);
@@ -72,6 +73,7 @@ const App = () => {
       {background && <Route path="/ingredients/:id" children={<ModalIngredient />} />}
       {background && <Route path="/feed/:id" children={<ModalFeedItem />} />}
       {background && <Route path="/profile/orders/:id" children={<ModalFeedItem />} />}
+      <ModalRequest />
     </div>
   );
 }
