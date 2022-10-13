@@ -11,14 +11,12 @@ export {
 export type TIngredientName = 'Булки' | 'Начинки' | 'Соусы';
 export type TIngredientType = 'bun' | 'main' | 'sauce';
 
-export interface IIngredientCategory
-{
+export interface IIngredientCategory {
     name: TIngredientName;
     type: TIngredientType;
 };
 
-export interface IIngredient
-{
+export interface IIngredient {
     _id: string;
     name: string;
     type: TIngredientType;
@@ -33,57 +31,48 @@ export interface IIngredient
     __v: 0
 };
 
-export interface IAuthUserInfo
-{
+export interface IAuthUserInfo {
     email: string;
     name: string;
 };
 
-export interface IAuthToken 
-{
+export interface IAuthToken {
     accessToken: string;
     refreshToken: string;
 };
 
 export type TAuthResponse = IAuthUserInfo & IAuthToken;
 
-export interface ILogoutResponse
-{
+export interface ILogoutResponse {
     message: string;
 };
 
-export interface ILocationState
-{
+export interface ILocationState {
     background: undefined;
 };
 
 
-export interface IProfileForm
-{
+export interface IProfileForm {
     name: string;
     email: string;
     password: string;
 };
 
-export interface IResetPasswordForm
-{
-   password: string;
-   token: string;
+export interface IResetPasswordForm {
+    password: string;
+    token: string;
 };
 
-export interface ILoginForm
-{
+export interface ILoginForm {
     email: string;
     password: string;
 };
 
-export interface IBasicAction<T>
-{
+export interface IBasicAction<T> {
     readonly type: T;
 };
 
-export interface ILocationState
-{
+export interface ILocationState {
     from: {
         pathname: string;
     };
@@ -92,8 +81,7 @@ export interface ILocationState
 export const TFeedOrderStatusDone: 'done' = 'done';
 export type TFeedOrderStatus = typeof TFeedOrderStatusDone;
 
-export interface IFeedOrder<TNumber>
-{
+export interface IFeedOrder<TNumber> {
     _id: string;
     ingredients: string[];
     status: TFeedOrderStatus;
@@ -103,10 +91,13 @@ export interface IFeedOrder<TNumber>
     number: TNumber;
 };
 
-export interface IFeedOrdersMessage<TNumber> 
-{
+export interface IFeedOrdersMessage<TNumber> {
     success: boolean;
     orders: IFeedOrder<TNumber>[];
     total: number;
     totalToday: number;
 };
+
+export interface IConstructorCounter {
+    [id: string]: number;
+}

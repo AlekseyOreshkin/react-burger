@@ -1,5 +1,4 @@
 import { useMemo, } from 'react';
-import {v4 as uuidv4} from 'uuid';
 import styles from './burger-ingredients-modal-details.module.css'
 import { useParams } from 'react-router-dom';
 import { useSelector } from '../..';
@@ -28,7 +27,7 @@ export const BurgerIngredientsModalDetails = () => {
             <p className='text text_type_main-medium'>{ingredient.name}</p>
             <div className={styles.details}>
                 {detailsAccessors.map( o => (
-                    <div key={uuidv4()} className={styles.info}>
+                    <div key={o.accsessor} className={styles.info}>
                         <p className={`text text_type_main-small`}>{o.name}</p>
                         {/* @ts-ignore */}
                         <p className={`text text_type_main-medium`}>{ingredient[o.accsessor]}</p>

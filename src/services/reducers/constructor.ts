@@ -1,3 +1,5 @@
+import { IConstructorCounter } from '../../utils/types';
+import { calcConstructorCounter } from '../../utils/utils';
 import {  
     CHANGE_INGREDIENTS,
     SET_PRICE,
@@ -6,15 +8,17 @@ import {
     TConstructorActions
  } from '../actions/constructor';
 
+
  interface IConstructorState
  {
     bun: string;
     items: string[];
     price: number;
+    counter: IConstructorCounter;
  }
 export const initialConstructor : IConstructorState =
 {
-     bun: '',  items: [], price: 0
+     bun: '',  items: [], price: 0, counter: {}
 };
 export const constructorReducer = (state = initialConstructor, action: TConstructorActions) => {
     switch (action.type)
@@ -23,7 +27,8 @@ export const constructorReducer = (state = initialConstructor, action: TConstruc
         return {
             ...state,
             bun: action.bun,
-            items: action.items
+            items: action.items,
+            counter: calcConstructorCounter(action.bun, action.items)
         };
     case UPDATE_INGREDIENTS_ORDER:
         return {

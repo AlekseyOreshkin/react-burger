@@ -51,9 +51,9 @@ const App = () => {
           <Route path='/feed' exact={true}>
             <FeedPage />
           </Route>
-          <ProtectedRoute path='/feed/:id' exact={true}>
+          <Route path='/feed/:id' exact={true}>
             <FeedItemPage />
-          </ProtectedRoute>
+          </Route>
           <ProtectedRoute path='/profile/orders/:id' exact={true}>
             <FeedItemPage orders={true}/>
           </ProtectedRoute>

@@ -6,6 +6,7 @@ import { SET_PRICE, CHANGE_INGREDIENTS} from '../../services/actions/constructor
 import {BurgerConstructorItem} from '../burger-constructor-item/burger-constructor-item';
 import { IIngredient } from '../../utils/types';
 import { useDispatch, useSelector } from '../..';
+import { useIngredientKey } from '../../hooks/use-ingredient-key';
 
 export const isBun = (ingredient : IIngredient) : boolean =>  ingredient.type === 'bun';
 
@@ -13,6 +14,8 @@ export const BurgerConstructorList : FC = () => {
 
   const ingredients = useSelector(state => state.ingredients.items);
   const {bun : bun_id, items : ids} = useSelector(state => state.constructor);
+
+  const { handleUuid : uuid } = useIngredientKey();
   
   const dispatch = useDispatch();
   
@@ -74,7 +77,7 @@ export const BurgerConstructorList : FC = () => {
         {ids && <div className={`${styles.ingredients} scrollable`} style={{margin: bun_id ? '0' : 'auto 0'}}>
             {selectedIngredients.map((data : IIngredient | undefined, index : number) => {
               return (data && <BurgerConstructorItem
-                key={`${data._id}@${index}`} 
+                key={uuid(index, data._id)} 
                 data={data} index={index} 
                 onRemoveIngredient={onRemoveIngredient}/>);})
               }

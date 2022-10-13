@@ -53,7 +53,7 @@ export const OrderDetails = () => {
                 }</div>
             </div>
             <div className={styles.lastRow}>
-                <p className={`text text_type_main-small ${styles.time}`}>{date.toUTCString()}</p>
+                <p className={`text text_type_main-small ${styles.time}`}>{date.toLocaleString()}</p>
                 <div className={styles.itemPrice}>
                     <p className={`text text_type_digits-default`}>{price}&nbsp;</p>
                     <CurrencyIcon type='primary'/></div>

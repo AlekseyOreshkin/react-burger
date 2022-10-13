@@ -173,8 +173,12 @@ export const requestIngredients = async () => {
 };
 
 export const requestOrder = async (ingredients: string[]) => {
+    const token = localStorage.getItem('refreshToken');
+    if (!token) {
+        return Promise.reject();
+    }
     const { name, order: {number} } = await makeSecuredRequest<{name: string, order: {number: number}}>(ORDER_REQUEST_ENDPOINT,
-        buildParams(postRequestParams, {ingredients}));
+        buildParams(securedPostRequestParams, { token, ingredients }));
     return Promise.resolve({ name, number: padOrderNumber(number) });
 };
 

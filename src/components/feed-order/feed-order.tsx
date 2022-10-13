@@ -4,6 +4,7 @@ import {IFeedOrder} from '../../utils/types'
 import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientIcon } from '../../ui/ingredient-icon/ingredient-icon';
+import { useIngredientKey } from '../../hooks/use-ingredient-key';
 
 interface IProps {
     order: IFeedOrder<string>;
@@ -11,6 +12,8 @@ interface IProps {
 const MAX_ITEMS_COUNT = 7;
 export const FeedOrder = ({ order } : IProps) => {
     const ingredients = useSelector(store => store.ingredients.items)?.filter(i => order.ingredients.includes(i._id));
+    const {handleUuid : uuid} = useIngredientKey();
+
 
     const {items, extra} = useMemo(() => {const count = ingredients.length;
         return (count > MAX_ITEMS_COUNT) ?
@@ -23,14 +26,14 @@ export const FeedOrder = ({ order } : IProps) => {
         <div className={styles.main}>
             <div className={styles.content}>
                 <p className={`text text_type_digits-default`}>#{order.number}</p>
-                <p className={`text text_type_main-default text_color_inactive`}>{date.toUTCString()}</p>
+                <p className={`text text_type_main-default text_color_inactive`}>{date.toLocaleString()}</p>
             </div>
             <p className="text text_type_main-default">{order.name}</p>
             <div className={styles.content}>
                 <div className={styles.ingredients}>
                     {
                         items.map((i, idx) => (
-                            <div className={styles.icon} style={{zIndex: `${1000 - idx}`}} key={`${i}_${idx}`}>
+                            <div className={styles.icon} style={{zIndex: `${1000 - idx}`}} key={uuid(idx, i._id)}>
                                 <IngredientIcon image={i.image} info={idx === items.length - 1 ? extra : ''}/>
                             </div>
                         ))

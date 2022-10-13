@@ -1,0 +1,12 @@
+.main
+{
+    display: block;
+    border-radius: 100px;
+    background-color: #4C4CFF;
+    color: #F2F2F3;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: -24px;
+    padding: 2px 5px;
+    min-width: 15px;
+}

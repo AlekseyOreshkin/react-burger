@@ -9,6 +9,8 @@ import { useSelector } from '../..';
 export const BurgerIngredientsCategory : FC<{type: TIngredientType}>= ({type}) => {
 
   const { items, cats } = useSelector(state => state.ingredients);
+  const counter = useSelector(state => state.constructor.counter) ?? {};
+
   const categoryContext = useContext(CategoryContext);
 
   const cat = useMemo(() => cats.find(c => c.type === type), [cats, type]);
@@ -19,7 +21,7 @@ export const BurgerIngredientsCategory : FC<{type: TIngredientType}>= ({type}) =
     <div className={styles.main}>
         <p className={`text text_type_main-medium ${styles.textWrapper}`}  ref={categoryContext[cat.type]} >{cat.name}</p>
         {items.filter(ing => ing.type === type).map(ing => (
-            <BurgerIngredientsCard key={ing._id} ingredient={ing}/>
+            <BurgerIngredientsCard key={ing._id} ingredient={ing} count={counter[ing._id]}/>
         ))}
     </div>
   );

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "../..";
 export const ProfileHome = () => {
     const { request, user: {name, email} } = useSelector(state => state.authInfo);
 
-    const initForm = useMemo<IProfileForm>(() => ({name, email, password: ''}), [name, email]);
+    const initForm = useMemo<IProfileForm>(() => ({name: name ?? '', email: email ?? '', password: ''}), [name, email]);
     
     const {form, handleChange, setValues} = useForm(initForm);
 
