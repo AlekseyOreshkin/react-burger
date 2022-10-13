@@ -41,7 +41,11 @@ export interface IAuthToken {
     refreshToken: string;
 };
 
-export type TAuthResponse = IAuthUserInfo & IAuthToken;
+export interface IAuthResponse extends IAuthToken
+{
+    success: boolean;
+    user: IAuthUserInfo;
+};
 
 export interface ILogoutResponse {
     message: string;

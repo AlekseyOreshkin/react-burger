@@ -34,8 +34,8 @@ export const authInfoReducer = (state = initialAuthState, action: TAuthInfoActio
             return {
                 ...state,
                 request: false,
-                success: true,
-                user: action.authInfo
+                success: action.authInfo.success,
+                user: action.authInfo.user
             };
         } case LOGIN_FAILED: return {
             ...state,

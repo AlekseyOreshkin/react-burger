@@ -1,5 +1,5 @@
 import { requestPatchUser, requestLogin, requestLogout, requestRefreshToken, requestRegister, requestGetUser } from "../../utils/request";
-import { AppDispatch, AppThunk, IAuthUserInfo, IBasicAction, ILoginForm, IProfileForm } from "../../utils/types";
+import { AppDispatch, AppThunk, IBasicAction, ILoginForm, IProfileForm, IAuthResponse } from "../../utils/types";
 
 export const LOGIN_REQUEST: 'LOGIN_REQUEST' = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS: 'LOGIN_SUCCESS' = 'LOGIN_SUCCESS';
@@ -11,7 +11,7 @@ export const LOGOUT_FAILED: 'LOGOUT_FAILED' = 'LOGOUT_FAILED';
 
 interface ILoginRequestAction extends IBasicAction<typeof LOGIN_REQUEST> { };
 interface ILoginSuccessAction extends IBasicAction<typeof LOGIN_SUCCESS> {
-    authInfo: IAuthUserInfo;
+    authInfo: IAuthResponse;
 };
 interface ILoginFailedAction extends IBasicAction<typeof LOGIN_FAILED> { };
 

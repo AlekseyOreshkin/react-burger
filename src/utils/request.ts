@@ -19,7 +19,7 @@ import {
     TIngredientType,
     ILoginForm,
     IAuthToken,
-    TAuthResponse,
+    IAuthResponse,
     ILogoutResponse
 } from './types';
 import { padOrderNumber } from './utils';
@@ -196,13 +196,13 @@ export const requestPasswordSet = async (form: IResetPasswordForm) => {
 };
 
 export const requestRegister = async (form: IProfileForm) => {
-    const authInfo = await makeRequest<TAuthResponse>(REGISTER_ENDPOINT,
+    const authInfo = await makeRequest<IAuthResponse>(REGISTER_ENDPOINT,
         buildParams(postRequestParams, form));
     return Promise.resolve(authInfo);
 };
 
 export const requestLogin = async (form: ILoginForm) => {
-    const authInfo = await makeRequest<TAuthResponse>(LOGIN_ENDPOINT,
+    const authInfo = await makeRequest<IAuthResponse>(LOGIN_ENDPOINT,
         buildParams(postRequestParams, form));
     return Promise.resolve(authInfo);
 };
@@ -229,7 +229,7 @@ export const requestRefreshToken = async () => {
 
 export const requestGetUser = async () => {
     try {
-        const authInfo = await makeRequest<TAuthResponse>(USER_ENDPOINT, buildParams(securedGetRequestParams));
+        const authInfo = await makeRequest<IAuthResponse>(USER_ENDPOINT, buildParams(securedGetRequestParams));
         return Promise.resolve(authInfo);
     } catch (error) {
         console.log('не удалось восстановить контекст', error);
@@ -238,7 +238,7 @@ export const requestGetUser = async () => {
 };
 
 export const requestPatchUser = async (form: IProfileForm) => {
-    const authInfo = await makeRequest<TAuthResponse>(USER_ENDPOINT,
+    const authInfo = await makeRequest<IAuthResponse>(USER_ENDPOINT,
         buildParams(securedPatchRequestParams, form));
     return Promise.resolve(authInfo);
 };
