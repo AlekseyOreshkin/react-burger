@@ -59,7 +59,7 @@ export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActio
         error: undefined,
         data: {
           ...message,
-          orders: message.orders.map(o => ({ ...o, number: padOrderNumber(o.number) }))
+          orders: message.orders?.map(o => ({ ...o, number: padOrderNumber(o.number) })) ?? []
         }
       };
     }
