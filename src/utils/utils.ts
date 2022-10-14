@@ -1,19 +1,20 @@
-import { IConstructorCounter } from "./types";
+import { IConstructorCounter, IConstructorItem } from "./types";
 
 export const padOrderNumber = (num: number): string => {
     return String(num).padStart(6, '0');
 }
 
-export const calcConstructorCounter = (bun: string, items: string[]): IConstructorCounter => {
+export const calcConstructorCounter = (bun: string, items: IConstructorItem[]): IConstructorCounter => {
     let counter: IConstructorCounter = {};
     if (bun) {
         counter[bun] = 2;
     }
     items.forEach(i => {
-        if (counter[i] === undefined) {
-            counter[i] = 1;
+        const id = i.id;
+        if (counter[id] === undefined) {
+            counter[id] = 1;
         } else {
-            counter[i]++;
+            counter[id]++;
         }
     })
     return counter;

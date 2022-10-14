@@ -26,7 +26,7 @@ export const BurgerConstructorSubmit = () => {
       history.replace({ pathname: "/login", state: { from: location } });
       return;
     }
-    const arr = [...ingredients] ?? [];
+    const arr = ingredients?.map(i => i.id) ?? [];
     if (bun?.length > 0) {
       arr.splice(-1, 0, bun, bun);
     }

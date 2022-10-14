@@ -1,4 +1,4 @@
-import { IConstructorCounter } from '../../utils/types';
+import { IConstructorCounter, IConstructorItem } from '../../utils/types';
 import { calcConstructorCounter } from '../../utils/utils';
 import {
     CHANGE_INGREDIENTS,
@@ -8,10 +8,9 @@ import {
     TConstructorActions
 } from '../actions/constructor';
 
-
 interface IConstructorState {
     bun: string;
-    items: string[];
+    items: IConstructorItem[];
     price: number;
     counter: IConstructorCounter;
 }

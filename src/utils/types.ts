@@ -41,8 +41,7 @@ export interface IAuthToken {
     refreshToken: string;
 };
 
-export interface IAuthResponse extends IAuthToken
-{
+export interface IAuthResponse extends IAuthToken {
     success: boolean;
     user: IAuthUserInfo;
 };
@@ -104,4 +103,9 @@ export interface IFeedOrdersMessage<TNumber> {
 
 export interface IConstructorCounter {
     [id: string]: number;
-}
+};
+
+export interface IConstructorItem {
+    id: string;
+    key: string;
+};

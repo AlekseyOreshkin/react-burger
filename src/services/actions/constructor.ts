@@ -1,4 +1,4 @@
-import { AppDispatch, AppThunk, IBasicAction } from "../../utils/types";
+import { AppDispatch, AppThunk, IBasicAction, IConstructorItem } from "../../utils/types";
 
 export const CHANGE_INGREDIENTS: 'CHANGE_INGREDIENTS' = 'CHANGE_INGREDIENTS';
 export const SET_PRICE: 'SET_PRICE' = 'SET_PRICE';
@@ -13,16 +13,16 @@ interface ISetPriceAction extends IBasicAction<typeof SET_PRICE> {
 
 interface IConstructorAction extends IBasicAction<typeof CHANGE_INGREDIENTS> {
     bun: string;
-    items: string[];
+    items: IConstructorItem[];
 };
 interface IUpdateIngredientsAction extends IBasicAction<typeof UPDATE_INGREDIENTS_ORDER> {
-    items: string[];
+    items: IConstructorItem[];
 };
 
 export type TConstructorActions = IClearConstructorAction | ISetPriceAction | IConstructorAction | IUpdateIngredientsAction;
 
 
-export const changeIngredients: AppThunk = (bun: string, items: string[]) =>
+export const changeIngredients: AppThunk = (bun: string, items: IConstructorItem[]) =>
     (dispatch: AppDispatch) =>
         dispatch({ type: CHANGE_INGREDIENTS, bun, items });
 
