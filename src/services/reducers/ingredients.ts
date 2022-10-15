@@ -1,14 +1,29 @@
-import { 
-    GET_INGREDIENTS_REQUEST, 
-    GET_INGREDIENTS_SUCCESS, 
+import { IIngredient, IIngredientCategory, TIngredientType } from "../../utils/types";
+import {
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
-    SET_ACTIVE_TAB
+    SET_ACTIVE_TAB,
+    TIngredientsActions
 } from "../actions/ingredients";
 
+interface IIngredientsState {
+    items: IIngredient[];
+    cats: IIngredientCategory[];
+    activeTab: TIngredientType;
+    request: boolean;
+    failed: boolean;
+}
 
-export const initialIngredients  = {items: [], cats: [], activeTab: 'bun', request: false, failed: false};
+export const initialIngredients: IIngredientsState = {
+    items: [],
+    cats: [],
+    activeTab: 'bun',
+    request: false,
+    failed: false
+};
 
-export const ingredientsReducer = (state = initialIngredients, action ) => {
+export const ingredientsReducer = (state = initialIngredients, action: TIngredientsActions) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {
@@ -33,7 +48,7 @@ export const ingredientsReducer = (state = initialIngredients, action ) => {
         case SET_ACTIVE_TAB:
             return {
                 ...state,
-                activeTab: action.cat
+                activeTab: action.active
             }
         default:
             return state;

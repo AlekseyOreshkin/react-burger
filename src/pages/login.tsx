@@ -2,27 +2,27 @@ import styles from './login.module.css';
 import { CommonForm, IFormData } from '../components/common-form';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../services/actions/authInfo';
-import { useForm } from '../hooks/useForm';
-import { ILoginForm, IState } from '../utils/types';
+import { login } from '../services/actions/auth-info';
+import { useForm } from '../hooks/use-form';
+import { ILoginForm } from '../utils/types';
+import { useDispatch, useSelector } from '..';
 
 export const LoginPage = () => {
-    const email = useSelector<IState, string>(state => state.authInfo.user.email);
-    const authorized = useSelector<IState, boolean>(state => state.authInfo.success);
+    const email = useSelector(state => state.authInfo.user.email);
+    const authorized = useSelector(state => state.authInfo.success);
     const dispatch = useDispatch();
-    const {form, handleChange} = useForm<ILoginForm>({ email: email, password: '' });
-    const location = useLocation<{from: string}>();
+    const { form, handleChange } = useForm<ILoginForm>({ email: email, password: '' });
+    const location = useLocation<{ from: string }>();
 
 
-    const handleLogin = ({email, password} : IFormData) => {
-        dispatch(login({ email, password}));
+    const handleLogin = ({ email, password }: IFormData) => {
+        dispatch(login({ email, password }));
     };
 
-    if(authorized) {
+    if (authorized) {
         return (<Redirect to={location?.state?.from || '/'} />);
     }
-    
+
 
     return (
         <div className={styles.main} >
@@ -35,5 +35,5 @@ export const LoginPage = () => {
                 <p className="text text_type_main-default text_color_inactive"> Забыли пароль? <Link to='/forgot-password'>Восстановить пароль</Link></p>
             </div>
         </div>
-      );
+    );
 };

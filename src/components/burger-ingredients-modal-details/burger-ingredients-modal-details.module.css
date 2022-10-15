@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: stretch;
 }
+
 .details {
     width: 100%;
     margin-top: 30px;
@@ -11,6 +12,7 @@
     display: flex;
     justify-content: center;
 }
+
 .info {
     margin: 0 10px;
     display: flex;

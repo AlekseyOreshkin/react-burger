@@ -7,12 +7,24 @@
   background-repeat: no-repeat;
   background-position: 50%;
   display: flex;
-  justify-content: left;
-  align-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
-.rightItems{
+.leftItems {
   display: flex;
-  flex-grow: 100;
+  width: 33%;
+
+}
+
+.rightItems {
+  composes: leftItems;
   justify-content: right;
 }
 
+.homeLink
+{
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}

@@ -1,17 +1,22 @@
-import React from "react";
+import { RootState, AppThunk, AppDispatch } from "..";
+import { TApplicationActions } from "../services/actions";
+
+export {
+    type RootState,
+    type AppThunk,
+    type AppDispatch,
+    type TApplicationActions
+};
 
 export type TIngredientName = 'Булки' | 'Начинки' | 'Соусы';
 export type TIngredientType = 'bun' | 'main' | 'sauce';
 
-export interface IIngredientCategory
-{
+export interface IIngredientCategory {
     name: TIngredientName;
-    ref: React.RefObject<HTMLParagraphElement>;
     type: TIngredientType;
 };
 
-export interface IIngredient
-{
+export interface IIngredient {
     _id: string;
     name: string;
     type: TIngredientType;
@@ -26,107 +31,81 @@ export interface IIngredient
     __v: 0
 };
 
-export interface IConstructorState
-{
-    bun: string;
-    items: string[];
-    price: number;
-};
-
-export interface IIngredientsState
-{
-    items: IIngredient[];
-    cats: IIngredientCategory[];
-    activeTab: TIngredientType;
-    request: boolean;
-    failed: boolean;
-};
-
-export interface IAuthUserInfo
-{
+export interface IAuthUserInfo {
     email: string;
     name: string;
 };
 
-export interface IAuthToken 
-{
+export interface IAuthToken {
     accessToken: string;
     refreshToken: string;
 };
 
-export type TAuthResponse = IAuthUserInfo & IAuthToken;
-
-export interface ILogoutResponse
-{
-    message: string;
-};
-
-export interface IAuthInfoState
-{
-    request: boolean;
+export interface IAuthResponse extends IAuthToken {
     success: boolean;
     user: IAuthUserInfo;
 };
 
-export interface IOrderDetailsState
-{ 
-    number: string;
-    name: string;
-    request: boolean;
-    failed: boolean;
-    show: boolean
-};
-
-export interface IResetPasswordState
-{ 
+export interface ILogoutResponse {
     message: string;
-    step: string;
-    request: boolean;
-    failed: boolean;
 };
 
-export interface IState
-{
-    resetPassword: IResetPasswordState;
-    constructor: IConstructorState;
-    ingredients: IIngredientsState;
-    authInfo: IAuthInfoState;
-    orderDetails: IOrderDetailsState;
-};
-
-export interface ILocationState
-{
+export interface ILocationState {
     background: undefined;
 };
 
 
-export interface IProfileForm
-{
+export interface IProfileForm {
     name: string;
     email: string;
     password: string;
 };
 
-export interface IResetPasswordForm
-{
-   password: string;
-   token: string;
+export interface IResetPasswordForm {
+    password: string;
+    token: string;
 };
 
-export interface ILoginForm
-{
+export interface ILoginForm {
     email: string;
     password: string;
 };
 
-export interface IBasicAction 
-{
-    type: string;
+export interface IBasicAction<T> {
+    readonly type: T;
 };
 
-export interface ILocationState
-{
+export interface ILocationState {
     from: {
         pathname: string;
     };
-}
+};
+
+export const TFeedOrderStatusDone: 'done' = 'done';
+export type TFeedOrderStatus = typeof TFeedOrderStatusDone;
+
+export interface IFeedOrder<TNumber> {
+    _id: string;
+    ingredients: string[];
+    status: TFeedOrderStatus;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: TNumber;
+};
+
+export interface IFeedOrdersMessage<TNumber> {
+    success: boolean;
+    orders: IFeedOrder<TNumber>[];
+    total: number;
+    totalToday: number;
+};
+
+export interface IConstructorCounter {
+    [id: string]: number;
+};
+
+export interface IConstructorItem {
+    id: string;
+    key: string;
+};

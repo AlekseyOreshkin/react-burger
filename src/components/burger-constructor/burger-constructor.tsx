@@ -4,9 +4,9 @@ import { BurgerConstructorSubmit } from '../burger-constructor-submit/burger-con
 
 export const BurgerConstructor = () => {
   return (
-  <div className={styles.main}>
-    <BurgerConstructorList />
-    <BurgerConstructorSubmit />
-  </div>
+    <div className={styles.main}>
+      <BurgerConstructorList />
+      <BurgerConstructorSubmit />
+    </div>
   );
 };

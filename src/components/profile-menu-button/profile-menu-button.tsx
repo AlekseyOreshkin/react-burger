@@ -9,8 +9,8 @@ interface IProps {
     onClick?: () => void;
 }
 
-export const ProfileMenuButton : FC<IProps> = ({path, text, onClick}) => {
-    
+export const ProfileMenuButton: FC<IProps> = ({ path, text, onClick }) => {
+
     const { pathname } = useLocation();
     const history = useHistory();
 
@@ -18,12 +18,12 @@ export const ProfileMenuButton : FC<IProps> = ({path, text, onClick}) => {
         return pathname.toLowerCase() === path?.toLowerCase();
     }, [pathname, path]);
 
-    const handleClick= useCallback(() => {
+    const handleClick = useCallback(() => {
         if (!active) {
             if (typeof onClick === 'function') {
                 return onClick();
             } else {
-                history.push({pathname: path, state: {from: pathname}});
+                history.push({ pathname: path, state: { from: pathname } });
             }
         }
     }, [active, history, path, onClick, pathname]);
