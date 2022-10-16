@@ -1,9 +1,10 @@
 import { IFeedOrdersMessage } from "../../utils/types";
 import { padOrderNumber } from "../../utils/utils";
-import { TSocketMiddlewareActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket-middleware";
+import { TSocketMiddlewareActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket-middleware";
 
 interface IWsState {
   wsConnected: boolean;
+  request: boolean;
   data: IFeedOrdersMessage<string>;
 
   error?: Event;
@@ -11,6 +12,7 @@ interface IWsState {
 
 export const initialWsState: IWsState = {
   wsConnected: false,
+  request: false,
   data: {
     success: false,
     orders: [],
@@ -18,16 +20,21 @@ export const initialWsState: IWsState = {
     totalToday: 0
   }
 };
-
 // Создадим редьюсер для WebSocket
 export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActions): IWsState => {
   switch (action.type) {
+    case WS_CONNECTION_START:
+      return {
+        ...state,
+        request: true,
+      };
     // Опишем обработку экшена с типом WS_CONNECTION_SUCCESS
     // Установим флаг wsConnected в состояние true
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
         error: undefined,
+        request: false,
         wsConnected: true
       };
 
@@ -36,6 +43,7 @@ export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActio
     case WS_CONNECTION_ERROR:
       return {
         ...state,
+        request: false,
         error: action.payload,
         wsConnected: false
       };
