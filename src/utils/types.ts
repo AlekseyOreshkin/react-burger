@@ -82,7 +82,11 @@ export interface ILocationState {
 };
 
 export const TFeedOrderStatusDone: 'done' = 'done';
-export type TFeedOrderStatus = typeof TFeedOrderStatusDone;
+export const TFeedOrderStatusCreated: 'created' = 'created';
+export const TFeedOrderStatusCanceled: 'canceled' = 'canceled';
+export type TFeedOrderStatus = typeof TFeedOrderStatusDone
+    | typeof TFeedOrderStatusCreated
+    | typeof TFeedOrderStatusCanceled;
 
 export interface IFeedOrder<TNumber> {
     _id: string;
