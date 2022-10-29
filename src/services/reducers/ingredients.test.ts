@@ -1,8 +1,8 @@
 import { TApplicationActions } from "../actions";
 import { ingredientsReducer, initialIngredients } from "./ingredients";
 
-describe('Order details reducer', () => {
-    it('Should return initial order details state', () => {
+describe('Ingregients reducer', () => {
+    it('Should return initial ingredients state', () => {
         const action : any = {};
         expect(ingredientsReducer(undefined, action)).toEqual(initialIngredients);
     });

@@ -39,7 +39,7 @@ export const Modal: FC<IProps> = (props) => {
             <p className={`text text_type_main-large`}>
                 {text}
             </p>
-            <button className={styles.closeButton} onClick={closeModal}><CloseIcon type='primary' /></button>
+            <button data-testid='close-modal-btn' className={styles.closeButton} onClick={closeModal}><CloseIcon type='primary' /></button>
         </>)
     }
 

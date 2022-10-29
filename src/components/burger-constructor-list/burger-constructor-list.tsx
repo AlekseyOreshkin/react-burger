@@ -71,7 +71,7 @@ export const BurgerConstructorList: FC = () => {
   }).filter(o => o !== undefined), [items, ingredients]);
 
   return (
-    <div className={`${styles.main} ${isHover ? styles.onHover : ''}`} ref={dropNewRef} >
+    <div data-testid='drop-target' className={`${styles.main} ${isHover ? styles.onHover : ''}`} ref={dropNewRef} >
       {topData && <div className={styles.topBun}>
         <ConstructorElement
           type='top'
