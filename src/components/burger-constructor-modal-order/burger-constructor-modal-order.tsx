@@ -14,7 +14,7 @@ export const BurgerConstrctorModalOrder = () => {
 
     return (
         <div className={styles.main} >
-            <p className={`text text_type_digits-large ${styles.orderNumber}`}>{order}</p>
+            <p className={`text text_type_digits-large`}>{order}</p>
             <p className='text text_type_main-medium'>идентификатор заказа</p>
             <button className={styles.confirmButton}
                 style={{ backgroundImage: `url(${confirmImage})` }} onClick={onCloseOrder} />

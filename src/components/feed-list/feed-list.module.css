@@ -1,6 +1,6 @@
 .main {
     display: block;
-    grid-area: ingredients;
+    grid-area: ing-space;
     width: calc(100% - 30px);
     height: 500px;
     overflow-y: scroll;

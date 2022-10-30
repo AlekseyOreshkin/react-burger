@@ -9,7 +9,7 @@ body {
   grid-template-areas:
     ". header header ."
     ". static-text . ."
-    ". ingredients constructor ."
+    ". ing-space con-space ."
     "footer footer footer footer";
 
   justify-items: stretch;
