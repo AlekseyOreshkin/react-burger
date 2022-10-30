@@ -3,7 +3,7 @@
 
 Учебный проект курса разработки React приложений.
 
-https://alekseyoreshkin.github.io/react-burger/index.html
+https://alekseyoreshkin.github.io/react-burger/
 
 ### Сборка проекта 
 
