@@ -6,7 +6,7 @@ import './index.css';
 import App from './components/app/app';
 import { rootReducer } from './services/reducers';
 import thunk, { ThunkAction } from 'redux-thunk';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { TApplicationActions } from './services/actions';
 import { socketMiddleware } from './utils/socket-middleware';
 import { wsActions } from './services/actions/socket-middleware';
