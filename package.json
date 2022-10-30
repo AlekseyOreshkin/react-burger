@@ -61,5 +61,5 @@
     "react-error-overlay": "6.0.9",
     "redux-mock-store": "^1.5.4"
   },
-  "homepage": "./"
+  "homepage": "https://alekseyoreshkin.github.io/react-burger"
 }
