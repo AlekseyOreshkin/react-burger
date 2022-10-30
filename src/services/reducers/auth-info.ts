@@ -1,4 +1,4 @@
-import { IAuthUserInfo } from '../../utils/types';
+import { IAuthUserInfo, TApplicationActions } from '../../utils/types';
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -6,7 +6,6 @@ import {
     LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_FAILED,
-    TAuthInfoActions,
 } from '../actions/auth-info';
 
 interface IAuthInfoState {
@@ -24,7 +23,7 @@ export const initialAuthState: IAuthInfoState = {
     }
 };
 
-export const authInfoReducer = (state = initialAuthState, action: TAuthInfoActions) => {
+export const authInfoReducer = (state = initialAuthState, action: TApplicationActions) => {
     switch (action.type) {
         case LOGIN_REQUEST: return {
             ...state,

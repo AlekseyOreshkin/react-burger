@@ -38,7 +38,7 @@ describe('socket middleware reducer', () => {
     }
     
     it('Should return initial state', () => {
-        const action : any = {};
+        const action : TApplicationActions = { type: "CLOSE_ORDER"};
         expect(wsReducer(undefined, action)).toEqual(initialWsState);
     });
 

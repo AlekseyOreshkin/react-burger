@@ -3,7 +3,7 @@ import { authInfoReducer, initialAuthState } from "./auth-info";
 
 describe('Auth info reducer', () => {
     it('Should return initial auth state', () => {
-        const action : any = {};
+        const action : TApplicationActions = {type: "CLOSE_ORDER"};
         expect(authInfoReducer(undefined, action)).toEqual(initialAuthState);
     });
 

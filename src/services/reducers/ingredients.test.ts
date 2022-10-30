@@ -3,7 +3,7 @@ import { ingredientsReducer, initialIngredients } from "./ingredients";
 
 describe('Ingregients reducer', () => {
     it('Should return initial ingredients state', () => {
-        const action : any = {};
+        const action : TApplicationActions = {type: "CLOSE_ORDER"};
         expect(ingredientsReducer(undefined, action)).toEqual(initialIngredients);
     });
 

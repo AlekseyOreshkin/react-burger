@@ -1,9 +1,9 @@
+import { TApplicationActions } from '../actions';
 import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
     CLOSE_ORDER,
-    TOrderDetailsActions,
 } from '../actions/order-details';
 
 interface IOrderDetailsState {
@@ -23,7 +23,7 @@ export const initialOrderDetails: IOrderDetailsState =
     show: false
 };
 
-export const orderDetailsReducer = (state = initialOrderDetails, action: TOrderDetailsActions) => {
+export const orderDetailsReducer = (state = initialOrderDetails, action: TApplicationActions) => {
     switch (action.type) {
         case GET_ORDER_REQUEST:
             return {

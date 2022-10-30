@@ -4,7 +4,7 @@ import {initialResetPassword, resetPasswordReducer} from './reset-password';
 
 describe ('Reset-password reducer', () => {
     it('Should return initial state', () => {
-        const action : any = {};    
+        const action : TApplicationActions = {type: 'CLOSE_ORDER'};    
         expect(resetPasswordReducer(undefined, action)).toEqual(initialResetPassword);
     });
 

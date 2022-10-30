@@ -1,10 +1,9 @@
-import { IIngredient, IIngredientCategory, TIngredientType } from "../../utils/types";
+import { IIngredient, IIngredientCategory, TApplicationActions, TIngredientType } from "../../utils/types";
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
     SET_ACTIVE_TAB,
-    TIngredientsActions
 } from "../actions/ingredients";
 
 interface IIngredientsState {
@@ -23,7 +22,7 @@ export const initialIngredients: IIngredientsState = {
     failed: false
 };
 
-export const ingredientsReducer = (state = initialIngredients, action: TIngredientsActions) => {
+export const ingredientsReducer = (state = initialIngredients, action: TApplicationActions) => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

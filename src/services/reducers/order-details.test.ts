@@ -3,7 +3,7 @@ import { initialOrderDetails, orderDetailsReducer } from "./order-details";
 
 describe('Order details reducer', () => {
     it('Should return initial order details state', () => {
-        const action : any = {};
+        const action : TApplicationActions = {type: "GET_INGREDIENTS_FAILED"};
         expect(orderDetailsReducer(undefined, action)).toEqual(initialOrderDetails);
     });
     it('Should return requested order details state', () => {

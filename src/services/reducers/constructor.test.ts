@@ -3,7 +3,7 @@ import { constructorReducer, initialConstructor } from "./constructor";
 
 describe('Constructor reducer', () => {
     it('Should return initial constructor state', () => {
-        const action : any = {};
+        const action : TApplicationActions = {type: "CLOSE_ORDER"};
         expect(constructorReducer(undefined, action)).toEqual(initialConstructor);
     });
     const bun : string = 'bun';

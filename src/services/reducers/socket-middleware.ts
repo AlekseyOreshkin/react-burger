@@ -1,6 +1,6 @@
-import { IFeedOrdersMessage } from "../../utils/types";
+import { IFeedOrdersMessage, TApplicationActions } from "../../utils/types";
 import { padOrderNumber } from "../../utils/utils";
-import { TSocketMiddlewareActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket-middleware";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket-middleware";
 
 interface IWsState {
   wsConnected: boolean;
@@ -21,7 +21,7 @@ export const initialWsState: IWsState = {
   }
 };
 // Создадим редьюсер для WebSocket
-export const wsReducer = (state = initialWsState, action: TSocketMiddlewareActions): IWsState => {
+export const wsReducer = (state = initialWsState, action: TApplicationActions): IWsState => {
   switch (action.type) {
     case WS_CONNECTION_START:
       return {

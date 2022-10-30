@@ -2,7 +2,7 @@ import { makeLogin } from "./make-login";
 
 describe('make order', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000');
+        cy.visit('/');
     });
     
     const addItem = (item, target) => {
@@ -19,7 +19,7 @@ describe('make order', () => {
     }
 
     it ('add ingredients to constructor', () => {
-        cy.visit('http://localhost:3000');
+        cy.visit('/');
         cy.intercept('POST', '/api/orders').as('getOrder');
 
 
