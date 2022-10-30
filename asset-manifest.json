@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/AlekseyOreshkin/react-burger/static/css/main.da1b627a.chunk.css",
+    "main.js": "/AlekseyOreshkin/react-burger/static/js/main.f7999a8d.chunk.js",
+    "main.js.map": "/AlekseyOreshkin/react-burger/static/js/main.f7999a8d.chunk.js.map",
+    "runtime-main.js": "/AlekseyOreshkin/react-burger/static/js/runtime-main.e366e718.js",
+    "runtime-main.js.map": "/AlekseyOreshkin/react-burger/static/js/runtime-main.e366e718.js.map",
+    "static/css/2.0d0c3950.chunk.css": "/AlekseyOreshkin/react-burger/static/css/2.0d0c3950.chunk.css",
+    "static/js/2.86df849c.chunk.js": "/AlekseyOreshkin/react-burger/static/js/2.86df849c.chunk.js",
+    "static/js/2.86df849c.chunk.js.map": "/AlekseyOreshkin/react-burger/static/js/2.86df849c.chunk.js.map",
+    "index.html": "/AlekseyOreshkin/react-burger/index.html",
+    "static/css/2.0d0c3950.chunk.css.map": "/AlekseyOreshkin/react-burger/static/css/2.0d0c3950.chunk.css.map",
+    "static/css/main.da1b627a.chunk.css.map": "/AlekseyOreshkin/react-burger/static/css/main.da1b627a.chunk.css.map",
+    "static/js/2.86df849c.chunk.js.LICENSE.txt": "/AlekseyOreshkin/react-burger/static/js/2.86df849c.chunk.js.LICENSE.txt",
+    "static/media/fonts.css": "/AlekseyOreshkin/react-burger/static/media/iceland.77ad7fc2.woff",
+    "static/media/done.b2157769.png": "/AlekseyOreshkin/react-burger/static/media/done.b2157769.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e366e718.js",
+    "static/css/2.0d0c3950.chunk.css",
+    "static/js/2.86df849c.chunk.js",
+    "static/css/main.da1b627a.chunk.css",
+    "static/js/main.f7999a8d.chunk.js"
+  ]
+}
