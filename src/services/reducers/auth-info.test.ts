@@ -1,15 +1,17 @@
 import { TApplicationActions } from "../actions";
+import { LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILED, LOGOUT_REQUEST, LOGOUT_SUCCESS } from "../actions/auth-info";
+import { CLOSE_ORDER } from "../actions/order-details";
 import { authInfoReducer, initialAuthState } from "./auth-info";
 
 describe('Auth info reducer', () => {
     it('Should return initial auth state', () => {
-        const action : TApplicationActions = {type: "CLOSE_ORDER"};
+        const action : TApplicationActions = {type: CLOSE_ORDER};
         expect(authInfoReducer(undefined, action)).toEqual(initialAuthState);
     });
 
     it('Should return auth state on request login', () => {
         const action : TApplicationActions = {
-            type: 'LOGIN_REQUEST',
+            type: LOGIN_REQUEST,
         };
         const expectedState = {
             ...initialAuthState,
@@ -29,7 +31,7 @@ describe('Auth info reducer', () => {
 
     it('Should return auth state on login succeded', () => {
         const action : TApplicationActions = {
-            type: 'LOGIN_SUCCESS',
+            type: LOGIN_SUCCESS,
             authInfo,
         };
         const expectedState = {
@@ -43,7 +45,7 @@ describe('Auth info reducer', () => {
 
     it('Should return auth state on login failed', () => {
         const action : TApplicationActions = {
-            type: 'LOGIN_FAILED',
+            type: LOGIN_FAILED,
         };
 
         expect(authInfoReducer(initialAuthState, action)).toEqual(initialAuthState);
@@ -51,7 +53,7 @@ describe('Auth info reducer', () => {
 
     it('Should return auth state on logout request', () => {
         const action : TApplicationActions = {
-            type: 'LOGOUT_REQUEST',
+            type: LOGOUT_REQUEST,
         };
         const expectedState = {
             ...initialAuthState,
@@ -63,7 +65,7 @@ describe('Auth info reducer', () => {
 
     it('Should return auth state on logout succeded', () => {
         const action : TApplicationActions = {
-            type: 'LOGOUT_SUCCESS',
+            type: LOGOUT_SUCCESS,
             message: ''
         };
 
@@ -72,7 +74,7 @@ describe('Auth info reducer', () => {
 
     it('Should return auth state on logout failed', () => {
         const action : TApplicationActions = {
-            type: 'LOGOUT_FAILED',
+            type: LOGOUT_FAILED,
         };
 
         expect(authInfoReducer(initialAuthState, action)).toEqual(initialAuthState);

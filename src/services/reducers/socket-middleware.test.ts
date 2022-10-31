@@ -1,4 +1,6 @@
 import { TApplicationActions } from "../actions";
+import { CLOSE_ORDER } from "../actions/order-details";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_START, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE } from "../actions/socket-middleware";
 import { initialWsState, wsReducer } from "./socket-middleware";
 
 describe('socket middleware reducer', () => {
@@ -38,13 +40,13 @@ describe('socket middleware reducer', () => {
     }
     
     it('Should return initial state', () => {
-        const action : TApplicationActions = { type: "CLOSE_ORDER"};
+        const action : TApplicationActions = { type: CLOSE_ORDER};
         expect(wsReducer(undefined, action)).toEqual(initialWsState);
     });
 
     it('Should return requested connection state', () => {
         const action: TApplicationActions = {
-            type: 'WS_CONNECTION_START',
+            type: WS_CONNECTION_START,
             payload: ''
         };
         
@@ -58,7 +60,7 @@ describe('socket middleware reducer', () => {
 
     it('Should return connection state on success', () => {
         const action: TApplicationActions = {
-            type: 'WS_CONNECTION_SUCCESS',
+            type: WS_CONNECTION_SUCCESS,
             payload: event
         };
         
@@ -73,7 +75,7 @@ describe('socket middleware reducer', () => {
 
     it('Should return connection state on error', () => {
         const action: TApplicationActions = {
-            type: 'WS_CONNECTION_ERROR',
+            type: WS_CONNECTION_ERROR,
             payload: event
         };
         
@@ -87,7 +89,7 @@ describe('socket middleware reducer', () => {
 
     it('Should return connection state on close', () => {
         const action: TApplicationActions = {
-            type: 'WS_CONNECTION_CLOSED',
+            type: WS_CONNECTION_CLOSED,
             payload: event
         };
         
@@ -107,7 +109,7 @@ describe('socket middleware reducer', () => {
         });
         
         const action: TApplicationActions = {
-            type: 'WS_GET_MESSAGE',
+            type: WS_GET_MESSAGE,
             payload: message
         };
         

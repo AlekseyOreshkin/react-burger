@@ -1,15 +1,17 @@
 import { TApplicationActions } from "../actions";
+import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, SET_ACTIVE_TAB } from "../actions/ingredients";
+import { CLOSE_ORDER } from "../actions/order-details";
 import { ingredientsReducer, initialIngredients } from "./ingredients";
 
 describe('Ingregients reducer', () => {
     it('Should return initial ingredients state', () => {
-        const action : TApplicationActions = {type: "CLOSE_ORDER"};
+        const action : TApplicationActions = {type: CLOSE_ORDER};
         expect(ingredientsReducer(undefined, action)).toEqual(initialIngredients);
     });
 
     it('Should return requested ingredients state', () => {
         const action : TApplicationActions = {
-            type: 'GET_INGREDIENTS_REQUEST'
+            type: GET_INGREDIENTS_REQUEST
         };
         const expectedState = {
             ...initialIngredients,
@@ -21,7 +23,7 @@ describe('Ingregients reducer', () => {
 
     it('Should return ingredients state on success', () => {
         const action : TApplicationActions = {
-            type: 'GET_INGREDIENTS_SUCCESS',
+            type: GET_INGREDIENTS_SUCCESS,
             ingredients: [],
             categories: []
         };
@@ -34,7 +36,7 @@ describe('Ingregients reducer', () => {
 
     it('Should return ingredients state on failure', () => {
         const action : TApplicationActions = {
-            type: 'GET_INGREDIENTS_FAILED'
+            type: GET_INGREDIENTS_FAILED
         };
         const expectedState = {
             ...initialIngredients,
@@ -47,7 +49,7 @@ describe('Ingregients reducer', () => {
     it('Should return ingredients state on active tab', () => {
         const tab = "bun";
         const action : TApplicationActions = {
-            type: 'SET_ACTIVE_TAB',
+            type: SET_ACTIVE_TAB,
             active: tab
         };
         const expectedState = {
