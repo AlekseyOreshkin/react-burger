@@ -1,23 +1,22 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom';
 import { requestRefreshToken, requestGetUser } from '../../utils/request';
 import { LOGIN_SUCCESS, LOGIN_FAILED } from '../../services/actions/auth-info';
 import { useDispatch, useSelector } from '../..';
 
 export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
-    const authorized = useSelector(state => state.authInfo.success);
+    
+    const {request, success} = useSelector(state => state.authInfo);
     const location = useLocation();
     const dispatch = useDispatch();
-    const [request, setRequest] = useState(false);
 
     useEffect(() => {
-        if (!authorized) {
+        if (!success) {
             requestRefreshToken().then(() => {
                 requestGetUser().then(authInfo => {
                     dispatch({ type: LOGIN_SUCCESS, authInfo });
                 }).catch(() => {
                     dispatch({ type: LOGIN_FAILED });
-                    setRequest(false);
                 })
             }).catch(() => {
                 dispatch({ type: LOGIN_FAILED });
@@ -28,7 +27,7 @@ export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
 
     if (request) {
         return null;
-    } else if (authorized) {
+    } else if (success) {
         return (
             <Route {...rest} render={() => (children)} />
         );

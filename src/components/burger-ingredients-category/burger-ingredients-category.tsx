@@ -18,7 +18,7 @@ export const BurgerIngredientsCategory: FC<{ type: TIngredientType }> = ({ type 
     return null;
   }
   return (
-    <div className={styles.main}>
+    <div data-testid={`${type}_cat`} className={styles.main}>
       <p className={`text text_type_main-medium ${styles.textWrapper}`} ref={categoryContext[cat.type]} >{cat.name}</p>
       {items.filter(ing => ing.type === type).map(ing => (
         <BurgerIngredientsCard key={ing._id} ingredient={ing} count={counter[ing._id]} />

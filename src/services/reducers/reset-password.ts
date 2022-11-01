@@ -1,8 +1,8 @@
+import { TApplicationActions } from '../actions';
 import {
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED,
-    TResetPasswordActions,
 } from '../actions/reset-password';
 
 interface IResetPasswordState {
@@ -19,7 +19,7 @@ export const initialResetPassword: IResetPasswordState =
     failed: false
 };
 
-export const resetPasswordReducer = (state = initialResetPassword, action: TResetPasswordActions) => {
+export const resetPasswordReducer = (state = initialResetPassword, action: TApplicationActions) => {
     switch (action.type) {
         case RESET_PASSWORD_REQUEST:
             return {

@@ -29,7 +29,7 @@ export const LoginPage = () => {
             <div className='form-area'>
                 <CommonForm headerText='Вход' submitText='Войти' onSubmit={handleLogin} >
                     <EmailInput name='email' value={form.email} onChange={handleChange} />
-                    <PasswordInput value={form.password} name={'password'} onChange={handleChange} />
+                    <PasswordInput value={form.password} name='password' onChange={handleChange} />
                 </CommonForm>
                 <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь? <Link to='/register'>Зарегистрироваться</Link></p>
                 <p className="text text_type_main-default text_color_inactive"> Забыли пароль? <Link to='/forgot-password'>Восстановить пароль</Link></p>

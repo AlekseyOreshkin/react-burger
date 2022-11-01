@@ -1,11 +1,10 @@
-import { IConstructorCounter, IConstructorItem } from '../../utils/types';
+import { IConstructorCounter, IConstructorItem, TApplicationActions } from '../../utils/types';
 import { calcConstructorCounter } from '../../utils/utils';
 import {
     CHANGE_INGREDIENTS,
     SET_PRICE,
     UPDATE_INGREDIENTS_ORDER,
     CLEAR_CONSTRUCTOR,
-    TConstructorActions
 } from '../actions/constructor';
 
 interface IConstructorState {
@@ -18,7 +17,7 @@ export const initialConstructor: IConstructorState =
 {
     bun: '', items: [], price: 0, counter: {}
 };
-export const constructorReducer = (state = initialConstructor, action: TConstructorActions) => {
+export const constructorReducer = (state = initialConstructor, action: TApplicationActions) => {
     switch (action.type) {
         case CHANGE_INGREDIENTS:
             return {

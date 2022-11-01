@@ -1,7 +1,7 @@
 .main {
     display: flex;
     flex-direction: column;
-    grid-area: constructor;
+    grid-area: con-space;
     width: calc(100% - 30px);
     margin: 0 0 0 auto;
 }
